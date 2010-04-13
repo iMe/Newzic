@@ -6,6 +6,7 @@ Ex: "DS-Ricardo.vpp"
 keywords:
 set
 get
+show
 select
 fetch
 update
