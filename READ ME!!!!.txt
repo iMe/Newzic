@@ -1,0 +1,21 @@
+DEVEM INSTALAR PELA ORDEM SEGUINTE:
+
+1) Putty
+2) SysGit
+3) tortoiseGit
+
+Descarregar o ficheiro ppk que se encontra no vosso email
+(assunto: chave para aceder ao repositorio)
+
+4) Criar uma pasta para receber o repositorio
+5) No Menu de contexto da pasta escolher a opcao clone
+6) em url colar: git@github.com:iMe/Newzic.git
+7) fazer load da chave que sacaram do email
+
+8) No menu de contexto da pasta escolher tortoiseGit e navegar até setting
+
+9) no tab Git->Config, seleccionar origin da lista e no campo puttykey voltar a carregar a chave que sacaram do email
+
+Se algo falhar chamem o Chris ou o Ricardo...
+
+Boa sorte.
