@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Table Name="" Member="Imagens">
+    <Type Name="Imagens">
+      <Column Member="Id" Type="System.Guid" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Member="Img" Type="System.Byte[]" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="" Member="Videos">
+    <Type Name="Videos">
+      <Column Member="Id" Type="System.Guid" CanBeNull="false" />
+      <Column Member="Url" Type="System.String" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="" Member="Mapas">
+    <Type Name="Mapas">
+      <Column Member="Id" Type="System.Guid" CanBeNull="false" />
+      <Column Member="Mapa" Type="System.String" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="" Member="Noticias">
+    <Type Name="Noticia">
+      <Column Member="Id" Type="System.Guid" CanBeNull="false" />
+      <Column Member="IdImagem" Type="System.String" CanBeNull="false" />
+    </Type>
+  </Table>
+</Database>

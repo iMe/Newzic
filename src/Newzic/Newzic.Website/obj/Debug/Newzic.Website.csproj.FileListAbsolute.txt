@@ -1,0 +1,5 @@
+C:\Users\Administrator\Desktop\Newzic\Newzic\src\Newzic\Newzic.Website\bin\Newzic.Website.dll
+C:\Users\Administrator\Desktop\Newzic\Newzic\src\Newzic\Newzic.Website\bin\Newzic.Website.pdb
+C:\Users\Administrator\Desktop\Newzic\Newzic\src\Newzic\Newzic.Website\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\Newzic\Newzic\src\Newzic\Newzic.Website\obj\Debug\Newzic.Website.dll
+C:\Users\Administrator\Desktop\Newzic\Newzic\src\Newzic\Newzic.Website\obj\Debug\Newzic.Website.pdb
