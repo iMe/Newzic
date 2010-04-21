@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Table Name="" Member="Imagens">
+    <Type Name="Imagens">
+      <Column Name="Id" Type="System.Guid" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Img" Type="System.Byte[]" CanBeNull="false" />
+      <Association Name="Imagens_NoticiasImagens" Member="NoticiasImagens" ThisKey="Id" OtherKey="IdImagem" Type="NoticiasImagens" />
+    </Type>
+  </Table>
+  <Table Name="" Member="Videos">
+    <Type Name="Videos">
+      <Column Name="Id" Type="System.Guid" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Url" Type="System.String" CanBeNull="false" />
+      <Association Name="Videos_NoticiasVideos" Member="NoticiasVideos" ThisKey="Id" OtherKey="IdVideo" Type="NoticiasVideos" />
+    </Type>
+  </Table>
+  <Table Name="" Member="Mapas">
+    <Type Name="Mapas">
+      <Column Name="Id" Type="System.Guid" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Mapa" Type="System.String" CanBeNull="false" />
+      <Association Name="Mapas_Noticias" Member="Noticias" ThisKey="Id" OtherKey="IdMapa" Type="Noticias" />
+    </Type>
+  </Table>
+  <Table Name="" Member="Noticias">
+    <Type Name="Noticias">
+      <Column Name="Id" Type="System.Guid" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Member="Titulo" Type="System.String" CanBeNull="false" />
+      <Column Member="Corpo" Type="System.String" CanBeNull="false" />
+      <Column Member="IdUser" Type="System.Guid" CanBeNull="false" />
+      <Column Member="IdMapa" Type="System.Guid" CanBeNull="false" />
+      <Column Member="Votos" Type="System.Int32" CanBeNull="false" />
+      <Column Member="Data" Type="System.DateTime" CanBeNull="false" />
+      <Association Name="Noticias_NoticiasImagens" Member="NoticiasImagens" ThisKey="Id" OtherKey="IdNoticia" Type="NoticiasImagens" />
+      <Association Name="Noticias_NoticiasVideos" Member="NoticiasVideos" ThisKey="Id" OtherKey="IdNoticia" Type="NoticiasVideos" />
+      <Association Name="Mapas_Noticias" Member="Mapas" ThisKey="IdMapa" OtherKey="Id" Type="Mapas" IsForeignKey="true" />
+      <Association Name="Jornalistas_Noticias" Member="Jornalistas" ThisKey="IdUser" OtherKey="Id" Type="Jornalistas" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="" Member="Jornalistas">
+    <Type Name="Jornalistas">
+      <Column Member="Id" Type="System.Guid" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Member="Nome" Type="System.String" CanBeNull="false" />
+      <Column Member="Email" Type="System.String" CanBeNull="false" />
+      <Column Member="Password" Type="System.String" CanBeNull="false" />
+      <Association Name="Jornalistas_Moderadores" Member="Moderadores" ThisKey="Id" OtherKey="Id" Type="Moderadores" />
+      <Association Name="Jornalistas_Sessao" Member="Sessaos" ThisKey="Id" OtherKey="Id" Type="Sessao" />
+      <Association Name="Jornalistas_Noticias" Member="Noticias" ThisKey="Id" OtherKey="IdUser" Type="Noticias" />
+      <Association Name="Jornalistas_Queixas" Member="Queixas" ThisKey="Id" OtherKey="IdQueixoso" Type="Queixas" />
+    </Type>
+  </Table>
+  <Table Name="" Member="Moderadores">
+    <Type Name="Moderadores">
+      <Column Member="Id" Type="System.Guid" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Moderadores_Administradores" Member="Administradores" ThisKey="Id" OtherKey="Id" Type="Administradores" />
+      <Association Name="Jornalistas_Moderadores" Member="Jornalistas" ThisKey="Id" OtherKey="Id" Type="Jornalistas" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="" Member="Administradores">
+    <Type Name="Administradores">
+      <Column Member="Id" Type="System.Guid" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Moderadores_Administradores" Member="Moderadores" ThisKey="Id" OtherKey="Id" Type="Moderadores" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="" Member="Queixas">
+    <Type Name="Queixas">
+      <Column Member="Id" Type="System.Guid" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Member="IdQueixoso" Type="System.Guid" CanBeNull="false" />
+      <Column Member="IdUser" Type="System.Guid" CanBeNull="false" />
+      <Column Member="Corpo" Type="System.String" CanBeNull="false" />
+      <Association Name="Jornalistas_Queixas" Member="Jornalistas" ThisKey="IdQueixoso" OtherKey="Id" Type="Jornalistas" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="" Member="Sessaos">
+    <Type Name="Sessao">
+      <Column Member="Id" Type="System.Guid" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Member="Token" Type="System.String" CanBeNull="false" />
+      <Column Member="TimeStamp" Type="System.DateTime" CanBeNull="false" />
+      <Association Name="Jornalistas_Sessao" Member="Jornalistas" ThisKey="Id" OtherKey="Id" Type="Jornalistas" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="" Member="NoticiasImagens">
+    <Type Name="NoticiasImagens">
+      <Column Member="IdNoticia" Type="System.Guid" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Member="IdImagem" Type="System.Guid" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Noticias_NoticiasImagens" Member="Noticias" ThisKey="IdNoticia" OtherKey="Id" Type="Noticias" IsForeignKey="true" />
+      <Association Name="Imagens_NoticiasImagens" Member="Imagens" ThisKey="IdImagem" OtherKey="Id" Type="Imagens" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="" Member="NoticiasVideos">
+    <Type Name="NoticiasVideos">
+      <Column Member="IdNoticia" Type="System.Guid" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Member="IdVideo" Type="System.Guid" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Noticias_NoticiasVideos" Member="Noticias" ThisKey="IdNoticia" OtherKey="Id" Type="Noticias" IsForeignKey="true" />
+      <Association Name="Videos_NoticiasVideos" Member="Videos" ThisKey="IdVideo" OtherKey="Id" Type="Videos" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

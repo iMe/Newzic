@@ -1,0 +1,5 @@
+C:\Users\Administrator\Desktop\Newzic\Newzic\src\Newzic\Newzic.Domain.Tests\bin\Debug\Newzic.Domain.Tests.dll
+C:\Users\Administrator\Desktop\Newzic\Newzic\src\Newzic\Newzic.Domain.Tests\bin\Debug\Newzic.Domain.Tests.pdb
+C:\Users\Administrator\Desktop\Newzic\Newzic\src\Newzic\Newzic.Domain.Tests\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\Newzic\Newzic\src\Newzic\Newzic.Domain.Tests\obj\Debug\Newzic.Domain.Tests.dll
+C:\Users\Administrator\Desktop\Newzic\Newzic\src\Newzic\Newzic.Domain.Tests\obj\Debug\Newzic.Domain.Tests.pdb
