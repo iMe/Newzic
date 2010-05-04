@@ -1,0 +1,11 @@
+André:
+
+Bruno:
+
+Chris:
+ - <Newzic.Data>
+
+Ricrado:
+ - <Newzic.WebService>
+
+Vitor:
