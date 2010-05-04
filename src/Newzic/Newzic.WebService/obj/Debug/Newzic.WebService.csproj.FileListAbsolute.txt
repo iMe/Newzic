@@ -1,5 +1,0 @@
-C:\Users\Administrator\Desktop\Newzic\Newzic\src\Newzic\Newzic.WebService\bin\Newzic.WebService.dll
-C:\Users\Administrator\Desktop\Newzic\Newzic\src\Newzic\Newzic.WebService\bin\Newzic.WebService.pdb
-C:\Users\Administrator\Desktop\Newzic\Newzic\src\Newzic\Newzic.WebService\obj\Debug\ResolveAssemblyReference.cache
-C:\Users\Administrator\Desktop\Newzic\Newzic\src\Newzic\Newzic.WebService\obj\Debug\Newzic.WebService.dll
-C:\Users\Administrator\Desktop\Newzic\Newzic\src\Newzic\Newzic.WebService\obj\Debug\Newzic.WebService.pdb

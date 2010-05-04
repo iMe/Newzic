@@ -1,5 +1,0 @@
-C:\Users\Administrator\Desktop\Newzic\Newzic\src\Newzic\Newzic.Data.Tests\bin\Debug\Newzic.Data.Tests.dll
-C:\Users\Administrator\Desktop\Newzic\Newzic\src\Newzic\Newzic.Data.Tests\bin\Debug\Newzic.Data.Tests.pdb
-C:\Users\Administrator\Desktop\Newzic\Newzic\src\Newzic\Newzic.Data.Tests\obj\Debug\ResolveAssemblyReference.cache
-C:\Users\Administrator\Desktop\Newzic\Newzic\src\Newzic\Newzic.Data.Tests\obj\Debug\Newzic.Data.Tests.dll
-C:\Users\Administrator\Desktop\Newzic\Newzic\src\Newzic\Newzic.Data.Tests\obj\Debug\Newzic.Data.Tests.pdb
