@@ -15,7 +15,7 @@
       <Association Name="Noticia_Comentario" Member="Comentarios" ThisKey="NoticiaId" OtherKey="NoticiaId" Type="Comentario" />
       <Association Name="Noticia_Video" Member="Videos" ThisKey="NoticiaId" OtherKey="NoticiaId" Type="Video" />
       <Association Name="Noticia_VotoNoticia" Member="VotoNoticias" ThisKey="NoticiaId" OtherKey="NoticiaId" Type="VotoNoticia" />
-      <Association Name="Noticia_MapaView" Member="Mapas" ThisKey="NoticiaId" OtherKey="NoticiaId" Type="Mapa" />
+      <Association Name="Noticia_Mapa" Member="Mapas" ThisKey="NoticiaId" OtherKey="NoticiaId" Type="Mapa" />
       <Association Name="Jornalista_Noticia" Member="Jornalista" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Jornalista" IsForeignKey="true" />
     </Type>
   </Table>
@@ -120,8 +120,8 @@
       <Column Name="MapaId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="NoticiaId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="Morada" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
-      <Column Name="Mapa" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" CanBeNull="true" UpdateCheck="Never" />
-      <Association Name="Noticia_MapaView" Member="Noticia" ThisKey="NoticiaId" OtherKey="NoticiaId" Type="Noticia" IsForeignKey="true" />
+      <Column Name="Mapa" Member="Map" Storage="_Mapa" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Noticia_Mapa" Member="Noticia" ThisKey="NoticiaId" OtherKey="NoticiaId" Type="Noticia" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
