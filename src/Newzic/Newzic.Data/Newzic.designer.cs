@@ -194,11 +194,11 @@ namespace Newzic.Data
 			}
 		}
 		
-		public System.Data.Linq.Table<MapaView> MapaViews
+		public System.Data.Linq.Table<Mapa> Mapas
 		{
 			get
 			{
-				return this.GetTable<MapaView>();
+				return this.GetTable<Mapa>();
 			}
 		}
 	}
@@ -2504,7 +2504,7 @@ namespace Newzic.Data
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MapaView")]
-	public partial class MapaView
+	public partial class Mapa
 	{
 		
 		private System.Guid _MapaId;
@@ -2513,9 +2513,9 @@ namespace Newzic.Data
 		
 		private string _Morada;
 		
-		private System.Data.Linq.Binary _Expr1;
+		private System.Data.Linq.Binary _Mapa;
 		
-		public MapaView()
+		public Mapa()
 		{
 		}
 		
@@ -2567,18 +2567,18 @@ namespace Newzic.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Expr1", DbType="VarBinary(MAX)", UpdateCheck=UpdateCheck.Never)]
-		public System.Data.Linq.Binary Expr1
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="Mapa", Storage="_Mapa", DbType="VarBinary(MAX)", UpdateCheck=UpdateCheck.Never)]
+		public System.Data.Linq.Binary Map
 		{
 			get
 			{
-				return this._Expr1;
+				return this._Mapa;
 			}
 			set
 			{
-				if ((this._Expr1 != value))
+				if ((this._Mapa != value))
 				{
-					this._Expr1 = value;
+					this._Mapa = value;
 				}
 			}
 		}

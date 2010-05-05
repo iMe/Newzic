@@ -1,0 +1,12 @@
+André:
+ - Eu e o Vitor tamos a escrever as classes do modelo de apresentação!
+Bruno:
+
+Chris:
+ - <Newzic.Data>
+
+Ricrado:
+ - <Newzic.WebService>
+
+Vitor:
+ - O mesmo que o André
