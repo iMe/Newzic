@@ -59,6 +59,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NoticiaWrap.cs" />
     <Compile Include="Newzic.asmx.cs">
       <DependentUpon>Newzic.asmx</DependentUpon>
       <SubType>Component</SubType>
