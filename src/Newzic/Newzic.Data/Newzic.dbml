@@ -16,6 +16,7 @@
       <Association Name="Noticia_Video" Member="Videos" ThisKey="NoticiaId" OtherKey="NoticiaId" Type="Video" />
       <Association Name="Noticia_VotoNoticia" Member="VotoNoticias" ThisKey="NoticiaId" OtherKey="NoticiaId" Type="VotoNoticia" />
       <Association Name="Noticia_Mapa" Member="Mapas" ThisKey="NoticiaId" OtherKey="NoticiaId" Type="Mapa" />
+      <Association Name="Noticia_NoticiaFlagged" Member="NoticiaFlaggeds" ThisKey="NoticiaId" OtherKey="NoticiaId" Type="NoticiaFlagged" />
       <Association Name="Jornalista_Noticia" Member="Jornalista" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Jornalista" IsForeignKey="true" />
     </Type>
   </Table>
@@ -109,19 +110,21 @@
       <Association Name="Noticia_VotoNoticia" Member="Noticia" ThisKey="NoticiaId" OtherKey="NoticiaId" Type="Noticia" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.Mapa" Member="Mapas">
+    <Type Name="Mapa">
+      <Column Name="MapaId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="NoticiaId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Morada" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="Longitude" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Latidude" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Association Name="Noticia_Mapa" Member="Noticia" ThisKey="NoticiaId" OtherKey="NoticiaId" Type="Noticia" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.NoticiaFlagged" Member="NoticiaFlaggeds">
     <Type Name="NoticiaFlagged">
       <Column Name="NoticiaId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Data" Type="System.DateTime" DbType="DateTime NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="dbo.MapaView" Member="Mapas">
-    <Type Name="Mapa">
-      <Column Name="MapaId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="NoticiaId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="Morada" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
-      <Column Name="Mapa" Member="Map" Storage="_Mapa" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" CanBeNull="true" UpdateCheck="Never" />
-      <Association Name="Noticia_Mapa" Member="Noticia" ThisKey="NoticiaId" OtherKey="NoticiaId" Type="Noticia" IsForeignKey="true" />
+      <Association Name="Noticia_NoticiaFlagged" Member="Noticia" ThisKey="NoticiaId" OtherKey="NoticiaId" Type="Noticia" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
