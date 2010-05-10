@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="newzic" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="newzic" Class="NewzicDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=CHRISTOPHE-PC\SQLEXPRESS;Initial Catalog=newzic;Integrated Security=True" SettingsObjectName="Newzic.Data.Properties.Settings" SettingsPropertyName="newzicConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Noticia" Member="Noticias">
     <Type Name="Noticia">
