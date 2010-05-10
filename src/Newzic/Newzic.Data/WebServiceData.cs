@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Newzic.Data
 {
-    class WebServiceData
+    public class WebServiceData
     {
         public String login(String email, String password)
         {
@@ -13,11 +13,6 @@ namespace Newzic.Data
         }
 
         public void logout(Guid jornalistaID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void votarNoticia(Guid jornalistaID, Guid noticiaID)
         {
             throw new NotImplementedException();
         }

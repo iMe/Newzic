@@ -25,6 +25,7 @@ namespace Newzic.Data
 
         public void createNoticia(Noticia noticia)
         {
+            noticia.NoticiaId = Guid.NewGuid();
             db.Noticias.InsertOnSubmit(noticia);
         }
 
@@ -58,6 +59,11 @@ namespace Newzic.Data
             result.FlagCount++;
         }
 
+        public void votarNoticia(Guid jornalistaID, Guid noticiaID)
+        {
+            throw new NotImplementedException();
+        }
+
         //Metodos relativos as imagens de uma notícia
         public void createImagem(Imagem imagem)
         {
@@ -87,6 +93,11 @@ namespace Newzic.Data
         }
 
         public void updateMapa(Mapa mapa)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Noticia> searchNoticia(String query, int tipo)
         {
             throw new NotImplementedException();
         }
