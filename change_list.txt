@@ -1,1 +1,2 @@
 Alterar tipos do webservice - Falar com Ricardo
+Corrigir Esquema Relacional da BD(Ver folha impressa com correções a caneta) - Falar com Christophe
