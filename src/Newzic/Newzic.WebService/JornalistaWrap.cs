@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Newzic.Data;
 
 //{ }
-namespace Pericles.WebService
+namespace Newzic.WebService
 {
 
     public class JornalistaWrap

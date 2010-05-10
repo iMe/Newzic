@@ -6,7 +6,7 @@ using System.Web.Services;
 
 using Newzic.Data;
 using System.Collections;
-using Pericles.WebService;
+using Newzic.WebService;
 
 namespace Newzic.WebService
 {
