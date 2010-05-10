@@ -42,15 +42,51 @@ namespace Newzic.Data
 
         public void removeNoticia(Guid noticiaID)
         {
-            throw new NotImplementedException();
+            var result = db.Noticias.Single(id => id.NoticiaId == noticiaID);
+            result.Deleted = true;
         }
 
         public void markNoticia(Guid noticiaID)
         {
-            throw new NotImplementedException();
+            var result = db.Noticias.Single(id => id.NoticiaId == noticiaID);
+            result.Marked = true;
         }
 
         public void flagNoticia(Guid noticiaID)
+        {
+            var result = db.Noticias.Single(id => id.NoticiaId == noticiaID);
+            result.FlagCount++;
+        }
+
+        //Metodos relativos as imagens de uma notícia
+        public void createImagem(Imagem imagem)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void updateImagem(Imagem imagem)
+        {
+            throw new NotImplementedException();
+        }
+
+        //Metodos relativos aos videos de uma notícia
+        public void createVideo(Video video)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void updateVideo(Video video)
+        {
+            throw new NotImplementedException();
+        }
+
+        //Metodos relativos aos mapas de uma notícia
+        public void createMapa(Mapa mapa)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void updateMapa(Mapa mapa)
         {
             throw new NotImplementedException();
         }
