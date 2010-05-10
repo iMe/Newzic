@@ -4,18 +4,18 @@ using System.Collections.Generic;
 using Newzic.Data;
 
 //{ }
-namespace Pericles.WebService {
+namespace Newzic.WebService {
 
     public class NoticiaWrap {
 
         private Guid NoticiaId { get; set; }
-        private string Titulo { get; set; }
-        private string Corpo { get; set; }
-        private int Pontuacao { get; set; }
+        private String Titulo { get; set; }
+        private String Corpo { get; set; }
+        private Int32 Pontuacao { get; set; }
         private DateTime Data { get; set; }
-        private int FlagCount { get; set; }
-        private bool Deleted { get; set; }
-        private bool Marked { get; set; }
+        private Int32 FlagCount { get; set; }
+        private Boolean Deleted { get; set; }
+        private Boolean Marked { get; set; }
         private Guid JornalistaId { get; set; }
 
         public NoticiaWrap() {
