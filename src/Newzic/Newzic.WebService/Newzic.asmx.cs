@@ -142,13 +142,16 @@ namespace Newzic.WebService
         [WebMethod]
         public String login(String email, String password)
         {
-            throw new NoNullAllowedException();
+            WebServiceData data = new WebServiceData();
+            String token = data.login(email, password);
+            return token;
         }
 
         [WebMethod]
         public void logout(String token)
         {
-            throw new NotImplementedException();
+            WebServiceData data = new WebServiceData();
+            data.logout(token);
         }
     }
 }

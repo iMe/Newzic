@@ -12,7 +12,7 @@ namespace Newzic.Data
             throw new NotImplementedException();
         }
 
-        public void logout(Guid jornalistaID)
+        public void logout(String token)
         {
             throw new NotImplementedException();
         }
