@@ -42,5 +42,10 @@ namespace Newzic.Data
             throw new NotImplementedException();
         }
 
+        public void voteNoticia(Guid noticiaID, Guid JornalistaID)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
