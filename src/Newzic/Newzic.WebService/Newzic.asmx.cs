@@ -118,19 +118,114 @@ namespace Newzic.WebService
         [WebMethod]
         public void publicar(NoticiaWrap noticia, List<ImagemWrap> imagens, List<VideoWrap> videos, MapaWrap mapa, String token)
         {
-            throw new NotImplementedException();
+            NoticiaData data = new NoticiaData();
+            WebServiceData web = new WebServiceData();
+            if(!web.isLoged(token)) throw new ApplicationException("Utilizador desconhecido");
+            
+            Guid jorn = web.getUser(token);
+
+            Noticia ntc = new Noticia();
+            ntc.NoticiaId = noticia.NoticiaId;
+            ntc.Titulo = noticia.Titulo;
+            ntc.Corpo = noticia.Corpo;
+            ntc.Pontuacao = 0;
+            ntc.Data = DateTime.Now;
+            ntc.FlagCount = 0;
+            ntc.Deleted = false;
+            ntc.Marked = false;
+            ntc.JornalistaId = jorn;
+
+            Guid idN = data.createNoticia(ntc);
+
+            foreach (ImagemWrap imag in imagens)
+            {
+                Imagem i = new Imagem();
+                i.ImagemId = imag.ImagemId;
+                i.ImageFile = imag.ImageFile;
+                i.NoticiaId = idN;
+                data.createImagem(i);
+            }
+
+            foreach (VideoWrap vid in videos)
+            {
+                Video v = new Video();
+                v.VideoId = vid.VideoId;
+                v.NoticiaId = idN;
+                v.Url = vid.Url;
+                data.createVideo(v);
+            }
+
+            Mapa m = new Mapa();
+            m.MapaId = mapa.MapaId;
+            m.NoticiaId = idN;
+            m.Morada = mapa.Morada;
+            m.Longitude = mapa.Longitude;
+            m.Latidude = mapa.Latitude;
+            data.createMapa(m);
+            
+            data.Save();
+            //throw new NotImplementedException();
         }
 
         [WebMethod]
         public void editar(NoticiaWrap noticia, List<ImagemWrap> imagens, List<VideoWrap> videos, MapaWrap mapa, String token)
         {
-            throw new NotImplementedException();
+            NoticiaData data = new NoticiaData();
+            WebServiceData web = new WebServiceData();
+            if (!web.isLoged(token)) throw new ApplicationException("Utilizador desconhecido");
+
+            Guid jorn = web.getUser(token);
+
+            Noticia ntc = new Noticia();
+            ntc.NoticiaId = noticia.NoticiaId;
+            ntc.Titulo = noticia.Titulo;
+            ntc.Corpo = noticia.Corpo;
+            ntc.Pontuacao = 0;
+            ntc.Data = DateTime.Now;
+            ntc.FlagCount = 0;
+            ntc.Deleted = false;
+            ntc.Marked = false;
+            ntc.JornalistaId = jorn;
+
+            data.updateNoticia(ntc);
+
+            foreach (ImagemWrap imag in imagens)
+            {
+                Imagem i = new Imagem();
+                i.ImagemId = imag.ImagemId;
+                i.ImageFile = imag.ImageFile;
+                i.NoticiaId = ntc.NoticiaId;
+                data.updateImagem(i);
+            }
+
+            foreach (VideoWrap vid in videos)
+            {
+                Video v = new Video();
+                v.VideoId = vid.VideoId;
+                v.NoticiaId = ntc.NoticiaId;
+                v.Url = vid.Url;
+                data.updateVideo(v);
+            }
+
+            Mapa m = new Mapa();
+            m.MapaId = mapa.MapaId;
+            m.NoticiaId = ntc.NoticiaId;
+            m.Morada = mapa.Morada;
+            m.Longitude = mapa.Longitude;
+            m.Latidude = mapa.Latitude;
+            data.updateMapa(m);
+
+            data.Save();
         }
 
         [WebMethod]
         public void votar(Guid idNoticia, String token)
         {
-            throw new NotImplementedException();
+            NoticiaData data = new NoticiaData();
+            WebServiceData serv = new WebServiceData();
+            if(!serv.isLoged(token)) throw new ApplicationException("Utilizador desconhecido");
+            Guid idJornalista = serv.getUser(token);
+            data.votarNoticia(idJornalista,idNoticia);
         }
 
 

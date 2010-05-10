@@ -8,15 +8,15 @@ namespace Newzic.WebService {
 
     public class NoticiaWrap {
 
-        private Guid NoticiaId { get; set; }
-        private String Titulo { get; set; }
-        private String Corpo { get; set; }
-        private Int32 Pontuacao { get; set; }
-        private DateTime Data { get; set; }
-        private Int32 FlagCount { get; set; }
-        private Boolean Deleted { get; set; }
-        private Boolean Marked { get; set; }
-        private Guid JornalistaId { get; set; }
+        public Guid NoticiaId { get; set; }
+        public String Titulo { get; set; }
+        public String Corpo { get; set; }
+        public Int32 Pontuacao { get; set; }
+        public DateTime Data { get; set; }
+        public Int32 FlagCount { get; set; }
+        public Boolean Deleted { get; set; }
+        public Boolean Marked { get; set; }
+        public Guid JornalistaId { get; set; }
 
         public NoticiaWrap() {
             this.NoticiaId = Guid.Empty;

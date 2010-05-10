@@ -16,5 +16,15 @@ namespace Newzic.Data
         {
             throw new NotImplementedException();
         }
+
+        public Boolean isLoged(String token)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Guid getUser(String token)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

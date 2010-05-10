@@ -10,11 +10,11 @@ namespace Newzic.WebService
     public class MapaWrap
     {
 
-        private Guid MapaId { get; set; }
-        private Guid NoticiaId { get; set; }
-        private String Morada { get; set; }
-        private Double Longitude { get; set; }
-        private Double Latitude { get; set; }
+        public Guid MapaId { get; set; }
+        public Guid NoticiaId { get; set; }
+        public String Morada { get; set; }
+        public Double Longitude { get; set; }
+        public Double Latitude { get; set; }
 
         public MapaWrap()
         {

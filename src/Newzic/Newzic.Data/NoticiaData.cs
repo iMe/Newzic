@@ -23,10 +23,12 @@ namespace Newzic.Data
             return db.Noticias.ToList();
         }
 
-        public void createNoticia(Noticia noticia)
+        public Guid createNoticia(Noticia noticia)
         {
-            noticia.NoticiaId = Guid.NewGuid();
+            Guid idN = Guid.NewGuid();
+            noticia.NoticiaId = idN;
             db.Noticias.InsertOnSubmit(noticia);
+            return idN;
         }
 
         public void updateNoticia(Noticia noticia)
