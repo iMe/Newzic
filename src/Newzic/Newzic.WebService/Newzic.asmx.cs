@@ -38,28 +38,75 @@ namespace Newzic.WebService
             throw new NotImplementedException();
         }
 
+
+
         [WebMethod]
         public NoticiaWrap getNoticia(Guid idNoticia)
         {
-            throw new NotImplementedException();
+            NoticiaData data = new NoticiaData();
+            NoticiaWrap res = new NoticiaWrap(/*NoticiaData.*/data.fetchNoticia(idNoticia));
+            
+            return res;
         }
+
+
 
         [WebMethod]
         public List<ImagemWrap> getImagensOfNoticia(Guid idNoticia)
         {
-            throw new NotImplementedException();
+            NoticiaData data = new NoticiaData();
+            List<Imagem> aux = data.fetchNoticia(idNoticia).Imagems.ToList();
+            List<ImagemWrap> res = null;
+
+            foreach (Imagem elem in aux)
+            {
+                if (elem.NoticiaId==idNoticia)
+                {
+                    res.Add(new ImagemWrap(elem));
+                }
+            }
+
+            return res;
         }
+
+
 
         [WebMethod]
         public MapaWrap getMapOfNoticia(Guid idNoticia)
         {
-            throw new NotImplementedException();
+            NoticiaData data = new NoticiaData();
+            List<Mapa> aux = data.fetchNoticia(idNoticia).Mapas.ToList();
+            MapaWrap res = null;
+            
+            foreach (Mapa mapa in aux)
+            {
+                if (mapa.NoticiaId == idNoticia)
+                {
+                    res=new MapaWrap(mapa);
+                }
+            }
+            
+            return res;
         }
+
+
 
         [WebMethod]
         public List<VideoWrap> getVideosOfNoticia(Guid idNoticia)
         {
-            throw new NotImplementedException();
+            NoticiaData data = new NoticiaData();
+            List<Video> aux = data.fetchNoticia(idNoticia).Videos.ToList();
+            List<VideoWrap> res = null;
+
+            foreach (Video video in aux)
+            {
+                if (video.NoticiaId == idNoticia)
+                {
+                    res.Add(new VideoWrap(video));
+                }
+            }
+
+            return res;
         }
 
 

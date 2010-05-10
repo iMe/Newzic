@@ -5,21 +5,25 @@ using System.Text;
 
 namespace Newzic.Data
 {
-    class JornalistaData
+    public class JornalistaData
     {
+        NewzicDataContext db = new NewzicDataContext();
+
         public Jornalista fetchJornalista(Guid jornalistaID)
         {
-            throw new NotImplementedException();
+            return db.Jornalistas.Single(id => id.JornalistaId == jornalistaID);
         }
 
         public List<Jornalista> fetchJornalistas()
         {
-            throw new NotImplementedException();
+            var result = db.Jornalistas;
+            return result.ToList();
         }
 
         public void createJornalista(Jornalista jornalista)
         {
-            throw new NotImplementedException();
+            jornalista.JornalistaId = Guid.NewGuid();
+            db.Jornalistas.InsertOnSubmit(jornalista);
         }
 
         public void updateJornalista(Jornalista jornalista)
@@ -27,9 +31,5 @@ namespace Newzic.Data
             throw new NotImplementedException();
         }
 
-        public void removeJornalista(Guid jornalistaID)
-        {
-            throw new NotImplementedException();
-        }
-    }
+   }
 }
