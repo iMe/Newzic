@@ -59,12 +59,16 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImagemWrap.cs" />
+    <Compile Include="JornalistaWrap.cs" />
+    <Compile Include="MapaWrap.cs" />
     <Compile Include="NoticiaWrap.cs" />
     <Compile Include="Newzic.asmx.cs">
       <DependentUpon>Newzic.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VideoWrap.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
