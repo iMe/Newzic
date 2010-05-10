@@ -23,7 +23,7 @@ namespace Newzic.Data
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="newzic")]
-	public partial class DataClasses1DataContext : System.Data.Linq.DataContext
+	public partial class NewzicDataContext : System.Data.Linq.DataContext
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -71,31 +71,31 @@ namespace Newzic.Data
     partial void DeleteNoticiaFlagged(NoticiaFlagged instance);
     #endregion
 		
-		public DataClasses1DataContext() : 
+		public NewzicDataContext() : 
 				base(global::Newzic.Data.Properties.Settings.Default.newzicConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public DataClasses1DataContext(string connection) : 
+		public NewzicDataContext(string connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public DataClasses1DataContext(System.Data.IDbConnection connection) : 
+		public NewzicDataContext(System.Data.IDbConnection connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public DataClasses1DataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public NewzicDataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public DataClasses1DataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public NewzicDataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
