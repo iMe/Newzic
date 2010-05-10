@@ -1,2 +1,3 @@
-Alterar tipos do webservice - Falar com Ricardo
-Corrigir Esquema Relacional da BD(Ver folha impressa com correções a caneta) - Falar com Christophe
+1 - Alterar tipos do webservice e mudar metodos para começarem com maiscula - Falar com Ricardo
+
+2 - Corrigir Esquema Relacional da BD(Ver folha impressa com correções a caneta) - Falar com Christophe
