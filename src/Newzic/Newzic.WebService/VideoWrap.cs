@@ -10,9 +10,9 @@ namespace Newzic.WebService
     public class VideoWrap
     {
 
-        private Guid VideoId { get; set; }
-        private Guid NoticiaId { get; set; }
-        private String Url { get; set; }
+        public Guid VideoId { get; set; }
+        public Guid NoticiaId { get; set; }
+        public String Url { get; set; }
 
         public VideoWrap()
         {

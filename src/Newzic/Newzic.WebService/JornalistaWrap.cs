@@ -10,10 +10,10 @@ namespace Newzic.WebService
     public class JornalistaWrap
     {
 
-        private String Nome { get; set; }
-        private String Email { get; set; }
-        private String Password{ get; set; }
-        private Guid JornalistaId { get; set; }
+        public String Nome { get; set; }
+        public String Email { get; set; }
+        public String Password{ get; set; }
+        public Guid JornalistaId { get; set; }
 
         public JornalistaWrap()
         {

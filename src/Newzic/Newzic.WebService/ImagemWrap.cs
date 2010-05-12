@@ -8,9 +8,9 @@ namespace Newzic.WebService {
 
     public class ImagemWrap {
 
-        private Guid ImagemId { get; set; }
-        private Byte[] ImageFile { get; set; }
-        private Guid NoticiaId { get; set; }
+        public Guid ImagemId { get; set; }
+        public Byte[] ImageFile { get; set; }
+        public Guid NoticiaId { get; set; }
 
         public ImagemWrap() {
             this.ImagemId = Guid.Empty;
