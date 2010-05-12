@@ -34,5 +34,15 @@ namespace Newzic.Data
             voto.JornalistaId = jornalista.JornalistaId;
             this.VotoNoticias.Add(voto);
         }
+
+        public void addTag(String tag)
+        {
+            Enumerable.Concat(this.Tags, tag);
+        }
+
+        public void removeTag(String tag)
+        {
+            this.Tags.Replace(tag, "").Replace("  ", " ");
+        }
     }
 }

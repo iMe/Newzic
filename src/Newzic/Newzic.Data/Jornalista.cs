@@ -12,12 +12,24 @@ namespace Newzic.Data
 
         public void Ban()
         {
-            throw new NotImplementedException();
+            var banido = new Banido();
+            banido.BanidoId = Guid.NewGuid();
+            banido.Permanente = true;
+            banido.Jornalista = this;
+            banido.JornalistaId = this.JornalistaId;
+            this.Banidos.Add(banido);
         }
 
         public void Ban(DateTime dataFim)
         {
-            throw new NotImplementedException();
+            var banido = new Banido();
+            banido.BanidoId = Guid.NewGuid();
+            banido.Permanente = false;
+            banido.Jornalista = this;
+            banido.JornalistaId = this.JornalistaId;
+            banido.DataFim = dataFim;
+            this.Banidos.Add(banido);
+            
         }
     }
 }
