@@ -6,6 +6,11 @@
         {
             moderador.Ban();
         }
+
+        public void demoteModerador(Moderador moderador)
+        {
+            db.GetTable<Moderador>().DeleteOnSubmit(moderador);
+        }
     }
     
 }

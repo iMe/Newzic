@@ -59,6 +59,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Administrador.cs" />
+    <Compile Include="AdministradorData.cs" />
     <Compile Include="DataCRUD.cs" />
     <Compile Include="DeletedEntityException.cs" />
     <Compile Include="Jornalista.cs" />
