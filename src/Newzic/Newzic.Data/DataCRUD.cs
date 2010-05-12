@@ -13,10 +13,11 @@ namespace Newzic.Data
             db.Dispose();
         }
 
-        public virtual void create(T entity)
+        public virtual Guid create(T entity)
         {
             entity.Id = Guid.NewGuid();
             db.GetTable<T>().InsertOnSubmit(entity);
+            return entity.Id;
         }
 
         public virtual void update(T entity)

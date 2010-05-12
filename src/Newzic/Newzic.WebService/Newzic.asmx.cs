@@ -135,7 +135,7 @@ namespace Newzic.WebService
             ntc.Marked = false;
             ntc.JornalistaId = jorn;
 
-            Guid idN = data.createNoticia(ntc);
+            Guid idN = data.create(ntc);
 
             foreach (ImagemWrap imag in imagens)
             {
@@ -187,7 +187,7 @@ namespace Newzic.WebService
             ntc.Marked = false;
             ntc.JornalistaId = jorn;
 
-            data.updateNoticia(ntc);
+            data.update(ntc);
 
             foreach (ImagemWrap imag in imagens)
             {

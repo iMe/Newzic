@@ -7,29 +7,9 @@ namespace Newzic.Data
 {
     public class JornalistaData : DataCRUD<Jornalista>
     {
-        NewzicDataContext db = new NewzicDataContext();
-
-        public Jornalista fetchJornalista(Guid jornalistaID)
+        public override void remove(Jornalista entity)
         {
-            return db.Jornalistas.Single(id => id.JornalistaId == jornalistaID);
+            entity.Ban();
         }
-
-        public List<Jornalista> fetchJornalistas()
-        {
-            var result = db.Jornalistas;
-            return result.ToList();
-        }
-
-        public void createJornalista(Jornalista jornalista)
-        {
-            jornalista.JornalistaId = Guid.NewGuid();
-            db.Jornalistas.InsertOnSubmit(jornalista);
-        }
-
-        public void updateJornalista(Jornalista jornalista)
-        {
-            throw new NotImplementedException();
-        }
-
-   }
+    }
 }

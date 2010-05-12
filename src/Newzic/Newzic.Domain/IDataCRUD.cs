@@ -5,7 +5,7 @@ namespace Newzic.Data
 {
     public interface IDataCRUD<T> : IDisposable where T : class, IEntity
     {
-        void create(T entity);
+        Guid create(T entity);
         void update(T entity);
         void remove(T entity);
         void Save();

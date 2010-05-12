@@ -9,5 +9,15 @@ namespace Newzic.Data
             get { return JornalistaId; }
             set { JornalistaId = value; }
         }
+
+        public void Ban()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Ban(DateTime dataFim)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
