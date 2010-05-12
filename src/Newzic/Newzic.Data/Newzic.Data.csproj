@@ -63,6 +63,8 @@
     <Compile Include="DeletedEntityException.cs" />
     <Compile Include="Jornalista.cs" />
     <Compile Include="JornalistaData.cs" />
+    <Compile Include="Moderador.cs" />
+    <Compile Include="ModeradorData.cs" />
     <Compile Include="Noticia.cs" />
     <Compile Include="NoticiaData.cs" />
     <Compile Include="Newzic.designer.cs">

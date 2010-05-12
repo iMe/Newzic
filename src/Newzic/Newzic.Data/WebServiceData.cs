@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Newzic.Data
 {
-    public class WebServiceData
+    public class WebServiceData : IWebServiceData
     {
         public String login(String email, String password)
         {
