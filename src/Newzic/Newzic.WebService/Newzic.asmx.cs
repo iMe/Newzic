@@ -25,10 +25,43 @@ namespace Newzic.WebService
         // { }
         //-------------- Metodos do Leitor -------------------
         //
+        private const Int32 Titulo = 0;
+        private const Int32 Autor = 1;
+        private const Int32 Tags = 2;
+        private const Int32 Conteudo = 3;
+
         [WebMethod]
-        public List<NoticiaWrap> searchNoticia(String query, String type) 
+        public List<NoticiaWrap> searchNoticia(String query, Int32 type) 
         {
-            throw new NotImplementedException();
+            IDataCRUD<Noticia> data = new DataCRUD<Noticia>();
+            var ns = data.fetchAll();
+            List<Noticia> result = new List<Noticia>();// = new IQueryable<Noticia>();
+            switch (type)
+            {
+                case Titulo:
+                    result = (from n in ns where n.Titulo.Contains(query) select n).ToList();
+                    break;
+                case Autor:
+                    result = (from n in ns where n.Jornalista.Nome.Contains(query) select n).ToList();
+                    break;
+                case Tags:
+                    result = (from n in ns where n.Tags.Contains(query) select n).ToList();
+                    break;
+                case Conteudo:
+                    result = (from n in ns where n.Corpo.Contains(query) select n).ToList();
+                    break;
+                default:
+                    //result = ns;
+                    throw new ApplicationException("Tipo de pesquisa desconhecido");
+            }
+
+            List<NoticiaWrap> res = new List<NoticiaWrap>();
+            foreach (Noticia n in result)
+            {
+                res.Add(new NoticiaWrap(n));
+            }
+
+            return res;
         }
 
 
@@ -114,7 +147,7 @@ namespace Newzic.WebService
             IWebServiceData web = new WebServiceData();
             if(!web.isLoged(token)) throw new ApplicationException("Utilizador desconhecido");
             
-            Guid jorn = web.getUser(token);
+            Jornalista jorn = web.getUser(token);
 
             Noticia ntc = new Noticia();
             ntc.NoticiaId = noticia.NoticiaId;
@@ -125,7 +158,8 @@ namespace Newzic.WebService
             ntc.FlagCount = 0;
             ntc.Deleted = false;
             ntc.Marked = false;
-            ntc.JornalistaId = jorn;
+            ntc.JornalistaId = jorn.JornalistaId;
+            ntc.Tags = noticia.Tags;
 
             Guid idN = data.create(ntc);
 
@@ -166,7 +200,7 @@ namespace Newzic.WebService
             IWebServiceData web = new WebServiceData();
             if (!web.isLoged(token)) throw new ApplicationException("Utilizador desconhecido");
 
-            Guid jorn = web.getUser(token);
+            Jornalista jorn = web.getUser(token);
 
             Noticia ntc = new Noticia();
             ntc.NoticiaId = noticia.NoticiaId;
@@ -177,7 +211,8 @@ namespace Newzic.WebService
             ntc.FlagCount = 0;
             ntc.Deleted = false;
             ntc.Marked = false;
-            ntc.JornalistaId = jorn;
+            ntc.JornalistaId = jorn.JornalistaId;
+            ntc.Tags = noticia.Tags;
 
             ntc.Imagems.Clear();
             ntc.Videos.Clear();
@@ -217,11 +252,17 @@ namespace Newzic.WebService
         [WebMethod]
         public void votar(Guid idNoticia, String token)
         {
-            NoticiaData data = new NoticiaData();
-            WebServiceData serv = new WebServiceData();
-            if(!serv.isLoged(token)) throw new ApplicationException("Utilizador desconhecido");
-            Guid idJornalista = serv.getUser(token);
-            data.votarNoticia(idJornalista,idNoticia);
+            IDataCRUD<Noticia> data = new NoticiaData();
+            IWebServiceData serv = new WebServiceData();
+            Jornalista j = serv.getUser(token);
+
+            Noticia noticia = data.fetch(idNoticia);
+            noticia.votarNoticia(j);
+            data.Save();
+
+            //if(!serv.isLoged(token)) throw new ApplicationException("Utilizador desconhecido");
+            //Guid idJornalista = serv.getUser(token);
+            //data.votarNoticia(idJornalista,idNoticia);
         }
 
 
@@ -235,6 +276,7 @@ namespace Newzic.WebService
         {
             IWebServiceData data = new WebServiceData();
             String token = data.login(email, password);
+            data.Save();
             return token;
         }
 
@@ -243,6 +285,7 @@ namespace Newzic.WebService
         {
             IWebServiceData data = new WebServiceData();
             data.logout(token);
+            data.Save();
         }
     }
 }

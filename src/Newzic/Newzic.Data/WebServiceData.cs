@@ -22,7 +22,12 @@ namespace Newzic.Data
             throw new NotImplementedException();
         }
 
-        public Guid getUser(String token)
+        public Jornalista getUser(String token)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Save()
         {
             throw new NotImplementedException();
         }
