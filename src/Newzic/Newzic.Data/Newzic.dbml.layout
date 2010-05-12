@@ -125,7 +125,7 @@
         <elementListCompartment Id="e75363fd-3a93-4c1f-a0e9-ea44cc94e83c" absoluteBounds="9.515, 8.96, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(6.375 : 6.46519903320312); (9.01041666666667 : 6.46519903320312 : JumpStart); (9.17708333333333 : 6.46519903320312 : JumpEnd); (10.5 : 6.46519903320312); (10.5 : 8.5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(6.375 : 6.46519903320312); (10.5 : 6.46519903320312); (10.5 : 8.5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/NewzicDataContext/Jornalista/Jornalista_Queixa" />
       <nodes>
         <classShapeMoniker Id="b82d778e-71e3-4f3d-85c1-a8b90c651c4d" />

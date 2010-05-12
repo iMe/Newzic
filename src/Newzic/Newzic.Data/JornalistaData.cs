@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Newzic.Data
 {
-    public class JornalistaData
+    public class JornalistaData : DataCRUD<Jornalista>
     {
         NewzicDataContext db = new NewzicDataContext();
 

@@ -61,11 +61,11 @@ namespace Newzic.Data.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A Noticia que procura já não se encontra presente no sistema..
+        ///   Looks up a localized string similar to A Entidade que procura já não se encontra presente no sistema..
         /// </summary>
-        internal static string DeletedNoticiaException {
+        internal static string DeletedEntityException {
             get {
-                return ResourceManager.GetString("DeletedNoticiaException", resourceCulture);
+                return ResourceManager.GetString("DeletedEntityException", resourceCulture);
             }
         }
     }

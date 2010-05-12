@@ -44,7 +44,7 @@ namespace Newzic.WebService
         public NoticiaWrap getNoticia(Guid idNoticia)
         {
             NoticiaData data = new NoticiaData();
-            NoticiaWrap res = new NoticiaWrap(/*NoticiaData.*/data.fetchNoticia(idNoticia));
+            NoticiaWrap res = new NoticiaWrap(/*NoticiaData.*/data.fetch(idNoticia));
             
             return res;
         }
@@ -55,7 +55,7 @@ namespace Newzic.WebService
         public List<ImagemWrap> getImagensOfNoticia(Guid idNoticia)
         {
             NoticiaData data = new NoticiaData();
-            List<Imagem> aux = data.fetchNoticia(idNoticia).Imagems.ToList();
+            List<Imagem> aux = data.fetch(idNoticia).Imagems.ToList();
             List<ImagemWrap> res = null;
 
             foreach (Imagem elem in aux)
@@ -75,7 +75,7 @@ namespace Newzic.WebService
         public MapaWrap getMapOfNoticia(Guid idNoticia)
         {
             NoticiaData data = new NoticiaData();
-            List<Mapa> aux = data.fetchNoticia(idNoticia).Mapas.ToList();
+            List<Mapa> aux = data.fetch(idNoticia).Mapas.ToList();
             MapaWrap res = null;
             
             foreach (Mapa mapa in aux)
@@ -95,7 +95,7 @@ namespace Newzic.WebService
         public List<VideoWrap> getVideosOfNoticia(Guid idNoticia)
         {
             NoticiaData data = new NoticiaData();
-            List<Video> aux = data.fetchNoticia(idNoticia).Videos.ToList();
+            List<Video> aux = data.fetch(idNoticia).Videos.ToList();
             List<VideoWrap> res = null;
 
             foreach (Video video in aux)

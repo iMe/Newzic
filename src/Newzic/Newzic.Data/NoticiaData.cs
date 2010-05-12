@@ -6,45 +6,25 @@ using Newzic.Data;
 
 namespace Newzic.Data
 {
-    public class NoticiaData
+    public class NoticiaData : DataCRUD<Noticia>
     {
+        //Os datacontext tem de ser descartaveis...
+        //O que leva a que sempre que na camada de apresentação se recorrer a camada de dados deve-se usar com using...
 
-        NewzicDataContext db = new NewzicDataContext();
-        
-        public Noticia fetchNoticia(Guid noticiaID)
-        {
-            var result = db.Noticias.Single(id => id.NoticiaId == noticiaID);
-            if (result.Deleted) throw new DeletedNoticiaException();
-            return result;
-        }
 
-        public List<Noticia> fetchNoticias()
-        {
-            return db.Noticias.ToList();
-        }
+        // Update pode ficar vazio... 
 
-        public void createNoticia(Noticia noticia)
+        public override Noticia fetch(Guid id)
         {
-            noticia.NoticiaId = Guid.NewGuid();
-            db.Noticias.InsertOnSubmit(noticia);
-        }
-
-        public void updateNoticia(Noticia noticia)
-        {
-            var result = db.Noticias.Single(id => id.NoticiaId == noticia.NoticiaId);
-            result.Titulo = noticia.Titulo;
-            result.Data = noticia.Data;
-            result.Corpo = noticia.Corpo;
-            result.Imagems = noticia.Imagems;
-            result.Mapas = noticia.Mapas;
-            result.Videos = noticia.Videos;
-            result.Marked = false;
-        }
-
-        public void removeNoticia(Guid noticiaID)
-        {
-            var result = db.Noticias.Single(id => id.NoticiaId == noticiaID);
-            result.Deleted = true;
+            var f = base.fetch(id);
+            if(f.Deleted)
+            {
+                throw new DeletedEntityException();
+            }
+            else
+            {
+                return f;
+            }
         }
 
         public void markNoticia(Guid noticiaID)
@@ -101,11 +81,5 @@ namespace Newzic.Data
         {
             throw new NotImplementedException();
         }
-
-        public void Save()
-        {
-            db.SubmitChanges();
-        }
-
     }
 }

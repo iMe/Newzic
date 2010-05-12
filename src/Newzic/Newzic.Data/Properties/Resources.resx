@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DeletedNoticiaException" xml:space="preserve">
-    <value>A Noticia que procura já não se encontra presente no sistema.</value>
+  <data name="DeletedEntityException" xml:space="preserve">
+    <value>A Entidade que procura já não se encontra presente no sistema.</value>
   </data>
 </root>
