@@ -44,6 +44,7 @@
     <Compile Include="IDataCRUD.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="ISoftDelete.cs" />
+    <Compile Include="IWebServiceData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -21,13 +21,6 @@ namespace Newzic.WebService
     // [System.Web.Script.Services.ScriptService]
     public class Newzic : System.Web.Services.WebService
     {
-        /*
-        [WebMethod]
-        public string HelloWorld()
-        {
-            return "Hello World";
-        }
-        */
 
         // { }
         //-------------- Metodos do Leitor -------------------
@@ -43,8 +36,8 @@ namespace Newzic.WebService
         [WebMethod]
         public NoticiaWrap getNoticia(Guid idNoticia)
         {
-            NoticiaData data = new NoticiaData();
-            NoticiaWrap res = new NoticiaWrap(/*NoticiaData.*/data.fetch(idNoticia));
+            IDataCRUD<Noticia> data = new NoticiaData();
+            NoticiaWrap res = new NoticiaWrap(data.fetch(idNoticia));
             
             return res;
         }
@@ -54,16 +47,15 @@ namespace Newzic.WebService
         [WebMethod]
         public List<ImagemWrap> getImagensOfNoticia(Guid idNoticia)
         {
-            NoticiaData data = new NoticiaData();
+            IDataCRUD<Noticia> data = new NoticiaData();
             List<Imagem> aux = data.fetch(idNoticia).Imagems.ToList();
-            List<ImagemWrap> res = null;
-
+            List<ImagemWrap> res = new List<ImagemWrap>();
             foreach (Imagem elem in aux)
             {
-                if (elem.NoticiaId==idNoticia)
-                {
+                //if (elem.NoticiaId==idNoticia)
+                //{
                     res.Add(new ImagemWrap(elem));
-                }
+                //}
             }
 
             return res;
@@ -80,10 +72,10 @@ namespace Newzic.WebService
             
             foreach (Mapa mapa in aux)
             {
-                if (mapa.NoticiaId == idNoticia)
-                {
+                //if (mapa.NoticiaId == idNoticia)
+                //{
                     res=new MapaWrap(mapa);
-                }
+                //}
             }
             
             return res;
@@ -94,16 +86,16 @@ namespace Newzic.WebService
         [WebMethod]
         public List<VideoWrap> getVideosOfNoticia(Guid idNoticia)
         {
-            NoticiaData data = new NoticiaData();
+            IDataCRUD<Noticia> data = new NoticiaData();
             List<Video> aux = data.fetch(idNoticia).Videos.ToList();
-            List<VideoWrap> res = null;
+            List<VideoWrap> res = new List<VideoWrap>();
 
             foreach (Video video in aux)
             {
-                if (video.NoticiaId == idNoticia)
-                {
+                //if (video.NoticiaId == idNoticia)
+                //{
                     res.Add(new VideoWrap(video));
-                }
+                //}
             }
 
             return res;
@@ -118,8 +110,8 @@ namespace Newzic.WebService
         [WebMethod]
         public void publicar(NoticiaWrap noticia, List<ImagemWrap> imagens, List<VideoWrap> videos, MapaWrap mapa, String token)
         {
-            NoticiaData data = new NoticiaData();
-            WebServiceData web = new WebServiceData();
+            IDataCRUD<Noticia> data = new NoticiaData();
+            IWebServiceData web = new WebServiceData();
             if(!web.isLoged(token)) throw new ApplicationException("Utilizador desconhecido");
             
             Guid jorn = web.getUser(token);
@@ -143,7 +135,7 @@ namespace Newzic.WebService
                 i.ImagemId = imag.ImagemId;
                 i.ImageFile = imag.ImageFile;
                 i.NoticiaId = idN;
-                data.createImagem(i);
+                ntc.Imagems.Add(i);
             }
 
             foreach (VideoWrap vid in videos)
@@ -152,7 +144,7 @@ namespace Newzic.WebService
                 v.VideoId = vid.VideoId;
                 v.NoticiaId = idN;
                 v.Url = vid.Url;
-                data.createVideo(v);
+                ntc.Videos.Add(v);
             }
 
             Mapa m = new Mapa();
@@ -161,7 +153,7 @@ namespace Newzic.WebService
             m.Morada = mapa.Morada;
             m.Longitude = mapa.Longitude;
             m.Latidude = mapa.Latitude;
-            data.createMapa(m);
+            ntc.Mapas.Add(m);
             
             data.Save();
             //throw new NotImplementedException();
@@ -170,8 +162,8 @@ namespace Newzic.WebService
         [WebMethod]
         public void editar(NoticiaWrap noticia, List<ImagemWrap> imagens, List<VideoWrap> videos, MapaWrap mapa, String token)
         {
-            NoticiaData data = new NoticiaData();
-            WebServiceData web = new WebServiceData();
+            IDataCRUD<Noticia> data = new NoticiaData();
+            IWebServiceData web = new WebServiceData();
             if (!web.isLoged(token)) throw new ApplicationException("Utilizador desconhecido");
 
             Guid jorn = web.getUser(token);
@@ -187,6 +179,10 @@ namespace Newzic.WebService
             ntc.Marked = false;
             ntc.JornalistaId = jorn;
 
+            ntc.Imagems.Clear();
+            ntc.Videos.Clear();
+            ntc.Mapas.Clear();
+
             data.update(ntc);
 
             foreach (ImagemWrap imag in imagens)
@@ -195,7 +191,7 @@ namespace Newzic.WebService
                 i.ImagemId = imag.ImagemId;
                 i.ImageFile = imag.ImageFile;
                 i.NoticiaId = ntc.NoticiaId;
-                data.updateImagem(i);
+                ntc.Imagems.Add(i);
             }
 
             foreach (VideoWrap vid in videos)
@@ -204,7 +200,7 @@ namespace Newzic.WebService
                 v.VideoId = vid.VideoId;
                 v.NoticiaId = ntc.NoticiaId;
                 v.Url = vid.Url;
-                data.updateVideo(v);
+                ntc.Videos.Add(v);
             }
 
             Mapa m = new Mapa();
@@ -213,7 +209,7 @@ namespace Newzic.WebService
             m.Morada = mapa.Morada;
             m.Longitude = mapa.Longitude;
             m.Latidude = mapa.Latitude;
-            data.updateMapa(m);
+            ntc.Mapas.Add(m);
 
             data.Save();
         }
@@ -237,7 +233,7 @@ namespace Newzic.WebService
         [WebMethod]
         public String login(String email, String password)
         {
-            WebServiceData data = new WebServiceData();
+            IWebServiceData data = new WebServiceData();
             String token = data.login(email, password);
             return token;
         }
@@ -245,7 +241,7 @@ namespace Newzic.WebService
         [WebMethod]
         public void logout(String token)
         {
-            WebServiceData data = new WebServiceData();
+            IWebServiceData data = new WebServiceData();
             data.logout(token);
         }
     }
