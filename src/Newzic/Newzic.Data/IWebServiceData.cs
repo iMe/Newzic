@@ -7,6 +7,7 @@ namespace Newzic.Data
         String login(String email, String password);
         void logout(String token);
         Boolean isLoged(String token);
-        Guid getUser(String token);
+        Jornalista getUser(String token);
+        void Save();
     }
 }
