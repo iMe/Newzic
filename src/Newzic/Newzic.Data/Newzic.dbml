@@ -30,8 +30,8 @@
       <Association Name="Jornalista_Banido" Member="Banidos" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Banido" />
       <Association Name="Jornalista_VotoNoticia" Member="VotoNoticias" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="VotoNoticia" />
       <Association Name="Jornalista_Noticia" Member="Noticias" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Noticia" />
-      <Association Name="Jornalista_Sessao" Member="Sessao" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Sessao" Cardinality="One" />
       <Association Name="Jornalista_Queixa" Member="Queixas" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Queixa" />
+      <Association Name="Jornalista_Sessao" Member="Sessao" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Sessao" Cardinality="One" />
     </Type>
   </Table>
   <Table Name="dbo.Video" Member="Videos">
@@ -109,14 +109,6 @@
       <Association Name="Jornalista_Noticia" Member="Jornalista" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Jornalista" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Sessao" Member="Sessaos">
-    <Type Name="Sessao">
-      <Column Name="Token" Type="System.String" DbType="VarChar(128) NOT NULL" CanBeNull="false" />
-      <Column Name="Timestamp" Type="System.Data.Linq.Binary" DbType="rowversion NOT NULL" CanBeNull="false" IsVersion="true" />
-      <Column Name="JornalistaId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Association Name="Jornalista_Sessao" Member="Jornalista" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Jornalista" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Queixa" Member="Queixas">
     <Type Name="Queixa">
       <Column Name="QueixaId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -126,6 +118,14 @@
       <Column Name="Resolved" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="Assunto" Type="System.String" DbType="VarChar(64) NOT NULL" CanBeNull="false" />
       <Association Name="Jornalista_Queixa" Member="Jornalista" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Jornalista" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Sessao" Member="Sessaos">
+    <Type Name="Sessao">
+      <Column Name="Token" Type="System.String" DbType="VarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="Timestamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="JornalistaId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Jornalista_Sessao" Member="Jornalista" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Jornalista" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

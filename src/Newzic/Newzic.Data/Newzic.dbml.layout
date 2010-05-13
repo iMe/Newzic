@@ -65,7 +65,7 @@
         <elementListCompartment Id="ec695a11-60fe-481e-9f29-46b7c2d815c8" absoluteBounds="1.0149999999999997, 3.835, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(4.53125 : 5.25); (4.53125 : 4.82619466145833); (3 : 4.82619466145833)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(4.84375 : 5.25); (4.84375 : 4.51369466145833); (3 : 4.51369466145833)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/NewzicDataContext/Jornalista/Jornalista_Banido" />
       <nodes>
         <classShapeMoniker Id="b82d778e-71e3-4f3d-85c1-a8b90c651c4d" />
@@ -152,19 +152,6 @@
         <classShapeMoniker Id="f808d6c3-6cb2-4c4c-91fd-792eb1fcd01f" />
       </nodes>
     </associationConnector>
-    <classShape Id="1b6bdaf6-8008-4c1e-a0a6-c6d1c2c915dc" absoluteBounds="4.75, 3.25, 2, 1.3862939453125">
-      <DataClassMoniker Name="/NewzicDataContext/Sessao" />
-      <nestedChildShapes>
-        <elementListCompartment Id="d75ee241-a655-4f77-b88e-c78907bd846a" absoluteBounds="4.765, 3.71, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <associationConnector edgePoints="[(5.5625 : 5.25); (5.5625 : 4.6362939453125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/NewzicDataContext/Jornalista/Jornalista_Sessao" />
-      <nodes>
-        <classShapeMoniker Id="b82d778e-71e3-4f3d-85c1-a8b90c651c4d" />
-        <classShapeMoniker Id="1b6bdaf6-8008-4c1e-a0a6-c6d1c2c915dc" />
-      </nodes>
-    </associationConnector>
     <classShape Id="b9366c51-ba9f-4efa-9b25-2fb8a7445b15" absoluteBounds="10, 6.875, 2, 1.9631982421875">
       <DataClassMoniker Name="/NewzicDataContext/Queixa" />
       <nestedChildShapes>
@@ -176,6 +163,19 @@
       <nodes>
         <classShapeMoniker Id="b82d778e-71e3-4f3d-85c1-a8b90c651c4d" />
         <classShapeMoniker Id="b9366c51-ba9f-4efa-9b25-2fb8a7445b15" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="6de5be74-8b57-45b6-8241-c229dd2b983b" absoluteBounds="5.375, 2.625, 2, 1.3862939453125">
+      <DataClassMoniker Name="/NewzicDataContext/Sessao" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ab2843d1-52ca-44c4-b684-26466d1cc0db" absoluteBounds="5.39, 3.085, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.875 : 5.25); (5.875 : 4.0112939453125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/NewzicDataContext/Jornalista/Jornalista_Sessao" />
+      <nodes>
+        <classShapeMoniker Id="b82d778e-71e3-4f3d-85c1-a8b90c651c4d" />
+        <classShapeMoniker Id="6de5be74-8b57-45b6-8241-c229dd2b983b" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>
