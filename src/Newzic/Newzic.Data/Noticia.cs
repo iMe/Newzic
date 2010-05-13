@@ -37,7 +37,7 @@ namespace Newzic.Data
 
         public void addTag(String tag)
         {
-            Enumerable.Concat(this.Tags, tag);
+            Enumerable.Concat(this.Tags, " " + tag);
         }
 
         public void removeTag(String tag)
