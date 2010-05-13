@@ -28,9 +28,9 @@
       <Association Name="Jornalista_Administrador" Member="Administrador" ThisKey="JornalistaId" OtherKey="AdministradorId" Type="Administrador" Cardinality="One" />
       <Association Name="Jornalista_Moderador" Member="Moderador" ThisKey="JornalistaId" OtherKey="ModeradorId" Type="Moderador" Cardinality="One" />
       <Association Name="Jornalista_Banido" Member="Banidos" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Banido" />
-      <Association Name="Jornalista_Queixa" Member="Queixas" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Queixa" />
       <Association Name="Jornalista_VotoNoticia" Member="VotoNoticias" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="VotoNoticia" />
       <Association Name="Jornalista_Noticia" Member="Noticias" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Noticia" />
+      <Association Name="Jornalista_Queixa" Member="Queixas" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Queixa" />
       <Association Name="Jornalista_Sessao" Member="Sessao" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Sessao" Cardinality="One" />
     </Type>
   </Table>
@@ -61,16 +61,6 @@
       <Column Name="DataFim" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="Permanente" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Association Name="Jornalista_Banido" Member="Jornalista" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Jornalista" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Queixas" Member="Queixas">
-    <Type Name="Queixa">
-      <Column Name="QueixaId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="JornalistaId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="AcusadoId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="Texto" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
-      <Column Name="Resolved" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="Jornalista_Queixa" Member="Jornalista" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Jornalista" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.VotoNoticia" Member="VotoNoticias">
@@ -119,10 +109,21 @@
       <Association Name="Jornalista_Noticia" Member="Jornalista" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Jornalista" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.Queixa" Member="Queixas">
+    <Type Name="Queixa">
+      <Column Name="QueixaId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="JornalistaId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="AcusadoId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Texto" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="Resolved" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Assunto" Type="System.String" DbType="VarChar(64) NOT NULL" CanBeNull="false" />
+      <Association Name="Jornalista_Queixa" Member="Jornalista" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Jornalista" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.Sessao" Member="Sessaos">
     <Type Name="Sessao">
       <Column Name="Token" Type="System.String" DbType="VarChar(128) NOT NULL" CanBeNull="false" />
-      <Column Name="Timestamp" Type="System.Data.Linq.Binary" DbType="rowversion NOT NULL" CanBeNull="false" IsVersion="true" />
+      <Column Name="Timestamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="JornalistaId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Association Name="Jornalista_Sessao" Member="Jornalista" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Jornalista" IsForeignKey="true" />
     </Type>
