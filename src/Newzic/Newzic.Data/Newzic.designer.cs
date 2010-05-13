@@ -54,9 +54,6 @@ namespace Newzic.Core
     partial void InsertVotoNoticia(VotoNoticia instance);
     partial void UpdateVotoNoticia(VotoNoticia instance);
     partial void DeleteVotoNoticia(VotoNoticia instance);
-    partial void InsertMapa(Mapa instance);
-    partial void UpdateMapa(Mapa instance);
-    partial void DeleteMapa(Mapa instance);
     partial void InsertNoticiaFlagged(NoticiaFlagged instance);
     partial void UpdateNoticiaFlagged(NoticiaFlagged instance);
     partial void DeleteNoticiaFlagged(NoticiaFlagged instance);
@@ -72,6 +69,9 @@ namespace Newzic.Core
     partial void InsertTour(Tour instance);
     partial void UpdateTour(Tour instance);
     partial void DeleteTour(Tour instance);
+    partial void InsertMapa(Mapa instance);
+    partial void UpdateMapa(Mapa instance);
+    partial void DeleteMapa(Mapa instance);
     #endregion
 		
 		public NewzicDataContext() : 
@@ -168,14 +168,6 @@ namespace Newzic.Core
 			}
 		}
 		
-		public System.Data.Linq.Table<Mapa> Mapas
-		{
-			get
-			{
-				return this.GetTable<Mapa>();
-			}
-		}
-		
 		public System.Data.Linq.Table<NoticiaFlagged> NoticiaFlaggeds
 		{
 			get
@@ -213,6 +205,14 @@ namespace Newzic.Core
 			get
 			{
 				return this.GetTable<Tour>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Mapa> Mapas
+		{
+			get
+			{
+				return this.GetTable<Mapa>();
 			}
 		}
 	}
@@ -1654,233 +1654,6 @@ namespace Newzic.Core
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Mapa")]
-	public partial class Mapa : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _MapaId;
-		
-		private System.Guid _NoticiaId;
-		
-		private string _Morada;
-		
-		private double _Longitude;
-		
-		private double _Latidude;
-		
-		private EntitySet<Tour> _Tours;
-		
-		private EntityRef<Noticia> _Noticia;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnMapaIdChanging(System.Guid value);
-    partial void OnMapaIdChanged();
-    partial void OnNoticiaIdChanging(System.Guid value);
-    partial void OnNoticiaIdChanged();
-    partial void OnMoradaChanging(string value);
-    partial void OnMoradaChanged();
-    partial void OnLongitudeChanging(double value);
-    partial void OnLongitudeChanged();
-    partial void OnLatidudeChanging(double value);
-    partial void OnLatidudeChanged();
-    #endregion
-		
-		public Mapa()
-		{
-			this._Tours = new EntitySet<Tour>(new Action<Tour>(this.attach_Tours), new Action<Tour>(this.detach_Tours));
-			this._Noticia = default(EntityRef<Noticia>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MapaId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid MapaId
-		{
-			get
-			{
-				return this._MapaId;
-			}
-			set
-			{
-				if ((this._MapaId != value))
-				{
-					this.OnMapaIdChanging(value);
-					this.SendPropertyChanging();
-					this._MapaId = value;
-					this.SendPropertyChanged("MapaId");
-					this.OnMapaIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NoticiaId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid NoticiaId
-		{
-			get
-			{
-				return this._NoticiaId;
-			}
-			set
-			{
-				if ((this._NoticiaId != value))
-				{
-					if (this._Noticia.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnNoticiaIdChanging(value);
-					this.SendPropertyChanging();
-					this._NoticiaId = value;
-					this.SendPropertyChanged("NoticiaId");
-					this.OnNoticiaIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Morada", DbType="VarChar(256)")]
-		public string Morada
-		{
-			get
-			{
-				return this._Morada;
-			}
-			set
-			{
-				if ((this._Morada != value))
-				{
-					this.OnMoradaChanging(value);
-					this.SendPropertyChanging();
-					this._Morada = value;
-					this.SendPropertyChanged("Morada");
-					this.OnMoradaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Longitude", DbType="Float NOT NULL")]
-		public double Longitude
-		{
-			get
-			{
-				return this._Longitude;
-			}
-			set
-			{
-				if ((this._Longitude != value))
-				{
-					this.OnLongitudeChanging(value);
-					this.SendPropertyChanging();
-					this._Longitude = value;
-					this.SendPropertyChanged("Longitude");
-					this.OnLongitudeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Latidude", DbType="Float NOT NULL")]
-		public double Latidude
-		{
-			get
-			{
-				return this._Latidude;
-			}
-			set
-			{
-				if ((this._Latidude != value))
-				{
-					this.OnLatidudeChanging(value);
-					this.SendPropertyChanging();
-					this._Latidude = value;
-					this.SendPropertyChanged("Latidude");
-					this.OnLatidudeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Mapa_Tour", Storage="_Tours", ThisKey="MapaId", OtherKey="MapaId")]
-		public EntitySet<Tour> Tours
-		{
-			get
-			{
-				return this._Tours;
-			}
-			set
-			{
-				this._Tours.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Noticia_Mapa", Storage="_Noticia", ThisKey="NoticiaId", OtherKey="NoticiaId", IsForeignKey=true)]
-		public Noticia Noticia
-		{
-			get
-			{
-				return this._Noticia.Entity;
-			}
-			set
-			{
-				Noticia previousValue = this._Noticia.Entity;
-				if (((previousValue != value) 
-							|| (this._Noticia.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Noticia.Entity = null;
-						previousValue.Mapas.Remove(this);
-					}
-					this._Noticia.Entity = value;
-					if ((value != null))
-					{
-						value.Mapas.Add(this);
-						this._NoticiaId = value.NoticiaId;
-					}
-					else
-					{
-						this._NoticiaId = default(System.Guid);
-					}
-					this.SendPropertyChanged("Noticia");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Tours(Tour entity)
-		{
-			this.SendPropertyChanging();
-			entity.Mapa = this;
-		}
-		
-		private void detach_Tours(Tour entity)
-		{
-			this.SendPropertyChanging();
-			entity.Mapa = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.NoticiaFlagged")]
 	public partial class NoticiaFlagged : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -2042,9 +1815,9 @@ namespace Newzic.Core
 		
 		private EntitySet<VotoNoticia> _VotoNoticias;
 		
-		private EntitySet<Mapa> _Mapas;
-		
 		private EntitySet<NoticiaFlagged> _NoticiaFlaggeds;
+		
+		private EntitySet<Mapa> _Mapas;
 		
 		private EntityRef<Jornalista> _Jornalista;
 		
@@ -2080,8 +1853,8 @@ namespace Newzic.Core
 			this._Comentarios = new EntitySet<Comentario>(new Action<Comentario>(this.attach_Comentarios), new Action<Comentario>(this.detach_Comentarios));
 			this._Videos = new EntitySet<Video>(new Action<Video>(this.attach_Videos), new Action<Video>(this.detach_Videos));
 			this._VotoNoticias = new EntitySet<VotoNoticia>(new Action<VotoNoticia>(this.attach_VotoNoticias), new Action<VotoNoticia>(this.detach_VotoNoticias));
-			this._Mapas = new EntitySet<Mapa>(new Action<Mapa>(this.attach_Mapas), new Action<Mapa>(this.detach_Mapas));
 			this._NoticiaFlaggeds = new EntitySet<NoticiaFlagged>(new Action<NoticiaFlagged>(this.attach_NoticiaFlaggeds), new Action<NoticiaFlagged>(this.detach_NoticiaFlaggeds));
+			this._Mapas = new EntitySet<Mapa>(new Action<Mapa>(this.attach_Mapas), new Action<Mapa>(this.detach_Mapas));
 			this._Jornalista = default(EntityRef<Jornalista>);
 			OnCreated();
 		}
@@ -2342,19 +2115,6 @@ namespace Newzic.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Noticia_Mapa", Storage="_Mapas", ThisKey="NoticiaId", OtherKey="NoticiaId")]
-		public EntitySet<Mapa> Mapas
-		{
-			get
-			{
-				return this._Mapas;
-			}
-			set
-			{
-				this._Mapas.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Noticia_NoticiaFlagged", Storage="_NoticiaFlaggeds", ThisKey="NoticiaId", OtherKey="NoticiaId")]
 		public EntitySet<NoticiaFlagged> NoticiaFlaggeds
 		{
@@ -2365,6 +2125,19 @@ namespace Newzic.Core
 			set
 			{
 				this._NoticiaFlaggeds.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Noticia_Mapa", Storage="_Mapas", ThisKey="NoticiaId", OtherKey="NoticiaId")]
+		public EntitySet<Mapa> Mapas
+		{
+			get
+			{
+				return this._Mapas;
+			}
+			set
+			{
+				this._Mapas.Assign(value);
 			}
 		}
 		
@@ -2470,18 +2243,6 @@ namespace Newzic.Core
 			entity.Noticia = null;
 		}
 		
-		private void attach_Mapas(Mapa entity)
-		{
-			this.SendPropertyChanging();
-			entity.Noticia = this;
-		}
-		
-		private void detach_Mapas(Mapa entity)
-		{
-			this.SendPropertyChanging();
-			entity.Noticia = null;
-		}
-		
 		private void attach_NoticiaFlaggeds(NoticiaFlagged entity)
 		{
 			this.SendPropertyChanging();
@@ -2489,6 +2250,18 @@ namespace Newzic.Core
 		}
 		
 		private void detach_NoticiaFlaggeds(NoticiaFlagged entity)
+		{
+			this.SendPropertyChanging();
+			entity.Noticia = null;
+		}
+		
+		private void attach_Mapas(Mapa entity)
+		{
+			this.SendPropertyChanging();
+			entity.Noticia = this;
+		}
+		
+		private void detach_Mapas(Mapa entity)
 		{
 			this.SendPropertyChanging();
 			entity.Noticia = null;
@@ -3065,6 +2838,257 @@ namespace Newzic.Core
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Mapa")]
+	public partial class Mapa : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _MapaId;
+		
+		private System.Guid _NoticiaId;
+		
+		private string _Morada;
+		
+		private double _Longitude;
+		
+		private double _Latidude;
+		
+		private bool _isTour;
+		
+		private EntitySet<Tour> _Tours;
+		
+		private EntityRef<Noticia> _Noticia;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnMapaIdChanging(System.Guid value);
+    partial void OnMapaIdChanged();
+    partial void OnNoticiaIdChanging(System.Guid value);
+    partial void OnNoticiaIdChanged();
+    partial void OnMoradaChanging(string value);
+    partial void OnMoradaChanged();
+    partial void OnLongitudeChanging(double value);
+    partial void OnLongitudeChanged();
+    partial void OnLatidudeChanging(double value);
+    partial void OnLatidudeChanged();
+    partial void OnisTourChanging(bool value);
+    partial void OnisTourChanged();
+    #endregion
+		
+		public Mapa()
+		{
+			this._Tours = new EntitySet<Tour>(new Action<Tour>(this.attach_Tours), new Action<Tour>(this.detach_Tours));
+			this._Noticia = default(EntityRef<Noticia>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MapaId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid MapaId
+		{
+			get
+			{
+				return this._MapaId;
+			}
+			set
+			{
+				if ((this._MapaId != value))
+				{
+					this.OnMapaIdChanging(value);
+					this.SendPropertyChanging();
+					this._MapaId = value;
+					this.SendPropertyChanged("MapaId");
+					this.OnMapaIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NoticiaId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid NoticiaId
+		{
+			get
+			{
+				return this._NoticiaId;
+			}
+			set
+			{
+				if ((this._NoticiaId != value))
+				{
+					if (this._Noticia.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnNoticiaIdChanging(value);
+					this.SendPropertyChanging();
+					this._NoticiaId = value;
+					this.SendPropertyChanged("NoticiaId");
+					this.OnNoticiaIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Morada", DbType="VarChar(256)")]
+		public string Morada
+		{
+			get
+			{
+				return this._Morada;
+			}
+			set
+			{
+				if ((this._Morada != value))
+				{
+					this.OnMoradaChanging(value);
+					this.SendPropertyChanging();
+					this._Morada = value;
+					this.SendPropertyChanged("Morada");
+					this.OnMoradaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Longitude", DbType="Float NOT NULL")]
+		public double Longitude
+		{
+			get
+			{
+				return this._Longitude;
+			}
+			set
+			{
+				if ((this._Longitude != value))
+				{
+					this.OnLongitudeChanging(value);
+					this.SendPropertyChanging();
+					this._Longitude = value;
+					this.SendPropertyChanged("Longitude");
+					this.OnLongitudeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Latidude", DbType="Float NOT NULL")]
+		public double Latidude
+		{
+			get
+			{
+				return this._Latidude;
+			}
+			set
+			{
+				if ((this._Latidude != value))
+				{
+					this.OnLatidudeChanging(value);
+					this.SendPropertyChanging();
+					this._Latidude = value;
+					this.SendPropertyChanged("Latidude");
+					this.OnLatidudeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_isTour", DbType="Bit NOT NULL")]
+		public bool isTour
+		{
+			get
+			{
+				return this._isTour;
+			}
+			set
+			{
+				if ((this._isTour != value))
+				{
+					this.OnisTourChanging(value);
+					this.SendPropertyChanging();
+					this._isTour = value;
+					this.SendPropertyChanged("isTour");
+					this.OnisTourChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Mapa_Tour", Storage="_Tours", ThisKey="MapaId", OtherKey="MapaId")]
+		public EntitySet<Tour> Tours
+		{
+			get
+			{
+				return this._Tours;
+			}
+			set
+			{
+				this._Tours.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Noticia_Mapa", Storage="_Noticia", ThisKey="NoticiaId", OtherKey="NoticiaId", IsForeignKey=true)]
+		public Noticia Noticia
+		{
+			get
+			{
+				return this._Noticia.Entity;
+			}
+			set
+			{
+				Noticia previousValue = this._Noticia.Entity;
+				if (((previousValue != value) 
+							|| (this._Noticia.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Noticia.Entity = null;
+						previousValue.Mapas.Remove(this);
+					}
+					this._Noticia.Entity = value;
+					if ((value != null))
+					{
+						value.Mapas.Add(this);
+						this._NoticiaId = value.NoticiaId;
+					}
+					else
+					{
+						this._NoticiaId = default(System.Guid);
+					}
+					this.SendPropertyChanged("Noticia");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Tours(Tour entity)
+		{
+			this.SendPropertyChanging();
+			entity.Mapa = this;
+		}
+		
+		private void detach_Tours(Tour entity)
+		{
+			this.SendPropertyChanging();
+			entity.Mapa = null;
 		}
 	}
 }

@@ -4,25 +4,24 @@ namespace Newzic.Core
 {
     public partial class Mapa : IEntity
     {
-        public void InsertPonto()
+        public Mapa(float longitude, float latidude, string morada)
         {
-            throw new NotImplementedException();
+            this.Longitude = longitude;
+            this.Latidude = latidude;
+            this.Morada = morada;
+            this.isTour = false;
         }
 
-        public void InsertTour()
+        public void InsertTour(float longitude, float latidude, string morada)
         {
-            throw new NotImplementedException();
-        }
-
-        public void RemovePonto()
-        {
-            throw new NotImplementedException();
+            var tour = new Tour {Latitude = latidude, Longitude = longitude, Morada = morada};
+            this.Tours.Add(tour);
         }
 
         public Guid Id
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get { return MapaId; }
+            set { MapaId = value; }
         }
     }
 }
