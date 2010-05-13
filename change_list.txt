@@ -1,3 +1,5 @@
-Alterar tipos do webservice - Falar com Ricardo
+Done! - Alterar tipos do webservice - Falar com Ricardo
 Done! - Corrigir Esquema Relacional da BD(Ver folha impressa com correções a caneta) - Falar com Christophe
 Done! - Especificar que quando uma noticia marked é editada fica unmarked após a edição - Falar com Christophe
+Por os diagramas corrigidos no relatório
+
