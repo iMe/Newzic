@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="newzic" Class="NewzicDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=CHRISTOPHE-PC\SQLEXPRESS;Initial Catalog=newzic;Integrated Security=True" SettingsObjectName="Newzic.Data.Properties.Settings" SettingsPropertyName="newzicConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=CHRISTOPHE-PC\SQLEXPRESS;Initial Catalog=newzic;Integrated Security=True" SettingsObjectName="Newzic.Core.Properties.Settings" SettingsPropertyName="newzicConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Imagem" Member="Imagems">
     <Type Name="Imagem">
       <Column Name="ImagemId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />

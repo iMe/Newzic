@@ -8,7 +8,7 @@
     <ProjectGuid>{82C3EE18-DCED-4E67-83A6-8B1D85CD6F5E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Newzic.Data.Tests</RootNamespace>
+    <RootNamespace>Newzic.Core.Tests</RootNamespace>
     <AssemblyName>Newzic.Data.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

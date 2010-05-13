@@ -1,4 +1,4 @@
-namespace Newzic.Data
+namespace Newzic.Core
 {
     public class AdministradorData : DataCRUD<Administrador>
     {

@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Newzic.Data
+namespace Newzic.Core
 {
 	using System.Data.Linq;
 	using System.Data.Linq.Mapping;
@@ -72,7 +72,7 @@ namespace Newzic.Data
     #endregion
 		
 		public NewzicDataContext() : 
-				base(global::Newzic.Data.Properties.Settings.Default.newzicConnectionString, mappingSource)
+				base(global::Newzic.Core.Properties.Settings.Default.newzicConnectionString, mappingSource)
 		{
 			OnCreated();
 		}

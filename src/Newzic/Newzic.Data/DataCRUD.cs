@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Newzic.Data
+namespace Newzic.Core
 {
     public class DataCRUD<T> : IDataCRUD<T> where T : class, IEntity
     {

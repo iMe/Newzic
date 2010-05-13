@@ -12,13 +12,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newzic.Domain", "Newzic.Domain\Newzic.Domain.csproj", "{6F91BD92-A370-4D08-8661-63C0BE1B6B90}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newzic.Core", "Newzic.Data\Newzic.Core.csproj", "{738C3BC2-E319-4C23-9DC4-A9B1EA921FB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newzic.Data", "Newzic.Data\Newzic.Data.csproj", "{738C3BC2-E319-4C23-9DC4-A9B1EA921FB8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newzic.Domain.Tests", "Newzic.Domain.Tests\Newzic.Domain.Tests.csproj", "{856D0AB2-4BA0-4C64-9048-6AE3F77B0A6E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newzic.Data.Tests", "Newzic.Data.Tests\Newzic.Data.Tests.csproj", "{82C3EE18-DCED-4E67-83A6-8B1D85CD6F5E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newzic.Core.Tests", "Newzic.Data.Tests\Newzic.Core.Tests.csproj", "{82C3EE18-DCED-4E67-83A6-8B1D85CD6F5E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newzic.WebService", "Newzic.WebService\Newzic.WebService.csproj", "{E08D9185-7886-49A7-9781-080717F93336}"
 EndProject
@@ -39,18 +35,10 @@ Global
 		{F2FC032C-AA63-4145-BC17-8D74A2BCFB58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2FC032C-AA63-4145-BC17-8D74A2BCFB58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2FC032C-AA63-4145-BC17-8D74A2BCFB58}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6F91BD92-A370-4D08-8661-63C0BE1B6B90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6F91BD92-A370-4D08-8661-63C0BE1B6B90}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6F91BD92-A370-4D08-8661-63C0BE1B6B90}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6F91BD92-A370-4D08-8661-63C0BE1B6B90}.Release|Any CPU.Build.0 = Release|Any CPU
 		{738C3BC2-E319-4C23-9DC4-A9B1EA921FB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{738C3BC2-E319-4C23-9DC4-A9B1EA921FB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{738C3BC2-E319-4C23-9DC4-A9B1EA921FB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{738C3BC2-E319-4C23-9DC4-A9B1EA921FB8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{856D0AB2-4BA0-4C64-9048-6AE3F77B0A6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{856D0AB2-4BA0-4C64-9048-6AE3F77B0A6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{856D0AB2-4BA0-4C64-9048-6AE3F77B0A6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{856D0AB2-4BA0-4C64-9048-6AE3F77B0A6E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{82C3EE18-DCED-4E67-83A6-8B1D85CD6F5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{82C3EE18-DCED-4E67-83A6-8B1D85CD6F5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82C3EE18-DCED-4E67-83A6-8B1D85CD6F5E}.Release|Any CPU.ActiveCfg = Release|Any CPU

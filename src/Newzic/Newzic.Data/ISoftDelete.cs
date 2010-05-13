@@ -1,4 +1,4 @@
-namespace Newzic.Data
+namespace Newzic.Core
 {
     public interface ISoftDelete
     {

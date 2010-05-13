@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Newzic.Data;
+using Newzic.Core;
 
-namespace Newzic.Data
+namespace Newzic.Core
 {
     public class NoticiaData : DataCRUD<Noticia>
     {
