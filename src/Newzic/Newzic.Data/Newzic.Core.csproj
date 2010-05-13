@@ -70,6 +70,7 @@
     <Compile Include="IWebServiceData.cs" />
     <Compile Include="Jornalista.cs" />
     <Compile Include="JornalistaData.cs" />
+    <Compile Include="Mapa.cs" />
     <Compile Include="Moderador.cs" />
     <Compile Include="ModeradorData.cs" />
     <Compile Include="Noticia.cs" />
@@ -90,6 +91,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Queixa.cs" />
     <Compile Include="Sessao.cs" />
     <Compile Include="WebServiceData.cs" />
   </ItemGroup>

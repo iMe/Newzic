@@ -14,6 +14,11 @@ namespace Newzic.Core
             throw new NotImplementedException();
         }
 
+        public void RemovePonto()
+        {
+            throw new NotImplementedException();
+        }
+
         public Guid Id
         {
             get { throw new NotImplementedException(); }

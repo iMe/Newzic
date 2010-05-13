@@ -78,6 +78,7 @@
       <Column Name="Morada" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
       <Column Name="Longitude" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
       <Column Name="Latidude" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Association Name="Mapa_Tour" Member="Tours" ThisKey="MapaId" OtherKey="MapaId" Type="Tour" />
       <Association Name="Noticia_Mapa" Member="Noticia" ThisKey="NoticiaId" OtherKey="NoticiaId" Type="Noticia" IsForeignKey="true" />
     </Type>
   </Table>
@@ -126,6 +127,16 @@
       <Column Name="Timestamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="JornalistaId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Association Name="Jornalista_Sessao" Member="Jornalista" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Jornalista" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Tour" Member="Tours">
+    <Type Name="Tour">
+      <Column Name="TourId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MapaId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Longitude" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Latitude" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Morada" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Association Name="Mapa_Tour" Member="Mapa" ThisKey="MapaId" OtherKey="MapaId" Type="Mapa" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
