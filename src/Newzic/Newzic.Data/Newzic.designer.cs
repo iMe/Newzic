@@ -51,9 +51,6 @@ namespace Newzic.Core
     partial void InsertBanido(Banido instance);
     partial void UpdateBanido(Banido instance);
     partial void DeleteBanido(Banido instance);
-    partial void InsertQueixa(Queixa instance);
-    partial void UpdateQueixa(Queixa instance);
-    partial void DeleteQueixa(Queixa instance);
     partial void InsertVotoNoticia(VotoNoticia instance);
     partial void UpdateVotoNoticia(VotoNoticia instance);
     partial void DeleteVotoNoticia(VotoNoticia instance);
@@ -69,6 +66,9 @@ namespace Newzic.Core
     partial void InsertSessao(Sessao instance);
     partial void UpdateSessao(Sessao instance);
     partial void DeleteSessao(Sessao instance);
+    partial void InsertQueixa(Queixa instance);
+    partial void UpdateQueixa(Queixa instance);
+    partial void DeleteQueixa(Queixa instance);
     #endregion
 		
 		public NewzicDataContext() : 
@@ -157,14 +157,6 @@ namespace Newzic.Core
 			}
 		}
 		
-		public System.Data.Linq.Table<Queixa> Queixas
-		{
-			get
-			{
-				return this.GetTable<Queixa>();
-			}
-		}
-		
 		public System.Data.Linq.Table<VotoNoticia> VotoNoticias
 		{
 			get
@@ -202,6 +194,14 @@ namespace Newzic.Core
 			get
 			{
 				return this.GetTable<Sessao>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Queixa> Queixas
+		{
+			get
+			{
+				return this.GetTable<Queixa>();
 			}
 		}
 	}
@@ -595,13 +595,13 @@ namespace Newzic.Core
 		
 		private EntitySet<Banido> _Banidos;
 		
-		private EntitySet<Queixa> _Queixas;
-		
 		private EntitySet<VotoNoticia> _VotoNoticias;
 		
 		private EntitySet<Noticia> _Noticias;
 		
 		private EntityRef<Sessao> _Sessao;
+		
+		private EntitySet<Queixa> _Queixas;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -623,10 +623,10 @@ namespace Newzic.Core
 			this._Administrador = default(EntityRef<Administrador>);
 			this._Moderador = default(EntityRef<Moderador>);
 			this._Banidos = new EntitySet<Banido>(new Action<Banido>(this.attach_Banidos), new Action<Banido>(this.detach_Banidos));
-			this._Queixas = new EntitySet<Queixa>(new Action<Queixa>(this.attach_Queixas), new Action<Queixa>(this.detach_Queixas));
 			this._VotoNoticias = new EntitySet<VotoNoticia>(new Action<VotoNoticia>(this.attach_VotoNoticias), new Action<VotoNoticia>(this.detach_VotoNoticias));
 			this._Noticias = new EntitySet<Noticia>(new Action<Noticia>(this.attach_Noticias), new Action<Noticia>(this.detach_Noticias));
 			this._Sessao = default(EntityRef<Sessao>);
+			this._Queixas = new EntitySet<Queixa>(new Action<Queixa>(this.attach_Queixas), new Action<Queixa>(this.detach_Queixas));
 			OnCreated();
 		}
 		
@@ -794,19 +794,6 @@ namespace Newzic.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Jornalista_Queixa", Storage="_Queixas", ThisKey="JornalistaId", OtherKey="JornalistaId")]
-		public EntitySet<Queixa> Queixas
-		{
-			get
-			{
-				return this._Queixas;
-			}
-			set
-			{
-				this._Queixas.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Jornalista_VotoNoticia", Storage="_VotoNoticias", ThisKey="JornalistaId", OtherKey="JornalistaId")]
 		public EntitySet<VotoNoticia> VotoNoticias
 		{
@@ -862,6 +849,19 @@ namespace Newzic.Core
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Jornalista_Queixa", Storage="_Queixas", ThisKey="JornalistaId", OtherKey="JornalistaId")]
+		public EntitySet<Queixa> Queixas
+		{
+			get
+			{
+				return this._Queixas;
+			}
+			set
+			{
+				this._Queixas.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -906,18 +906,6 @@ namespace Newzic.Core
 			entity.Jornalista = null;
 		}
 		
-		private void attach_Queixas(Queixa entity)
-		{
-			this.SendPropertyChanging();
-			entity.Jornalista = this;
-		}
-		
-		private void detach_Queixas(Queixa entity)
-		{
-			this.SendPropertyChanging();
-			entity.Jornalista = null;
-		}
-		
 		private void attach_VotoNoticias(VotoNoticia entity)
 		{
 			this.SendPropertyChanging();
@@ -937,6 +925,18 @@ namespace Newzic.Core
 		}
 		
 		private void detach_Noticias(Noticia entity)
+		{
+			this.SendPropertyChanging();
+			entity.Jornalista = null;
+		}
+		
+		private void attach_Queixas(Queixa entity)
+		{
+			this.SendPropertyChanging();
+			entity.Jornalista = this;
+		}
+		
+		private void detach_Queixas(Queixa entity)
 		{
 			this.SendPropertyChanging();
 			entity.Jornalista = null;
@@ -1443,205 +1443,6 @@ namespace Newzic.Core
 					if ((value != null))
 					{
 						value.Banidos.Add(this);
-						this._JornalistaId = value.JornalistaId;
-					}
-					else
-					{
-						this._JornalistaId = default(System.Guid);
-					}
-					this.SendPropertyChanged("Jornalista");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Queixas")]
-	public partial class Queixa : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _QueixaId;
-		
-		private System.Guid _JornalistaId;
-		
-		private System.Guid _AcusadoId;
-		
-		private string _Texto;
-		
-		private bool _Resolved;
-		
-		private EntityRef<Jornalista> _Jornalista;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnQueixaIdChanging(System.Guid value);
-    partial void OnQueixaIdChanged();
-    partial void OnJornalistaIdChanging(System.Guid value);
-    partial void OnJornalistaIdChanged();
-    partial void OnAcusadoIdChanging(System.Guid value);
-    partial void OnAcusadoIdChanged();
-    partial void OnTextoChanging(string value);
-    partial void OnTextoChanged();
-    partial void OnResolvedChanging(bool value);
-    partial void OnResolvedChanged();
-    #endregion
-		
-		public Queixa()
-		{
-			this._Jornalista = default(EntityRef<Jornalista>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QueixaId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid QueixaId
-		{
-			get
-			{
-				return this._QueixaId;
-			}
-			set
-			{
-				if ((this._QueixaId != value))
-				{
-					this.OnQueixaIdChanging(value);
-					this.SendPropertyChanging();
-					this._QueixaId = value;
-					this.SendPropertyChanged("QueixaId");
-					this.OnQueixaIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JornalistaId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid JornalistaId
-		{
-			get
-			{
-				return this._JornalistaId;
-			}
-			set
-			{
-				if ((this._JornalistaId != value))
-				{
-					if (this._Jornalista.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnJornalistaIdChanging(value);
-					this.SendPropertyChanging();
-					this._JornalistaId = value;
-					this.SendPropertyChanged("JornalistaId");
-					this.OnJornalistaIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AcusadoId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid AcusadoId
-		{
-			get
-			{
-				return this._AcusadoId;
-			}
-			set
-			{
-				if ((this._AcusadoId != value))
-				{
-					this.OnAcusadoIdChanging(value);
-					this.SendPropertyChanging();
-					this._AcusadoId = value;
-					this.SendPropertyChanged("AcusadoId");
-					this.OnAcusadoIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Texto", DbType="VarChar(256) NOT NULL", CanBeNull=false)]
-		public string Texto
-		{
-			get
-			{
-				return this._Texto;
-			}
-			set
-			{
-				if ((this._Texto != value))
-				{
-					this.OnTextoChanging(value);
-					this.SendPropertyChanging();
-					this._Texto = value;
-					this.SendPropertyChanged("Texto");
-					this.OnTextoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Resolved", DbType="Bit NOT NULL")]
-		public bool Resolved
-		{
-			get
-			{
-				return this._Resolved;
-			}
-			set
-			{
-				if ((this._Resolved != value))
-				{
-					this.OnResolvedChanging(value);
-					this.SendPropertyChanging();
-					this._Resolved = value;
-					this.SendPropertyChanged("Resolved");
-					this.OnResolvedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Jornalista_Queixa", Storage="_Jornalista", ThisKey="JornalistaId", OtherKey="JornalistaId", IsForeignKey=true)]
-		public Jornalista Jornalista
-		{
-			get
-			{
-				return this._Jornalista.Entity;
-			}
-			set
-			{
-				Jornalista previousValue = this._Jornalista.Entity;
-				if (((previousValue != value) 
-							|| (this._Jornalista.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Jornalista.Entity = null;
-						previousValue.Queixas.Remove(this);
-					}
-					this._Jornalista.Entity = value;
-					if ((value != null))
-					{
-						value.Queixas.Add(this);
 						this._JornalistaId = value.JornalistaId;
 					}
 					else
@@ -2774,6 +2575,229 @@ namespace Newzic.Core
 					if ((value != null))
 					{
 						value.Sessao = this;
+						this._JornalistaId = value.JornalistaId;
+					}
+					else
+					{
+						this._JornalistaId = default(System.Guid);
+					}
+					this.SendPropertyChanged("Jornalista");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Queixa")]
+	public partial class Queixa : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _QueixaId;
+		
+		private System.Guid _JornalistaId;
+		
+		private System.Guid _AcusadoId;
+		
+		private string _Texto;
+		
+		private bool _Resolved;
+		
+		private string _Assunto;
+		
+		private EntityRef<Jornalista> _Jornalista;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnQueixaIdChanging(System.Guid value);
+    partial void OnQueixaIdChanged();
+    partial void OnJornalistaIdChanging(System.Guid value);
+    partial void OnJornalistaIdChanged();
+    partial void OnAcusadoIdChanging(System.Guid value);
+    partial void OnAcusadoIdChanged();
+    partial void OnTextoChanging(string value);
+    partial void OnTextoChanged();
+    partial void OnResolvedChanging(bool value);
+    partial void OnResolvedChanged();
+    partial void OnAssuntoChanging(string value);
+    partial void OnAssuntoChanged();
+    #endregion
+		
+		public Queixa()
+		{
+			this._Jornalista = default(EntityRef<Jornalista>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QueixaId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid QueixaId
+		{
+			get
+			{
+				return this._QueixaId;
+			}
+			set
+			{
+				if ((this._QueixaId != value))
+				{
+					this.OnQueixaIdChanging(value);
+					this.SendPropertyChanging();
+					this._QueixaId = value;
+					this.SendPropertyChanged("QueixaId");
+					this.OnQueixaIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JornalistaId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid JornalistaId
+		{
+			get
+			{
+				return this._JornalistaId;
+			}
+			set
+			{
+				if ((this._JornalistaId != value))
+				{
+					if (this._Jornalista.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnJornalistaIdChanging(value);
+					this.SendPropertyChanging();
+					this._JornalistaId = value;
+					this.SendPropertyChanged("JornalistaId");
+					this.OnJornalistaIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AcusadoId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid AcusadoId
+		{
+			get
+			{
+				return this._AcusadoId;
+			}
+			set
+			{
+				if ((this._AcusadoId != value))
+				{
+					this.OnAcusadoIdChanging(value);
+					this.SendPropertyChanging();
+					this._AcusadoId = value;
+					this.SendPropertyChanged("AcusadoId");
+					this.OnAcusadoIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Texto", DbType="VarChar(256) NOT NULL", CanBeNull=false)]
+		public string Texto
+		{
+			get
+			{
+				return this._Texto;
+			}
+			set
+			{
+				if ((this._Texto != value))
+				{
+					this.OnTextoChanging(value);
+					this.SendPropertyChanging();
+					this._Texto = value;
+					this.SendPropertyChanged("Texto");
+					this.OnTextoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Resolved", DbType="Bit NOT NULL")]
+		public bool Resolved
+		{
+			get
+			{
+				return this._Resolved;
+			}
+			set
+			{
+				if ((this._Resolved != value))
+				{
+					this.OnResolvedChanging(value);
+					this.SendPropertyChanging();
+					this._Resolved = value;
+					this.SendPropertyChanged("Resolved");
+					this.OnResolvedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Assunto", DbType="VarChar(64) NOT NULL", CanBeNull=false)]
+		public string Assunto
+		{
+			get
+			{
+				return this._Assunto;
+			}
+			set
+			{
+				if ((this._Assunto != value))
+				{
+					this.OnAssuntoChanging(value);
+					this.SendPropertyChanging();
+					this._Assunto = value;
+					this.SendPropertyChanged("Assunto");
+					this.OnAssuntoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Jornalista_Queixa", Storage="_Jornalista", ThisKey="JornalistaId", OtherKey="JornalistaId", IsForeignKey=true)]
+		public Jornalista Jornalista
+		{
+			get
+			{
+				return this._Jornalista.Entity;
+			}
+			set
+			{
+				Jornalista previousValue = this._Jornalista.Entity;
+				if (((previousValue != value) 
+							|| (this._Jornalista.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Jornalista.Entity = null;
+						previousValue.Queixas.Remove(this);
+					}
+					this._Jornalista.Entity = value;
+					if ((value != null))
+					{
+						value.Queixas.Add(this);
 						this._JornalistaId = value.JornalistaId;
 					}
 					else
