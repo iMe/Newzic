@@ -27,11 +27,11 @@
       <Association Name="Jornalista_Comentario" Member="Comentarios" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Comentario" />
       <Association Name="Jornalista_Administrador" Member="Administrador" ThisKey="JornalistaId" OtherKey="AdministradorId" Type="Administrador" Cardinality="One" />
       <Association Name="Jornalista_Moderador" Member="Moderador" ThisKey="JornalistaId" OtherKey="ModeradorId" Type="Moderador" Cardinality="One" />
-      <Association Name="Jornalista_Sessao" Member="Sessaos" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Sessao" />
       <Association Name="Jornalista_Banido" Member="Banidos" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Banido" />
       <Association Name="Jornalista_Queixa" Member="Queixas" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Queixa" />
       <Association Name="Jornalista_VotoNoticia" Member="VotoNoticias" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="VotoNoticia" />
       <Association Name="Jornalista_Noticia" Member="Noticias" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Noticia" />
+      <Association Name="Jornalista_Sessao" Member="Sessao" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Sessao" Cardinality="One" />
     </Type>
   </Table>
   <Table Name="dbo.Video" Member="Videos">
@@ -52,15 +52,6 @@
     <Type Name="Moderador">
       <Column Name="ModeradorId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Association Name="Jornalista_Moderador" Member="Jornalista" ThisKey="ModeradorId" OtherKey="JornalistaId" Type="Jornalista" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Sessao" Member="Sessaos">
-    <Type Name="Sessao">
-      <Column Name="Token" Type="System.String" DbType="VarChar(128) NOT NULL" CanBeNull="false" />
-      <Column Name="Timestamp" Type="System.Data.Linq.Binary" DbType="rowversion NOT NULL" CanBeNull="false" IsVersion="true" />
-      <Column Name="SessaoId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="JornalistaId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Association Name="Jornalista_Sessao" Member="Jornalista" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Jornalista" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Banido" Member="Banidos">
@@ -126,6 +117,14 @@
       <Association Name="Noticia_Mapa" Member="Mapas" ThisKey="NoticiaId" OtherKey="NoticiaId" Type="Mapa" />
       <Association Name="Noticia_NoticiaFlagged" Member="NoticiaFlaggeds" ThisKey="NoticiaId" OtherKey="NoticiaId" Type="NoticiaFlagged" />
       <Association Name="Jornalista_Noticia" Member="Jornalista" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Jornalista" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Sessao" Member="Sessaos">
+    <Type Name="Sessao">
+      <Column Name="Token" Type="System.String" DbType="VarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="Timestamp" Type="System.Data.Linq.Binary" DbType="rowversion NOT NULL" CanBeNull="false" IsVersion="true" />
+      <Column Name="JornalistaId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Jornalista_Sessao" Member="Jornalista" ThisKey="JornalistaId" OtherKey="JornalistaId" Type="Jornalista" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
