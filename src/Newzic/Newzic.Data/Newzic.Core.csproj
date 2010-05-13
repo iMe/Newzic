@@ -8,8 +8,8 @@
     <ProjectGuid>{738C3BC2-E319-4C23-9DC4-A9B1EA921FB8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Newzic.Data</RootNamespace>
-    <AssemblyName>Newzic.Data</AssemblyName>
+    <RootNamespace>Newzic.Core</RootNamespace>
+    <AssemblyName>Newzic.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publish\</PublishUrl>
@@ -143,12 +143,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Newzic.Domain\Newzic.Domain.csproj">
-      <Project>{6F91BD92-A370-4D08-8661-63C0BE1B6B90}</Project>
-      <Name>Newzic.Domain</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

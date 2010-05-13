@@ -1,4 +1,4 @@
-﻿namespace Newzic.Data
+﻿namespace Newzic.Core
 {
     class ModeradorData: DataCRUD<Moderador>
     {

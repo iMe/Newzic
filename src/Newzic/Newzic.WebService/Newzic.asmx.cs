@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Services;
 
-using Newzic.Data;
+using Newzic.Core;
 using System.Collections;
 using Newzic.WebService;
 

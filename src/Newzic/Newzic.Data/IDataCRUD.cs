@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace Newzic.Data
+namespace Newzic.Core
 {
     public interface IDataCRUD<T> : IDisposable where T : class, IEntity
     {

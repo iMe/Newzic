@@ -75,13 +75,9 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Newzic.Data\Newzic.Data.csproj">
+    <ProjectReference Include="..\Newzic.Data\Newzic.Core.csproj">
       <Project>{738C3BC2-E319-4C23-9DC4-A9B1EA921FB8}</Project>
-      <Name>Newzic.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Newzic.Domain\Newzic.Domain.csproj">
-      <Project>{6F91BD92-A370-4D08-8661-63C0BE1B6B90}</Project>
-      <Name>Newzic.Domain</Name>
+      <Name>Newzic.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
