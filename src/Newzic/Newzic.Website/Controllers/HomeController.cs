@@ -11,6 +11,7 @@ namespace Newzic.Website.Controllers
     {
         public ActionResult Index()
         {
+
             ViewData["Message"] = "Welcome to ASP.NET MVC!";
 
             return View();
@@ -20,5 +21,6 @@ namespace Newzic.Website.Controllers
         {
             return View();
         }
+
     }
 }
