@@ -6,8 +6,8 @@ namespace Newzic.Core
     {
         public Guid Id
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get { return QueixaId; }
+            set { QueixaId = value; }
         }
 
 
