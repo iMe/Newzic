@@ -69,6 +69,9 @@ namespace Newzic.Core
     partial void InsertSessao(Sessao instance);
     partial void UpdateSessao(Sessao instance);
     partial void DeleteSessao(Sessao instance);
+    partial void InsertTour(Tour instance);
+    partial void UpdateTour(Tour instance);
+    partial void DeleteTour(Tour instance);
     #endregion
 		
 		public NewzicDataContext() : 
@@ -202,6 +205,14 @@ namespace Newzic.Core
 			get
 			{
 				return this.GetTable<Sessao>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Tour> Tours
+		{
+			get
+			{
+				return this.GetTable<Tour>();
 			}
 		}
 	}
@@ -1659,6 +1670,8 @@ namespace Newzic.Core
 		
 		private double _Latidude;
 		
+		private EntitySet<Tour> _Tours;
+		
 		private EntityRef<Noticia> _Noticia;
 		
     #region Extensibility Method Definitions
@@ -1679,6 +1692,7 @@ namespace Newzic.Core
 		
 		public Mapa()
 		{
+			this._Tours = new EntitySet<Tour>(new Action<Tour>(this.attach_Tours), new Action<Tour>(this.detach_Tours));
 			this._Noticia = default(EntityRef<Noticia>);
 			OnCreated();
 		}
@@ -1787,6 +1801,19 @@ namespace Newzic.Core
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Mapa_Tour", Storage="_Tours", ThisKey="MapaId", OtherKey="MapaId")]
+		public EntitySet<Tour> Tours
+		{
+			get
+			{
+				return this._Tours;
+			}
+			set
+			{
+				this._Tours.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Noticia_Mapa", Storage="_Noticia", ThisKey="NoticiaId", OtherKey="NoticiaId", IsForeignKey=true)]
 		public Noticia Noticia
 		{
@@ -1839,6 +1866,18 @@ namespace Newzic.Core
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_Tours(Tour entity)
+		{
+			this.SendPropertyChanging();
+			entity.Mapa = this;
+		}
+		
+		private void detach_Tours(Tour entity)
+		{
+			this.SendPropertyChanging();
+			entity.Mapa = null;
 		}
 	}
 	
@@ -2805,6 +2844,205 @@ namespace Newzic.Core
 						this._JornalistaId = default(System.Guid);
 					}
 					this.SendPropertyChanged("Jornalista");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Tour")]
+	public partial class Tour : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _TourId;
+		
+		private System.Guid _MapaId;
+		
+		private double _Longitude;
+		
+		private double _Latitude;
+		
+		private string _Morada;
+		
+		private EntityRef<Mapa> _Mapa;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnTourIdChanging(System.Guid value);
+    partial void OnTourIdChanged();
+    partial void OnMapaIdChanging(System.Guid value);
+    partial void OnMapaIdChanged();
+    partial void OnLongitudeChanging(double value);
+    partial void OnLongitudeChanged();
+    partial void OnLatitudeChanging(double value);
+    partial void OnLatitudeChanged();
+    partial void OnMoradaChanging(string value);
+    partial void OnMoradaChanged();
+    #endregion
+		
+		public Tour()
+		{
+			this._Mapa = default(EntityRef<Mapa>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TourId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid TourId
+		{
+			get
+			{
+				return this._TourId;
+			}
+			set
+			{
+				if ((this._TourId != value))
+				{
+					this.OnTourIdChanging(value);
+					this.SendPropertyChanging();
+					this._TourId = value;
+					this.SendPropertyChanged("TourId");
+					this.OnTourIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MapaId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid MapaId
+		{
+			get
+			{
+				return this._MapaId;
+			}
+			set
+			{
+				if ((this._MapaId != value))
+				{
+					if (this._Mapa.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnMapaIdChanging(value);
+					this.SendPropertyChanging();
+					this._MapaId = value;
+					this.SendPropertyChanged("MapaId");
+					this.OnMapaIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Longitude", DbType="Float NOT NULL")]
+		public double Longitude
+		{
+			get
+			{
+				return this._Longitude;
+			}
+			set
+			{
+				if ((this._Longitude != value))
+				{
+					this.OnLongitudeChanging(value);
+					this.SendPropertyChanging();
+					this._Longitude = value;
+					this.SendPropertyChanged("Longitude");
+					this.OnLongitudeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Latitude", DbType="Float NOT NULL")]
+		public double Latitude
+		{
+			get
+			{
+				return this._Latitude;
+			}
+			set
+			{
+				if ((this._Latitude != value))
+				{
+					this.OnLatitudeChanging(value);
+					this.SendPropertyChanging();
+					this._Latitude = value;
+					this.SendPropertyChanged("Latitude");
+					this.OnLatitudeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Morada", DbType="VarChar(256)")]
+		public string Morada
+		{
+			get
+			{
+				return this._Morada;
+			}
+			set
+			{
+				if ((this._Morada != value))
+				{
+					this.OnMoradaChanging(value);
+					this.SendPropertyChanging();
+					this._Morada = value;
+					this.SendPropertyChanged("Morada");
+					this.OnMoradaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Mapa_Tour", Storage="_Mapa", ThisKey="MapaId", OtherKey="MapaId", IsForeignKey=true)]
+		public Mapa Mapa
+		{
+			get
+			{
+				return this._Mapa.Entity;
+			}
+			set
+			{
+				Mapa previousValue = this._Mapa.Entity;
+				if (((previousValue != value) 
+							|| (this._Mapa.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Mapa.Entity = null;
+						previousValue.Tours.Remove(this);
+					}
+					this._Mapa.Entity = value;
+					if ((value != null))
+					{
+						value.Tours.Add(this);
+						this._MapaId = value.MapaId;
+					}
+					else
+					{
+						this._MapaId = default(System.Guid);
+					}
+					this.SendPropertyChanged("Mapa");
 				}
 			}
 		}
