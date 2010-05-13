@@ -1,4 +1,6 @@
 using System;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Newzic.Core
 {
@@ -31,5 +33,7 @@ namespace Newzic.Core
             this.Banidos.Add(banido);
             
         }
+
+
     }
 }
