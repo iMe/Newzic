@@ -99,7 +99,6 @@ namespace Newzic.Website.Controllers
 
         public ActionResult VerPerfil(string email)
         {
-
             var j = getJornalistaByEmail(email);
             var perfil = new RegisterModel();
             if (j.Count() != 0)
@@ -114,35 +113,12 @@ namespace Newzic.Website.Controllers
             perfil.Name = "";
             perfil.Password = "";
             return View("VerPerfil", perfil);
-
-
-
         }
-
-        public ActionResult editarPerfil(string email)
-        {
-            var j = getJornalistaByEmail(email);
-            var perfil = new RegisterModel();
-            if (j.Count() != 0)
-            {
-                perfil.Email = j.First().Email;
-                perfil.Name = j.First().Nome;
-                perfil.Password = j.First().Password;
-                return View("editarPerfil", perfil);
-            }
-
-            perfil.Email = "";
-            perfil.Name = "";
-            perfil.Password = "";
-
-            return View("editarPerfil", perfil);
-        }
-
 
         //[AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult guardarPerfil(RegisterModel model)
+        public ActionResult EditarPerfil(RegisterModel model)
         {
-
+            var j = getJornalistaByEmail(model.Email);
             if (ModelState.IsValid)
             {
                 string name = Request.Form["Name"];
@@ -155,28 +131,21 @@ namespace Newzic.Website.Controllers
                 {
                     //model.ModelState.AddModelError("", "A password é diferente da sua confirmação");
                     ModelState.AddModelError("", "A password é diferente da sua confirmação.");
-                    return View("editarPerfil", model);
+                    return View("EditarPerfil");
                 }
-                // Attempt to register the user
-                //checks if another user with the selected email exists
-                if (userExists(email))
-                {
-                    ModelState.AddModelError("", "O email escolhido já existe. Por favor escolha um novo.");
-                    return View("editarPerfil", model);
-                }
-                Jornalista newJornalista = new Jornalista();
-                newJornalista.Email = email;
-                newJornalista.Nome = name;
-                newJornalista.Password = password;
+                j.First().Email = email;
+                j.First().Nome = name;
+                j.First().Password = password;
 
-                newJornalista.JornalistaId = Guid.NewGuid();
-                //acRepo.addJornalista(newJornalista);
-                //acRepo.save();
-                ModelState.AddModelError("", "Perfil alterado com sucesso.");
+                acRepo.update(j.First());
+                acRepo.Save();
+                //ModelState.AddModelError("", "Perfil alterado com sucesso.");
 
             }
+            
+            model.Name = j.First().Nome;
 
-            return View("perfilEditado");
+            return View("EditarPerfil", model);
         }
 
         public ActionResult Register(RegisterModel model)

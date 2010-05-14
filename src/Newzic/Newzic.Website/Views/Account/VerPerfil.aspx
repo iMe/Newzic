@@ -21,14 +21,14 @@
             <%= Html.Encode(Model.Email ) %>
         </p>
 
-         <p>
+         <%--<p>
             Palavra chave:
             <%= Html.Encode(Model.Password ) %>
-        </p>
+        </p>--%>
         
     </fieldset>
     <p>
-        <%: Html.ActionLink("Edit", "editarPerfil", new { email = Model.Email }) %> |
+        <%:Html.ActionLink("Editar", "EditarPerfil", "Account", new {email = Model.Email, name = Model.Name}, null) %>
         <%: Html.ActionLink("Back to List", "/Home/Index") %>
     </p>
 

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<Newzic.Core.Queixa>>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Queixas
@@ -8,24 +8,69 @@
 
     <h2>Queixas</h2>
 
-    <fieldset>
-         <%foreach (var queixa in Model)
-          { %>
-            <li>
-               <%:Html.ActionLink("Ver qeixa", "Details", new { id=queixa.Id}) %>
-                <%--<%:Html.Encode(queixa.Texto)%>--%>
-                <%:Html.Encode("Acusado: " + queixa.IdAcusado)%>
-                <%:Html.Encode("Qeuixoso: " + queixa.IdQueixoso)%>
-                <%:Html.Encode(queixa.)%>
+    <table>
+        <tr>
+            <th></th>
+            <th>
+                QueixaId
+            </th>
+            <th>
+                JornalistaId
+            </th>
+            <th>
+                AcusadoId
+            </th>
+            <th>
+                Texto
+            </th>
+            <th>
+                Resolved
+            </th>
+            <th>
+                Assunto
+            </th>
+            <th>
+                Id
+            </th>
+        </tr>
 
-                <%:Html.Encode("Resolvido:"+ queixa.Resolvido.ToString())%>
-            </li>
-        <% } %>
-    </fieldset>
+    <% foreach (var item in Model) { %>
+    
+        <tr>
+            <td>
+                <%: Html.ActionLink("Edit", "Edit", new { id=item.QueixaId }) %> |
+                <%: Html.ActionLink("Details", "Details", new { id=item.QueixaId })%> |
+                <%: Html.ActionLink("Delete", "Delete", new { id=item.QueixaId })%>
+            </td>
+            <td>
+                <%: item.QueixaId %>
+            </td>
+            <td>
+                <%: item.JornalistaId %>
+            </td>
+            <td>
+                <%: item.AcusadoId %>
+            </td>
+            <td>
+                <%: item.Texto %>
+            </td>
+            <td>
+                <%: item.Resolved %>
+            </td>
+            <td>
+                <%: item.Assunto %>
+            </td>
+            <td>
+                <%: item.Id %>
+            </td>
+        </tr>
+    
+    <% } %>
+
+    </table>
+
     <p>
-
-        <%--<%: Html.ActionLink("Edit", "Edit", new { id=Model.IdQueixoso }) %> |--%>
-        <%: Html.ActionLink("Back to List", "Index") %>
+        <%: Html.ActionLink("Create New", "Create") %>
     </p>
 
 </asp:Content>
