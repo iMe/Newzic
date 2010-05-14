@@ -11,7 +11,7 @@
 
     <% using (Html.BeginForm()) {%>
         <%: Html.ValidationSummary(true) %>
-        
+        <div>
         <fieldset>
             <legend>Fields</legend>
             
@@ -47,12 +47,12 @@
                 <%: Html.ValidationMessageFor(model => model.ConfirmPassword) %>
             </div>
             
-           <%-- <p>
-                <input type="submit" value="Editar"/>
-            </p> --%>       
-            
-             <%: Html.ActionLink("Cancelar", "editarPerfil", "Account", new { email = Model.Email }, null) %>
-             <%: Html.ActionLink("Editar", "guardarPerfil", "Account", new { model = Model }, null) %>
+            <p>
+                <input type="submit" value="Editar" />
+            </p>
+
+            <%-- <%: Html.ActionLink("Cancelar", "editarPerfil", "Account", new {email = Model.Email}, "") %>--%>
+            <%-- <%: Html.ActionLink("Editar", "Editar", "Account",  new {model = Model}, "") %>--%>
              
             
         </fieldset>
@@ -62,6 +62,6 @@
     <div>
         <%: Html.ActionLink("Back to List", "Index") %>
     </div>
-
+    </div>
 </asp:Content>
 
