@@ -76,7 +76,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -86,6 +87,7 @@
     <Content Include="Views\Account\Login.aspx" />
     <Content Include="Views\Account\LogOff.aspx" />
     <Content Include="Views\Account\PerfilEditado.aspx" />
+    <Content Include="Views\Account\Register.aspx" />
     <Content Include="Views\Account\VerPerfil.aspx" />
     <Content Include="Views\Admin\AcessoNegado.aspx" />
     <Content Include="Views\Admin\GerirMods.aspx" />
@@ -113,8 +115,6 @@
     <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
     <Content Include="Views\Account\ChangePassword.aspx" />
     <Content Include="Views\Account\ChangePasswordSuccess.aspx" />
-    <Content Include="Views\Account\LogOn.aspx" />
-    <Content Include="Views\Account\Register.aspx" />
     <Content Include="Views\Home\About.aspx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Shared\Error.aspx" />
@@ -124,10 +124,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Mod\" />
-    <Folder Include="Views\News\" />
-    <Folder Include="Views\Perfil\" />
-    <Folder Include="Views\Search\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Newzic.Data\Newzic.Core.csproj">
+      <Project>{738C3BC2-E319-4C23-9DC4-A9B1EA921FB8}</Project>
+      <Name>Newzic.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

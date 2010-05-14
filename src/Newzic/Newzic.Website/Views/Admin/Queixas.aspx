@@ -12,20 +12,20 @@
         <tr>
             <th></th>
             <th>
-                QueixaId
+                Id da Queixa
             </th>
-            <th>
+            <%--<th>
                 JornalistaId
             </th>
             <th>
-                AcusadoId
+                Acusado
             </th>
             <th>
                 Texto
             </th>
             <th>
                 Resolved
-            </th>
+            </th>--%>
             <th>
                 Assunto
             </th>
@@ -38,14 +38,14 @@
     
         <tr>
             <td>
-                <%: Html.ActionLink("Edit", "Edit", new { id=item.QueixaId }) %> |
+               <%-- <%: Html.ActionLink("Edit", "Edit", new { id=item.QueixaId }) %> |--%>
                 <%: Html.ActionLink("Details", "Details", new { id=item.QueixaId })%> |
-                <%: Html.ActionLink("Delete", "Delete", new { id=item.QueixaId })%>
+               <%-- <%: Html.ActionLink("Delete", "Delete", new { id=item.QueixaId })%>--%>
             </td>
             <td>
                 <%: item.QueixaId %>
             </td>
-            <td>
+            <%--<td>
                 <%: item.JornalistaId %>
             </td>
             <td>
@@ -56,7 +56,7 @@
             </td>
             <td>
                 <%: item.Resolved %>
-            </td>
+            </td>--%>
             <td>
                 <%: item.Assunto %>
             </td>
@@ -70,7 +70,7 @@
     </table>
 
     <p>
-        <%: Html.ActionLink("Create New", "Create") %>
+      <%--  <%: Html.ActionLink("Create New", "Create") %>--%>
     </p>
 
 </asp:Content>
