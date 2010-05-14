@@ -93,6 +93,10 @@
     <Content Include="Views\Admin\GerirMods.aspx" />
     <Content Include="Views\Admin\Index.aspx" />
     <Content Include="Views\Admin\Queixas.aspx" />
+    <Content Include="Views\Mod\Index.aspx" />
+    <Content Include="Views\News\Index.aspx" />
+    <Content Include="Views\Perfil\Index.aspx" />
+    <Content Include="Views\Search\Index.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
