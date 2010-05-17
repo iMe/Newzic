@@ -35,6 +35,7 @@ namespace Newzic.WebService
         {
             IDataCRUD<Noticia> data = new DataCRUD<Noticia>();
             var ns = data.fetchAll();
+            
             List<Noticia> result = new List<Noticia>();// = new IQueryable<Noticia>();
             switch (type)
             {

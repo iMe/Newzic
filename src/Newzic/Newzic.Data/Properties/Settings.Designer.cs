@@ -26,8 +26,7 @@ namespace Newzic.Core.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=CHRISTOPHE-PC\\SQLEXPRESS;Initial Catalog=newzic;Integrated Security=T" +
-            "rue")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SQLEXPRESS;Initial Catalog=newzic;Integrated Security=True")]
         public string newzicConnectionString {
             get {
                 return ((string)(this["newzicConnectionString"]));
