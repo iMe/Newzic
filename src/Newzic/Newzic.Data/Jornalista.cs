@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -31,6 +32,16 @@ namespace Newzic.Core
             banido.JornalistaId = this.JornalistaId;
             banido.DataFim = dataFim;
             this.Banidos.Add(banido);
+        }
+
+        public void Unban()
+        {
+            IDataCRUD<Banido> data = new DataCRUD<Banido>();
+            IQueryable<Banido> r = data.fetchAll();
+            var banido = r.Single(b => b.JornalistaId == this.JornalistaId);
+            this.Banidos.Remove(banido);
+            data.Save();
+
             
         }
 
