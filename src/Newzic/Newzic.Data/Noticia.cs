@@ -15,6 +15,16 @@ namespace Newzic.Core
             set { NoticiaId = value; }
         }
 
+        public Video getVideo(Guid videoId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Imagem getImagem(Guid imagemId)
+        {
+            throw new NotImplementedException();
+        }
+
         public void markNoticia()
         {
             this.Marked = true;

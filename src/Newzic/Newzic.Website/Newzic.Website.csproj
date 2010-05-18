@@ -36,7 +36,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -68,20 +67,36 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\NewzicController.cs" />
-    <Compile Include="Controllers\NoticiaController.cs" />
+    <Compile Include="Controllers\ModController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\PerfilController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="Scripts\upload.js" />
-    <Content Include="Views\Noticia\Create.aspx" />
-    <Content Include="Views\Noticia\Index.aspx" />
+    <Content Include="Views\Account\EditarPerfil.aspx" />
+    <Content Include="Views\Account\LoggedIn.aspx" />
+    <Content Include="Views\Account\Login.aspx" />
+    <Content Include="Views\Account\LogOff.aspx" />
+    <Content Include="Views\Account\PerfilEditado.aspx" />
+    <Content Include="Views\Account\Register.aspx" />
+    <Content Include="Views\Account\VerPerfil.aspx" />
+    <Content Include="Views\Admin\AcessoNegado.aspx" />
+    <Content Include="Views\Admin\GerirMods.aspx" />
+    <Content Include="Views\Admin\Index.aspx" />
+    <Content Include="Views\Admin\Queixas.aspx" />
+    <Content Include="Views\Mod\Index.aspx" />
+    <Content Include="Views\News\Index.aspx" />
+    <Content Include="Views\Perfil\Index.aspx" />
+    <Content Include="Views\Search\Index.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -104,8 +119,6 @@
     <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
     <Content Include="Views\Account\ChangePassword.aspx" />
     <Content Include="Views\Account\ChangePasswordSuccess.aspx" />
-    <Content Include="Views\Account\LogOn.aspx" />
-    <Content Include="Views\Account\Register.aspx" />
     <Content Include="Views\Home\About.aspx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Shared\Error.aspx" />

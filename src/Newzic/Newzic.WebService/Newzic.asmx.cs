@@ -101,16 +101,8 @@ namespace Newzic.WebService
         public MapaWrap getMapOfNoticia(Guid idNoticia)
         {
             NoticiaData data = new NoticiaData();
-            List<Mapa> aux = data.fetch(idNoticia).Mapas.ToList();
-            MapaWrap res = null;
-            
-            foreach (Mapa mapa in aux)
-            {
-                //if (mapa.NoticiaId == idNoticia)
-                //{
-                    res=new MapaWrap(mapa);
-                //}
-            }
+            Mapa aux = data.fetch(idNoticia).Mapa;
+            MapaWrap res = new MapaWrap(aux);
             
             return res;
         }
@@ -188,7 +180,7 @@ namespace Newzic.WebService
             m.Morada = mapa.Morada;
             m.Longitude = mapa.Longitude;
             m.Latidude = mapa.Latitude;
-            ntc.Mapas.Add(m);
+            ntc.Mapa = m;
             
             data.Save();
             //throw new NotImplementedException();
@@ -217,7 +209,7 @@ namespace Newzic.WebService
 
             ntc.Imagems.Clear();
             ntc.Videos.Clear();
-            ntc.Mapas.Clear();
+            ntc.Mapa = null;
 
             data.update(ntc);
 
@@ -245,7 +237,7 @@ namespace Newzic.WebService
             m.Morada = mapa.Morada;
             m.Longitude = mapa.Longitude;
             m.Latidude = mapa.Latitude;
-            ntc.Mapas.Add(m);
+            ntc.Mapa = m;
 
             data.Save();
         }

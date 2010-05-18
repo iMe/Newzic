@@ -61,15 +61,18 @@
   <ItemGroup>
     <Compile Include="Administrador.cs" />
     <Compile Include="AdministradorData.cs" />
+    <Compile Include="Comentario.cs" />
     <Compile Include="DataCRUD.cs" />
     <Compile Include="DeletedEntityException.cs" />
     <Compile Include="Hash.cs" />
     <Compile Include="IDataCRUD.cs" />
     <Compile Include="IEntity.cs" />
+    <Compile Include="Imagem.cs" />
     <Compile Include="ISoftDelete.cs" />
     <Compile Include="IWebServiceData.cs" />
     <Compile Include="Jornalista.cs" />
     <Compile Include="JornalistaData.cs" />
+    <Compile Include="Mapa.cs" />
     <Compile Include="Moderador.cs" />
     <Compile Include="ModeradorData.cs" />
     <Compile Include="Noticia.cs" />
@@ -90,7 +93,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Queixa.cs" />
     <Compile Include="Sessao.cs" />
+    <Compile Include="Tour.cs" />
+    <Compile Include="Video.cs" />
     <Compile Include="WebServiceData.cs" />
   </ItemGroup>
   <ItemGroup>
