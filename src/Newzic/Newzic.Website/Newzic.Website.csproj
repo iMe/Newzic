@@ -36,6 +36,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -94,6 +95,7 @@
     <Content Include="Views\Admin\Index.aspx" />
     <Content Include="Views\Admin\Queixas.aspx" />
     <Content Include="Views\Mod\Index.aspx" />
+    <Content Include="Views\News\Create.aspx" />
     <Content Include="Views\News\Index.aspx" />
     <Content Include="Views\Perfil\Index.aspx" />
     <Content Include="Views\Search\Index.aspx" />
