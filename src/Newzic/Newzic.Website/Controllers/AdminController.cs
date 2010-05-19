@@ -41,6 +41,14 @@ namespace Newzic.Website.Controllers
             return View("Queixas", listaQueixas);
         }
 
+        
+        public ActionResult Details(string id)
+        {
+            Guid g = new Guid(id);
+            var q = qrepo.fetch(g);
+            return View("QueixaDetails", q);
+        }
+
         public ActionResult GerirMods(string email)
         {
             if (!isAdmin(email))
