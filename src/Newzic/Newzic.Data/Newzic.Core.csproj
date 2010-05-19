@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="Administrador.cs" />
     <Compile Include="AdministradorData.cs" />
+    <Compile Include="Banido.cs" />
     <Compile Include="Comentario.cs" />
     <Compile Include="DataCRUD.cs" />
     <Compile Include="DeletedEntityException.cs" />

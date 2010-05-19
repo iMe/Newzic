@@ -47,7 +47,8 @@ namespace Newzic.Core
 
         public void addTag(String tag)
         {
-            Enumerable.Concat(this.Tags, " " + tag);
+            if (Tags.Equals("")) Tags = ": ";
+            Enumerable.Concat(this.Tags, tag + " ");
         }
 
         public void removeTag(String tag)
