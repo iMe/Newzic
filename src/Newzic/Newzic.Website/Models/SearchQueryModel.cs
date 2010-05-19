@@ -21,7 +21,7 @@ namespace Newzic.Website.Models
         [DisplayName("Type")]
         public string type { get; set; }
 
-       // public List<Noticia> noticias { get; set; }
+       public List<Noticia> noticias { get; set; }
 
     }
 }

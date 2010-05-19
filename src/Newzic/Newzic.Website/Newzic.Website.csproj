@@ -99,7 +99,7 @@
     <Content Include="Views\News\Index.aspx" />
     <Content Include="Views\Perfil\Index.aspx" />
     <Content Include="Views\Search\Search.aspx" />
-    <Content Include="Views\Search\searchView.aspx" />
+    <Content Include="Views\Search\Results.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

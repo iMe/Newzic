@@ -18,21 +18,26 @@ namespace Newzic.Website.Controllers
         // GET: /Search/
         //{ }
 
-        public ActionResult SearchView()
+        public ActionResult Results()
         {
-            return View("searchView");
+            SearchQueryModel model = new SearchQueryModel();
+            model.query = "";
+            model.type = "";
+            model.noticias= new List<Noticia>();
+            return View("Results",model);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Search(SearchQueryModel model)
+        public ActionResult Results(SearchQueryModel model)
         {
             //var queryString = Request.Form["query"];
             //var queryType = Int32.Parse(Request.Form["type"]);
             var queryString = model.query;
             var queryType = Int32.Parse(model.type);
             var res = doSearch(queryString, queryType);
+            model.noticias = res;
             //query.noticias = search(query.query, query.type);
-            return View("Search",res);
+            return View("Results",model);
         }
 
         
