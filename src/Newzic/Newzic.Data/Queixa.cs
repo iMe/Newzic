@@ -4,7 +4,7 @@ namespace Newzic.Core
 {
     public partial class Queixa : IEntity
     {
-        public Guid Id
+        Guid IEntity.Id
         {
             get { return QueixaId; }
             set { QueixaId = value; }
