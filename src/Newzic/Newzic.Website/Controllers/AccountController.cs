@@ -52,11 +52,11 @@ namespace Newzic.Website.Controllers
         
         public ActionResult Login(LoginModel login)
         {
-            string email = Request.Form["email"];
-            string pass = Request.Form["password"];
+            //string email = Request.Form["email"];
+            //string pass = Request.Form["password"];
 
-            email = login.Email;
-            pass = login.Password;
+            String email = login.Email;
+            String pass = login.Password;
             string res = null;
             if ((email != null ) && (pass != null))
                 res = iniciarSessao(email, pass);
