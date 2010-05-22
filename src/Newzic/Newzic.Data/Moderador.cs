@@ -43,7 +43,7 @@ namespace Newzic.Core
             var jornalista = repJornalistas.fetchAll().Single(n => n.JornalistaId == this.ModeradorId);
             try
             {
-                var a = jornalista.Banidos.Single(n => n.JornalistaId == this.JornalistaId);
+                var a = jornalista.Banidos.Single(n => n.JornalistaId == this.ModeradorId);
                 return true;
             }
             catch (InvalidOperationException)
