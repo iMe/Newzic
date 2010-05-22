@@ -2,7 +2,7 @@ using System;
 
 namespace Newzic.Core
 {
-    public partial class Administrador : Moderador, IEntity
+    public partial class Administrador : IEntity
     {
         Guid IEntity.Id
         {

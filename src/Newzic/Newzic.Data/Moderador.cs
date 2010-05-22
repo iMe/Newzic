@@ -2,7 +2,7 @@ using System;
 
 namespace Newzic.Core
 {
-    public partial class Moderador :Jornalista, IEntity
+    public partial class Moderador : IEntity
     {
         Guid IEntity.Id
         {
