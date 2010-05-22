@@ -14,19 +14,18 @@
             <legend>Fields</legend>
             
             <div class="editor-label">
-                <%= Html.LabelFor(model => model.query) %>
+                <%= Html.Label("Pesquisa") %>
             </div>
             <div class="editor-field">
                 <%= Html.TextBoxFor(model => model.query) %>
                 <%= Html.ValidationMessageFor(model => model.query) %>
             </div>
-            
+           
             <div class="editor-label">
-                <%= Html.LabelFor(model => model.type) %>
+                <%= Html.Label("Tipo") %>
             </div>
             <div class="editor-field">
-                <%= Html.TextBoxFor(model => model.type) %>
-                <%= Html.ValidationMessageFor(model => model.type) %>
+                <%=Html.DropDownList("typeSelected", Model.type)%>
             </div>
            
             <p>
@@ -39,22 +38,22 @@
     <table>
         <tr>
             <th></th>
-            <th>
+<%--            <th>
                 NoticiaId
-            </th>
+            </th>--%>
             <th>
                 Titulo
             </th>
-            <th>
+<%--            <th>
                 Corpo
-            </th>
-            <th>
-                Pontuacao
-            </th>
+            </th>--%>
+    <%--            <th>
+                    Pontuacao
+                </th>--%>
             <th>
                 Data
             </th>
-            <th>
+<%--            <th>
                 FlagCount
             </th>
             <th>
@@ -71,7 +70,7 @@
             </th>
             <th>
                 MapaId
-            </th>
+            </th>--%>
         </tr>
 
     <% foreach (var item in Model.noticias) { %>
@@ -81,22 +80,22 @@
                 <%= Html.ActionLink("Edit", "Edit", new { id=item.NoticiaId }) %> |
                 <%= Html.ActionLink("Details", "Details", new { id=item.NoticiaId })%>
             </td>
-            <td>
+           <%-- <td>
                 <%= Html.Encode(item.NoticiaId) %>
-            </td>
+            </td>--%>
             <td>
                 <%= Html.Encode(item.Titulo) %>
             </td>
-            <td>
+            <%--<td>
                 <%= Html.Encode(item.Corpo) %>
             </td>
             <td>
                 <%= Html.Encode(item.Pontuacao) %>
-            </td>
+            </td>--%>
             <td>
                 <%= Html.Encode(String.Format("{0:g}", item.Data)) %>
             </td>
-            <td>
+            <%--<td>
                 <%= Html.Encode(item.FlagCount) %>
             </td>
             <td>
@@ -113,7 +112,7 @@
             </td>
             <td>
                 <%= Html.Encode(item.MapaId) %>
-            </td>
+            </td>--%>
         </tr>
     
     <% } %>
