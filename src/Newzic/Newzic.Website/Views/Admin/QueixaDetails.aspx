@@ -30,13 +30,13 @@
         <div class="display-field"><%: Model.Assunto %></div>
         
         <div class="display-label">Id</div>
-        <div class="display-field"><%: Model.Id %></div>
+        <div class="display-field"><%: Model.QueixaId %></div>
         
     </fieldset>
     <p>
 
-        <%: Html.ActionLink("Edit", "Edit", new { id=Model.QueixaId }) %> |
-        <%: Html.ActionLink("Back to List", "Index") %>
+        <%: Html.ActionLink("Marcar como resolvida", "resolv", new { id=Model.QueixaId.ToString() }) %> |
+        <%: Html.ActionLink("Back to List", "Queixas") %>
     </p>
 
 </asp:Content>

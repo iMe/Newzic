@@ -12,7 +12,9 @@ namespace Newzic.Website.Controllers
         //
         // GET: /Admin/
 
-        private readonly DataCRUD<Queixa> qrepo = new DataCRUD<Queixa>();
+        private readonly IDataCRUD<Queixa> qrepo = new DataCRUD<Queixa>();
+        private readonly IDataCRUD<Jornalista> qjorn = new DataCRUD<Jornalista>();
+        private readonly IDataCRUD<Moderador> modList = new DataCRUD<Moderador>();
         public ActionResult Index(string email)
         {
             if (!isAdmin(email))
@@ -41,12 +43,20 @@ namespace Newzic.Website.Controllers
             return View("Queixas", listaQueixas);
         }
 
-        
+        public ActionResult resolv(string id)
+        {
+            //marcar como resolvida
+            return View("resolved");
+        }
+
         public ActionResult Details(string id)
         {
             Guid g = new Guid(id);
-            var q = qrepo.fetch(g);
-            return View("QueixaDetails", q);
+            var jList = qrepo.fetchAll();
+            var q = (from n in jList where (n.QueixaId.ToString() == id) select n).ToList();
+
+            //var q = qrepo.fetch(g);
+            return View("QueixaDetails", q.First());
         }
 
         public ActionResult GerirMods(string email)
@@ -55,8 +65,9 @@ namespace Newzic.Website.Controllers
             {
                 return View("acessoNegado");
             }
+            var mods = modList.fetchAll().ToList();
 
-            return View("GerirMods");
+            return View("GerirMods",mods);
         }
     }
 }
