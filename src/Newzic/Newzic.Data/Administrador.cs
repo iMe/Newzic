@@ -37,5 +37,19 @@ namespace Newzic.Core
             banido.DataFim = dataFim;
             jornalista.Banidos.Add(banido);
         }
+
+        public bool isBanned()
+        {
+            var jornalista = repJornalistas.fetchAll().Single(n => n.JornalistaId == this.AdministradorId);
+            try
+            {
+                var a = jornalista.Banidos.Single(n => n.JornalistaId == this.AdministradorId);
+                return true;
+            }
+            catch (InvalidOperationException)
+            {
+                return false;
+            }
+        }
     }
 }
