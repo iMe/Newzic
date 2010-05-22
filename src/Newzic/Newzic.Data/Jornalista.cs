@@ -41,10 +41,32 @@ namespace Newzic.Core
             var banido = r.Single(b => b.JornalistaId == this.JornalistaId);
             this.Banidos.Remove(banido);
             data.Save();
-
-            
         }
 
+        public bool isAdministrador()
+        {
+            if (this.Administrador == null) return false;
+            return true;
+        }
+
+        public bool isModerador()
+        {
+            if (this.Moderador == null) return false;
+            return true;
+        }
+
+        public bool isBanned()
+        {
+            try
+            {
+                var a = this.Banidos.Single(n => n.JornalistaId == this.JornalistaId);
+                return true;
+            }
+            catch (InvalidOperationException)
+            {
+                return false;
+            }
+        }
 
     }
 }

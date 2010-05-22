@@ -18,7 +18,7 @@ namespace Newzic.Core
             this.Tours.Add(tour);
         }
 
-        public Guid Id
+        Guid IEntity.Id
         {
             get { return MapaId; }
             set { MapaId = value; }

@@ -10,6 +10,10 @@ namespace Newzic.Core
             set { QueixaId = value; }
         }
 
+        public void MarcarResolvida()
+        {
+            this.Resolved = true;
+        }
 
     }
 }
