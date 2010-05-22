@@ -25,5 +25,7 @@ namespace Newzic.Website.Models
 
         public List<Noticia> noticias { get; set; }
 
+        public int order { get; set; }
+
     }
 }

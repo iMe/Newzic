@@ -1,12 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Newzic.Website.Models.SearchQueryModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	searchView
+	Pesquisa
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>searchView</h2>
+    <h2>Pesquisa</h2>
 
      <% using (Html.BeginForm()) {%>
         <%: Html.ValidationSummary(true, "") %>
@@ -38,25 +38,22 @@
     <table>
         <tr>
             <th></th>
-<%--            <th>
-                NoticiaId
-            </th>--%>
             <th>
-                Titulo
+                 <%:Html.ActionLink("Rank", "Order", "Search", new { q = Model.query, t = Model.typeSelected.ToString(), o = 5.ToString() }, null)%>
+            </th>
+            <th>
+                <%:Html.ActionLink("Titulo", "Order", "Search", new { q = Model.query, t = Model.typeSelected.ToString(), o = 0.ToString() }, null)%>
             </th>
 <%--            <th>
                 Corpo
             </th>--%>
-    <%--            <th>
-                    Pontuacao
+ <%--               <th>
+                    FlagCount
                 </th>--%>
             <th>
-                Data
+                <%:Html.ActionLink("Data", "Order", "Search", new { q = Model.query, t = Model.typeSelected.ToString(), o = 4.ToString() }, null)%>
             </th>
 <%--            <th>
-                FlagCount
-            </th>
-            <th>
                 Deleted
             </th>
             <th>
@@ -80,9 +77,9 @@
                 <%= Html.ActionLink("Edit", "Edit", new { id=item.NoticiaId }) %> |
                 <%= Html.ActionLink("Details", "Details", new { id=item.NoticiaId })%>
             </td>
-           <%-- <td>
-                <%= Html.Encode(item.NoticiaId) %>
-            </td>--%>
+            <td>
+                <%= Html.Encode(item.rank) %>
+            </td>
             <td>
                 <%= Html.Encode(item.Titulo) %>
             </td>
