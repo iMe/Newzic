@@ -39,7 +39,7 @@
         <tr>
             <td>
                <%-- <%: Html.ActionLink("Edit", "Edit", new { id=item.QueixaId }) %> |--%>
-                <%: Html.ActionLink("Details", "Details", new { id=item.QueixaId })%> |
+               <%: Html.ActionLink("Ver queixa", "Details", "Admin", new { id = item.QueixaId }, null)%>
                <%-- <%: Html.ActionLink("Delete", "Delete", new { id=item.QueixaId })%>--%>
             </td>
             <td>
@@ -61,7 +61,7 @@
                 <%: item.Assunto %>
             </td>
             <td>
-                <%: item.Id %>
+                <%: item.QueixaId %>
             </td>
         </tr>
     

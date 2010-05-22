@@ -94,7 +94,9 @@
     <Content Include="Views\Admin\AcessoNegado.aspx" />
     <Content Include="Views\Admin\GerirMods.aspx" />
     <Content Include="Views\Admin\Index.aspx" />
+    <Content Include="Views\Admin\QueixaDetails.aspx" />
     <Content Include="Views\Admin\Queixas.aspx" />
+    <Content Include="Views\Admin\resolved.aspx" />
     <Content Include="Views\News\Create.aspx" />
     <Content Include="Views\News\Index.aspx" />
     <Content Include="Views\Perfil\Index.aspx" />

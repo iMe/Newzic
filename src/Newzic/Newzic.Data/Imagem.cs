@@ -4,7 +4,7 @@ namespace Newzic.Core
 {
     public partial class Imagem : IEntity
     {
-        public Guid Id
+        Guid IEntity.Id
         {
             get { return ImagemId; }
             set { ImagemId = value; }
