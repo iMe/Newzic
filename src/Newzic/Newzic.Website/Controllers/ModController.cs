@@ -62,8 +62,9 @@ namespace Newzic.Website.Controllers
                 Guid gid = new Guid(id);
 
                 var listaBanidos = repBanidos.fetchAll().ToList();
-                var jornalista = repBanidos.fetchAll().Single(n => n.BanidoId == gid).Jornalista;
+                var jornalista = repBanidos.fetchAll().Single(n => n.JornalistaId == gid).Jornalista;
                 return View("ConfirmarUnban", jornalista);
+                
             }
             catch (InvalidOperationException)
             {
@@ -116,24 +117,51 @@ namespace Newzic.Website.Controllers
 
         public ActionResult ConfirmaBanir(string id, string email)
         {
+            Jornalista user = getAutenticatedJornalista(email);
+
+            if (user == null || !user.isModerador()) return View("acessoNegado");
+            
+            Guid gid = new Guid(id);
+            Jornalista jornalista = repJornalistas.fetchAll().Single(n => n.JornalistaId == gid);
+            jornalista.Ban();
+            //repJornalistas.Save();
+            //repBanidos.Save();
+
+            var listaJornalistas = repJornalistas.fetchAll().ToList();
+            return View("GerirJornalistas", listaJornalistas);
+
+            //try
+            //{
+            //    Jornalista useri = repJornalistas.fetchAll().Single(n => n.Email.Equals(email));
+            //    if (!user.isModerador())
+            //        return View("acessoNegado");
+
+            //    Guid gid = new Guid(id);
+            //    Jornalista jornalista = repJornalistas.fetchAll().Single(n => n.JornalistaId == gid);
+            //    jornalista.Ban();
+            //    repBanidos.Save();
+
+            //    var listaJornalistas = repJornalistas.fetchAll().ToList();
+            //    return View("GerirJornalistas", listaJornalistas);
+            //}
+            //catch (InvalidOperationException)
+            //{
+            //    return View("acessoNegado");
+            //}
+        }
+
+        public Jornalista getAutenticatedJornalista(string email)
+        {
             try
             {
                 Jornalista user = repJornalistas.fetchAll().Single(n => n.Email.Equals(email));
-                if (!user.isModerador())
-                    return View("acessoNegado");
-
-                Guid gid = new Guid(id);
-                Jornalista jornalista = repJornalistas.fetchAll().Single(n => n.JornalistaId == gid);
-                jornalista.Ban();
-                repBanidos.Save();
-
-                var listaJornalistas = repJornalistas.fetchAll().ToList();
-                return View("GerirJornalistas", listaJornalistas);
+                return user;
             }
             catch (InvalidOperationException)
             {
-                return View("acessoNegado");
+                return null;
             }
+            
         }
     }
 }

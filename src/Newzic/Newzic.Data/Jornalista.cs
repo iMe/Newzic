@@ -7,6 +7,9 @@ namespace Newzic.Core
 {
     public partial class Jornalista : IEntity
     {
+        IDataCRUD<Banido> repBanidos = new DataCRUD<Banido>();
+        IDataCRUD<Jornalista> repJornalistas = new DataCRUD<Jornalista>();
+
         Guid IEntity.Id
         {
             get { return JornalistaId; }
@@ -14,16 +17,18 @@ namespace Newzic.Core
         }
 
         public void Ban()
-        {
-            IDataCRUD<Banido> data = new DataCRUD<Banido>();
+        {        
             var banido = new Banido();
-            banido.BanidoId = Guid.NewGuid();
+            //banido.BanidoId = Guid.NewGuid();
             banido.Permanente = true;
-            banido.Jornalista = this;
+            
             banido.JornalistaId = this.JornalistaId;
-            this.Banidos.Add(banido);
-            data.create(banido);
-            data.Save();
+
+            Guid guid = repBanidos.create(banido);
+           // banido.BanidoId = guid;
+            //this.Banidos.Add(banido);
+            
+            repBanidos.Save();
         }
 
         public void Ban(DateTime dataFim)
