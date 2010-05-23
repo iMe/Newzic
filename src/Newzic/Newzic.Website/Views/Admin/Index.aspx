@@ -11,8 +11,8 @@
     <div id="menucontainer">
             
                            
-                    <li><%: Html.ActionLink("Queixas", "Queixas", "Admin", new { email = Page.User.Identity }, null)%></li>    
-                    <li><%: Html.ActionLink("gerir mods", "GerirMods", "Admin", new { email = Page.User.Identity }, null)%></li>   
+                    <li><%: Html.ActionLink("Queixas", "Queixas", "Admin", new { email = Page.User.Identity.Name }, null)%></li>    
+                    <li><%: Html.ActionLink("gerir mods", "GerirMods", "Admin", new { email = Page.User.Identity.Name }, null)%></li>   
                
             
      </div>

@@ -11,17 +11,17 @@
     <table>
         <tr>
             <th></th>
-            <th>
+            <%--<th>
                 BanidoId
+            </th>--%>
+            <th>
+                Jornalista
             </th>
             <th>
-                JornalistaId
+                Data de Fim de Ban
             </th>
             <th>
-                DataFim
-            </th>
-            <th>
-                Permanente
+                Ban Permanente
             </th>
         </tr>
 
@@ -29,14 +29,15 @@
     
         <tr>
             <td>
-                <%= Html.ActionLink("Edit", "Edit", new { id=item.BanidoId }) %> |
-                <%= Html.ActionLink("Details", "Details", new { id=item.BanidoId })%>
+                <%--<%= Html.ActionLink("Edit", "Edit", new { id=item.BanidoId }) %> |
+                <%= Html.ActionLink("Details", "Details", new { id=item.BanidoId })%>--%>
+                <%=Html.ActionLink("Levantar Ban", "Unban", new {Id = item.BanidoId, email = Page.User.Identity.Name })%>
             </td>
-            <td>
+           <%-- <td>
                 <%= Html.Encode(item.BanidoId) %>
-            </td>
+            </td>--%>
             <td>
-                <%= Html.Encode(item.JornalistaId) %>
+                <%= Html.Encode(item.Jornalista.Nome) %>
             </td>
             <td>
                 <%= Html.Encode(String.Format("{0:g}", item.DataFim)) %>
@@ -50,9 +51,7 @@
 
     </table>
 
-    <p>
-        <%= Html.ActionLink("Create New", "Create") %>
-    </p>
+    <%=Html.ActionLink("", "Unban", new {Id = item.BanidoId, email = Page.User.Identity.Name })%>
 
 </asp:Content>
 

@@ -77,6 +77,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BanModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\SearchQueryModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
@@ -93,17 +94,25 @@
     <Content Include="Views\Account\Register.aspx" />
     <Content Include="Views\Account\VerPerfil.aspx" />
     <Content Include="Views\Admin\AcessoNegado.aspx" />
+    <Content Include="Views\Admin\BanModView.aspx" />
     <Content Include="Views\Admin\GerirMods.aspx" />
     <Content Include="Views\Admin\Index.aspx" />
+    <Content Include="Views\Admin\ModDetails.aspx" />
+    <Content Include="Views\Admin\PromoteView.aspx" />
+    <Content Include="Views\Admin\QueixaDetails.aspx" />
     <Content Include="Views\Admin\Queixas.aspx" />
+    <Content Include="Views\Mod\ConfirmarUnban.aspx" />
     <Content Include="Views\Mod\GerirJornalistasBanidos.aspx" />
     <Content Include="Views\Mod\Index.aspx" />
+    <Content Include="Views\Admin\UnBanView.aspx" />
+    <Content Include="Views\Admin\UnPromoteView.aspx" />
     <Content Include="Views\News\Create.aspx" />
     <Content Include="Views\News\Index.aspx" />
     <Content Include="Views\Perfil\Index.aspx" />
     <Content Include="Views\Search\Search.aspx" />
     <Content Include="Views\Search\Results.aspx" />
     <Content Include="Views\Shared\AcessoNegado.aspx" />
+    <Content Include="Views\Shared\SuccessView.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
