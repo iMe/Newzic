@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Scripts\upload.js" />
     <Content Include="Views\Account\EditarPerfil.aspx" />
     <Content Include="Views\Account\LoggedIn.aspx" />
     <Content Include="Views\Account\Login.aspx" />

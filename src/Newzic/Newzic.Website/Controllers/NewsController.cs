@@ -42,40 +42,59 @@ namespace Newzic.Website.Controllers
         [HttpPost]
         public ActionResult Create(Noticia noticia)
         {
-
-            if (ModelState.IsValid)
+            var isAuthenticated = Request.IsAuthenticated;
+            if (isAuthenticated == true)
             {
-
-                try
+                if (ModelState.IsValid)
                 {
-                    foreach (string file in Request.Files)
+
+                    try
                     {
-                        HttpPostedFileBase hpf = Request.Files[file] as HttpPostedFileBase;
-                        var fileSize = hpf.ContentLength;
-                        if (fileSize == 0)
-                            continue;
+                        foreach (string file in Request.Files)
+                        {
+                            HttpPostedFileBase hpf = Request.Files[file] as HttpPostedFileBase;
+                            var fileSize = hpf.ContentLength;
+                            if (fileSize == 0)
+                                continue;
 
-                        Imagem img = new Imagem();
-                        byte[] buffer = new byte[fileSize];
-                        hpf.InputStream.Read(buffer, 0, fileSize);
-                        img.ImageFile = buffer;
-                        noticia.Imagems.Add(img);
+                            Imagem img = new Imagem();
+                            byte[] buffer = new byte[fileSize];
+                            hpf.InputStream.Read(buffer, 0, fileSize);
+                            img.ImageFile = buffer;
+                            noticia.Imagems.Add(img);
 
+                        }
+                        var email = User.Identity.Name;
+                        IDataCRUD<Jornalista> jornalistaConsulta = new DataCRUD<Jornalista>();
+                        IQueryable<Jornalista> jornalistas = jornalistaConsulta.fetchAll();
+                        Jornalista jorn =
+                            (from Jornalista j in jornalistas where j.Email.Equals(email) select j).Single();
+                        var jornalistaId = jorn.JornalistaId;
+
+                        noticia.Data = DateTime.Now;
+                        noticia.JornalistaId = jornalistaId;
+
+                        IDataCRUD<Noticia> noticiaAdd = new DataCRUD<Noticia>();
+
+
+
+                        noticiaAdd.create(noticia);
+                        noticiaAdd.Save();
+                        return RedirectToAction("Index");
                     }
-                    DataCRUD<Noticia> noticiaAdd = new DataCRUD<Noticia>();
-                    noticia.Data = DateTime.Now;
-                    noticiaAdd.create(noticia);
-                    noticiaAdd.Save();
-                    return RedirectToAction("Index");
+                    catch
+                    {
+                        return View(noticia);
+                    }
                 }
-                catch
+                else
                 {
                     return View(noticia);
                 }
             }
             else
             {
-                return View(noticia);
+                throw new Exception("Utilizador nao está autenticado!");
             }
         }
 
