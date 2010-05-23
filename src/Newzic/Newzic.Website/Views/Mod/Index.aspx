@@ -6,6 +6,13 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Index</h2>
+    <form id="form1" runat="server">
+    <h2>Index - Pagina Principal para Moderadores</h2>
+
+    <%if (Request.IsAuthenticated) { %>
+        <li><%: Html.ActionLink("Gerir Jornalistas", "GerirJornalistasBanidos", "Mod", new {email = Page.User.Identity.Name}, null)%></li>   
+    <%} %>
+    
+    </form>
 
 </asp:Content>
