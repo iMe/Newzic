@@ -45,9 +45,7 @@ namespace Newzic.Core
             IDataCRUD<Banido> data = new DataCRUD<Banido>();
             IQueryable<Banido> r = data.fetchAll();
             var banido = r.Single(b => b.JornalistaId == this.JornalistaId);
-
             this.Banidos.Remove(banido);
-            data.remove(banido);
             data.Save();
         }
 
@@ -74,16 +72,6 @@ namespace Newzic.Core
             {
                 return false;
             }
-        }
-
-        public void promote()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void demote()
-        {
-            throw new NotImplementedException();
         }
 
     }

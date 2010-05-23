@@ -78,6 +78,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BanModel.cs" />
+    <Compile Include="Models\GerirModsModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\SearchQueryModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
@@ -94,6 +95,7 @@
     <Content Include="Views\Account\Register.aspx" />
     <Content Include="Views\Account\VerPerfil.aspx" />
     <Content Include="Views\Admin\AcessoNegado.aspx" />
+    <Content Include="Views\Admin\BanConfirmView.aspx" />
     <Content Include="Views\Admin\BanModView.aspx" />
     <Content Include="Views\Admin\GerirMods.aspx" />
     <Content Include="Views\Admin\Index.aspx" />
@@ -168,7 +170,8 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>49173</DevelopmentServerPort>
+          <DevelopmentServerPort>45523</DevelopmentServerPort>
+          <DevelopmentServerPort>49174</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
