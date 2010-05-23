@@ -17,6 +17,38 @@ namespace Newzic.Website.Controllers
         private readonly IDataCRUD<Queixa> qrepo = new DataCRUD<Queixa>();
         private readonly IDataCRUD<Jornalista> qjorn = new DataCRUD<Jornalista>();
         private readonly IDataCRUD<Moderador> modList = new DataCRUD<Moderador>();
+
+
+
+        //gets jornalista by email
+        public Jornalista getJornalistaByEmail(string email)
+        {
+            var jList = qjorn.fetchAll();
+            var jornalista = (from j in jList
+                             where (j.Email == email)
+                             select j).Single();
+            return jornalista;
+        }
+
+        //creates a list of strings to populate the dropLists
+        public List<SelectListItem> createDropList(string[] list)
+        {
+            Int32 i = 1;
+            List<SelectListItem> res = new List<SelectListItem>();
+            foreach (string s in list)
+            {
+
+                res.Add(new SelectListItem
+                {
+                    Text = s,
+                    Value = Convert.ToString(i)
+                });
+                i++;
+            }
+
+            return res;
+        }
+        
         public ActionResult Index(string email)
         {
             if (!isAdmin(email))
@@ -121,7 +153,8 @@ namespace Newzic.Website.Controllers
                 return View("acessoNegado");
             }
 
-            //promover mod 
+            var mod = getMod(id);
+            //mod.Jornalista.p
             return View("SuccessView");
         }
 
@@ -139,22 +172,70 @@ namespace Newzic.Website.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult BanModView(BanModel Ban)
         {
-            if (Int32.Parse(Ban.mes) > 12 || Int32.Parse(Ban.mes) < 0)
+
+            if (!isAdmin(Ban.Email))
+            {
+                return View("acessoNegado");
+            }
+            string[] meses = new string[12] { "Janeiro", "Fevereiro", "Março", "Abril,", "Maio", "Junho", "Julho", "Agosto", "Setembro,", "Outubro", "Novembro", "Dezembro" };
+            List<SelectListItem> diaList = new List<SelectListItem>();
+            for (int i = 1; i <= 31;i++)
+            {
+                SelectListItem item = new SelectListItem();
+                item.Text = i.ToString();
+                item.Value = i.ToString();
+                diaList.Add(item);
+            }
+
+            int nowYear = DateTime.Now.Year;
+            List<SelectListItem> anoList = new List<SelectListItem>();
+            for (int i = nowYear; i <= nowYear+10; i++)
+            {
+                SelectListItem item = new SelectListItem(); 
+                item.Text = i.ToString();
+                item.Value = i.ToString();
+                anoList.Add(item);
+            }
+            
+            List<SelectListItem> mesList = new List<SelectListItem>();
+            int mes = 1;
+            List<SelectListItem> res = new List<SelectListItem>();
+            foreach (string m in meses)
+            {
+                SelectListItem item = new SelectListItem();
+                item.Text = m;
+                item.Value = mes.ToString();
+                mesList.Add(item);
+                mes++;
+            }
+
+            Ban.diaList = diaList;
+            Ban.anoList = anoList;
+            Ban.mesList = mesList;
+
+            if (Ban.selectedMes > 12 || Ban.selectedMes < 1)
             {
                 ModelState.AddModelError("", "A data introduzida é inválida. Por favor corrija e tente novamente.");
                 return View();
             }
 
-            if (Int32.Parse(Ban.mes) ==  12 || Int32.Parse(Ban.mes) < 0)
+            if ((Ban.selectedMes ==  2) && (Ban.selectedDia>29))
             {
                 ModelState.AddModelError("", "A data introduzida é inválida. Por favor corrija e tente novamente.");
                 return View();
             }
 
+            if (Ban.selectedDia > 31 || (Ban.selectedDia < 1))
+            {
+                ModelState.AddModelError("", "A data introduzida é inválida. Por favor corrija e tente novamente.");
+                return View();
+            }
+            if (ModelState.IsValid)
+            {
+                return View("BanConfirmView", Ban.Email);
+            }
+            return View(Ban);
 
-
-
-            return View("SuccessView");
         }
 
         public ActionResult BanModView(string id, string email)
@@ -163,10 +244,48 @@ namespace Newzic.Website.Controllers
             {
                 return View("acessoNegado");
             }
-            var m = getMod(id);
-            //BanModel bm = new BanModel();
-            return View("BanModView");
-        }
+            var mod = getMod(id);
+            BanModel Ban = new BanModel();
+            
+            string[] meses = new string[12] { "Janeiro", "Fevereiro", "Março", "Abril,", "Maio", "Junho", "Julho", "Agosto", "Setembro,", "Outubro", "Novembro", "Dezembro" };
+            List<SelectListItem> diaList = new List<SelectListItem>();
+            for (int i = 1; i <= 31; i++)
+            {
+                SelectListItem item = new SelectListItem();
+                item.Text = i.ToString();
+                item.Value = i.ToString();
+                diaList.Add(item);
+            }
+
+            int nowYear = DateTime.Now.Year;
+            List<SelectListItem> anoList = new List<SelectListItem>();
+            for (int i = nowYear; i <= nowYear + 10; i++)
+            {
+                SelectListItem item = new SelectListItem();
+                item.Text = i.ToString();
+                item.Value = i.ToString();
+                anoList.Add(item);
+            }
+
+            List<SelectListItem> mesList = new List<SelectListItem>();
+            int m = 1;
+            List<SelectListItem> res = new List<SelectListItem>();
+            foreach (string mes in meses)
+            {
+                SelectListItem item = new SelectListItem();
+                item.Text = mes;
+                item.Value = m.ToString();
+                mesList.Add(item);
+                m++;
+            }
+
+            Ban.diaList = diaList;
+            Ban.anoList = anoList;
+            Ban.mesList = mesList;
+
+
+            return View("BanModView", Ban);
+       }
 
 
         public ActionResult UnBanMod(string id, string email)
@@ -175,7 +294,8 @@ namespace Newzic.Website.Controllers
             {
                 return View("acessoNegado");
             }
-            //desbanir mod
+            var mod = getMod(id);
+            mod.Jornalista.Unban();
 
             return View("SuccessView");
         }
@@ -186,8 +306,8 @@ namespace Newzic.Website.Controllers
             {
                 return View("acessoNegado");
             }
-            //banir mod
-
+            var mod = getMod(id);
+            mod.Jornalista.Ban();
             return View("SuccessView");
         }
 

@@ -35,5 +35,13 @@ namespace Newzic.Website.Models
         [DataType(DataType.Text)]
         [DisplayName("Razão")]
         public string reason { get; set; }
+
+        public List<SelectListItem> anoList { get; set; }
+        public List<SelectListItem> mesList { get; set; }
+        public List<SelectListItem> diaList { get; set; }
+
+        public int selectedDia { get; set; }
+        public int selectedMes { get; set; }
+        public int selectedAno { get; set; }
     }
 }

@@ -94,6 +94,7 @@
     <Content Include="Views\Account\Register.aspx" />
     <Content Include="Views\Account\VerPerfil.aspx" />
     <Content Include="Views\Admin\AcessoNegado.aspx" />
+    <Content Include="Views\Admin\BanConfirmView.aspx" />
     <Content Include="Views\Admin\BanModView.aspx" />
     <Content Include="Views\Admin\GerirMods.aspx" />
     <Content Include="Views\Admin\Index.aspx" />
