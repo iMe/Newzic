@@ -102,6 +102,7 @@
     <Content Include="Views\Admin\PromoteView.aspx" />
     <Content Include="Views\Admin\QueixaDetails.aspx" />
     <Content Include="Views\Admin\Queixas.aspx" />
+    <Content Include="Views\Mod\ConfirmarUnban.aspx" />
     <Content Include="Views\Mod\GerirJornalistasBanidos.aspx" />
     <Content Include="Views\Mod\Index.aspx" />
     <Content Include="Views\Admin\UnBanView.aspx" />
