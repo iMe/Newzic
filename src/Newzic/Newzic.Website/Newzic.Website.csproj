@@ -79,6 +79,7 @@
     </Compile>
     <Compile Include="Models\BanModel.cs" />
     <Compile Include="Models\GerirModsModel.cs" />
+    <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\SearchQueryModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
@@ -176,7 +177,6 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>45523</DevelopmentServerPort>
           <DevelopmentServerPort>49174</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
