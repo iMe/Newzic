@@ -43,7 +43,18 @@ namespace Newzic.Website.Controllers
             return View("GerirJornalistasBanidos",listaBanidos);
         }
 
-
-
+        public ActionResult Unban(string id)
+        {
+            //throw new NotImplementedException();
+            //Jornalista user = repJornalistas.fetchAll().Single(n => n.Email.Equals(email));
+            Guid gid = new Guid(id);
+            /*if (!user.isModerador())
+                return View("acessoNegado");
+            */
+            var listaBanidos = repBanidos.fetchAll().ToList();
+            var moderador = repBanidos.fetchAll().Single(n => n.BanidoId == gid);
+            return View("ConfirmarUnban", moderador);
+            
+        }
     }
 }

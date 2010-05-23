@@ -68,5 +68,15 @@ namespace Newzic.Core
             }
         }
 
+        public void promote()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void demote()
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
