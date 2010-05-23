@@ -9,12 +9,8 @@
     <form id="form1" runat="server">
 
     <h2>Pesquisa</h2>
-<%--     <% 
-         var actionURL = "http://"+ Request.Url.Host + "/Search/Results2";
-         using (Html.BeginForm("Results2","Search",FormMethod.Post,new { @action = actionURL })) --%>
          <%using (Html.BeginForm("Results","Search"))
         {%>
-        <%--<%: Html.ValidationSummary(true, "") %>--%>
         <% } %>
         <fieldset>
                     <%using (Html.BeginForm("Results","Search"))
@@ -40,8 +36,7 @@
     <% } %>
 
         </fieldset>
-  <%--  <% } %>--%>
-    
+
     <% if (Model.noticias.Count!=0) {%>
     <table>
         <tr style="width:900px;">
@@ -76,13 +71,15 @@
             </td>
             <td>
                 <b>
-                <%= Html.Encode(item.rank) %>
+                <%= Html.Encode(item.Pontuacao) %>
                 </b>
             </td>
             <td>
                 <b>
                 <%= Html.Encode(item.Titulo) %> </b><br>
+                <small>
                 <%= Html.Encode(item.Corpo)%>
+                </small>
             </td>
             <td>
                 <b>
