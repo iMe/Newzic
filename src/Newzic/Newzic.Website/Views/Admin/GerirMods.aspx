@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Newzic.Core.Moderador>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<Newzic.Core.Moderador>>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	GerirMods
@@ -6,32 +6,43 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>GerirMods</h2>
+    <h2>Lista de Moderadores</h2>
 
-    <fieldset>
-        <legend>Fields</legend>
-        
-        <div class="display-label">ModeradorId</div>
-        <div class="display-field"><%: Model.ModeradorId %></div>
-        
-        <div class="display-label">Nome</div>
-        <div class="display-field"><%: Model.Nome %></div>
-        
-        <div class="display-label">Email</div>
-        <div class="display-field"><%: Model.Email %></div>
-        
-        <div class="display-label">Password</div>
-        <div class="display-field"><%: Model.Password %></div>
-        
-        <div class="display-label">JornalistaId</div>
-        <div class="display-field"><%: Model.JornalistaId %></div>
-        
-    </fieldset>
-    <p>
+    <table>
+        <tr>
+            <th></th>
+            <th>
+                Nome Moderador
+            </th>
+            <th>
+                Email Moderador
+            </th>
+            <th>
+                Estado Moderador
+            </th>
+        </tr>
 
-        <%: Html.ActionLink("Edit", "Edit", new { id=Model.ModeradorId }) %> |
-        <%: Html.ActionLink("Back to List", "Index") %>
-    </p>
+    <% foreach (var item in Model) { %>
+    
+        <tr>
+            <td>
+                <%: Html.ActionLink("Ver Moderador", "ModDetais", new { id = item.ModeradorId, email = Page.User.Identity.Name })%> |
+                <%: Html.ActionLink("Banir", "BanModView", new { id = item.ModeradorId, email = Page.User.Identity.Name })%> |
+                <%: Html.ActionLink("Desbanir", "UnbanView", new { id = item.ModeradorId, email = Page.User.Identity.Name })%> |
+                <%: Html.ActionLink("Promover", "PromoteView", new { id = item.ModeradorId, email = Page.User.Identity.Name })%> |
+                 <%: Html.ActionLink("Despromover", "UnPromoteView", new { id = item.ModeradorId, email = Page.User.Identity.Name })%> |
+            </td>
+            <td>
+                <%: item.Jornalista.Nome %>
+            </td>
+            <td>
+                <%: item.Jornalista.Email%>
+            </td>
+        </tr>
+    
+    <% } %>
+
+    </table>
 
 </asp:Content>
 
