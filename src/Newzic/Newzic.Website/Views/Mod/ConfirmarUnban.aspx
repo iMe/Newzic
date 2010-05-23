@@ -23,7 +23,7 @@
     <p>
 
         <%=Html.ActionLink("Confirmar Leventamento do Ban", "ConfirmaUnban", new { id=Model.JornalistaId, email = Page.User.Identity.Name }) %> |
-        <%=Html.ActionLink("Voltar", "GerirJornalistasBanidos", new { email = Page.User.Identity.Name}) %>
+        <%=Html.ActionLink("Voltar", "GerirJornalistas", new { email = Page.User.Identity.Name}) %>
     </p>
 
 </asp:Content>

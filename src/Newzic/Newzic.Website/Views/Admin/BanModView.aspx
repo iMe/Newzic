@@ -9,7 +9,7 @@
     <h2>BanModView</h2>
 
     <% using (Html.BeginForm()) {%>
-        <%: Html.ValidationSummary(true) %>
+        <%: Html.ValidationSummary(true,"Erro na introdução da data") %>
         
         <fieldset>
             <legend>Fields</legend>
@@ -23,31 +23,28 @@
                 <%: Html.ValidationMessageFor(model => model.Email) %>
             </div>
             
-            
-            <div class="editor-label">
-                <%: Html.LabelFor(model => model.ano) %>
-            </div>
-            <div class="editor-field">
-                <%: Html.TextBoxFor(model => model.ano)%>
-                <%: Html.ValidationMessageFor(model => model.ano)%>
-            </div>
 
             <div class="editor-label">
-                <%: Html.LabelFor(model => model.mes) %>
+                <%= Html.Label("Dia") %>
             </div>
             <div class="editor-field">
-                <%: Html.TextBoxFor(model => model.mes)%>
-                <%: Html.ValidationMessageFor(model => model.mes)%>
+                <%=Html.DropDownList("selectedDia", Model.diaList)%>
             </div>
 
-            <div class="editor-label">
-                <%: Html.LabelFor(model => model.dia) %>
+             <div class="editor-label">
+                <%= Html.Label("Mês") %>
             </div>
             <div class="editor-field">
-                <%: Html.TextBoxFor(model => model.dia)%>
-                <%: Html.ValidationMessageFor(model => model.dia)%>
+                <%=Html.DropDownList("selectedMes", Model.mesList)%>
             </div>
-            
+
+             <div class="editor-label">
+                <%= Html.Label("Ano") %>
+            </div>
+            <div class="editor-field">
+                <%=Html.DropDownList("selectedAno", Model.anoList)%>
+            </div>
+
             <div class="editor-label">
                 <%: Html.LabelFor(model => model.reason) %>
             </div>
