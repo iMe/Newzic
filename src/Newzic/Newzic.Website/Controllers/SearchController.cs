@@ -42,12 +42,13 @@ namespace Newzic.Website.Controllers
             model.noticias= new List<Noticia>();
             model.state = RankDSC;
             model.page = 1;
+            model.merda = false;
             return View("Results",model);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Results(SearchQueryModel model)
-        {
+        { 
             var queryString = model.query;
             var queryType = model.typeSelected;
             var res = doSearch(queryString, queryType);
@@ -59,11 +60,15 @@ namespace Newzic.Website.Controllers
             return View("Results",model);
         }
 
+        public ActionResult Teste(SearchQueryModel m){
+            return View("Results", m);
+        }
+
         public ActionResult Order(string q, string t, string o, string s)
         {
             int typeSelected = Int32.Parse(t);
             int order = Int32.Parse(o);
-           
+            
             var res = doSearch(q, typeSelected);
             SearchQueryModel model=new SearchQueryModel();
 
@@ -77,6 +82,7 @@ namespace Newzic.Website.Controllers
             model.order = order;
             model.page = 1;
 
+            //return Teste(model);
             return View("Results",model);
         }
 
@@ -88,36 +94,23 @@ namespace Newzic.Website.Controllers
             switch (type)
             {
                 case Titulo:
-                    if(state==TituloASC){
-                        res = l.OrderBy(x => x.Titulo).ToList();
-                        res.Reverse();
-                    }
-                    else res = l.OrderBy(x => x.Titulo).ToList();
+                    res = l.OrderBy(x => x.Titulo).ToList();
+                    if (state != TituloASC) res.Reverse();
                     break;
                 
                 case Autor:
-                    if(state==AutorASC){
-                        res = l.OrderBy(x => x.Jornalista.Nome).ToList();
-                        res.Reverse();
-                    }
-                    else res = l.OrderBy(x => x.Jornalista.Nome).ToList();
+                    res = l.OrderBy(x => x.Jornalista.Nome).ToList();
+                    if(state!=AutorASC) res.Reverse();
                     break;
                 
                 case Data:
-                    if (state==DataASC){
-                        res = l.OrderBy(x => x.Data).ToList();
-                        res.Reverse();
-                    }
-                    else res = l.OrderBy(x => x.Data).ToList();
+                    res = l.OrderBy(x => x.Data).ToList();
+                    if (state != DataASC) res.Reverse();
                     break;
                 
                 case Rank:
-                    if (state == RankASC)
-                    {
-                        res = l.OrderBy(x => x.rank).ToList();
-                        res.Reverse();
-                    }
-                    else res = l.OrderBy(x => x.rank).ToList();
+                    res = l.OrderBy(x => x.rank).ToList();
+                    if (state != RankASC) res.Reverse();
                     break;
             }
             return res;
