@@ -78,6 +78,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BanModel.cs" />
+    <Compile Include="Models\GerirModsModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\SearchQueryModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
@@ -167,7 +168,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>49173</DevelopmentServerPort>
+          <DevelopmentServerPort>45523</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

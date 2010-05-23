@@ -86,8 +86,8 @@ namespace Newzic.Website.Controllers
 
         public ActionResult resolv(string id)
         {
-            //marcar como resolvida
-            return View("resolved");
+            //resolver queixa
+            return View("queixaResolvida");
         }
 
         public ActionResult Details(string id)
@@ -132,7 +132,14 @@ namespace Newzic.Website.Controllers
             {
                 return View("acessoNegado");
             }
-            //despromover mod
+            var mod = getMod(id);
+            if (mod.Jornalista.isModerador())
+                mod.Jornalista.demote();
+            else
+            {
+                ModelState.AddModelError("","Este utilizador já é jornalista");
+                return View("Index");
+            }
             return View("SuccessView");
         }
 
@@ -154,7 +161,13 @@ namespace Newzic.Website.Controllers
             }
 
             var mod = getMod(id);
-            //mod.Jornalista.p
+            if (!mod.Jornalista.isModerador())
+                mod.Jornalista.promote();
+            else
+            {
+                ModelState.AddModelError("","Este utilizador ja é Moderador");
+                return View("Index");
+            }
             return View("SuccessView");
         }
 
@@ -295,8 +308,14 @@ namespace Newzic.Website.Controllers
                 return View("acessoNegado");
             }
             var mod = getMod(id);
-            mod.Jornalista.Unban();
-
+            if(mod.isBanned())
+                mod.Jornalista.Unban();
+            else
+            {
+                ModelState.AddModelError("","Este utilizador não está banido");
+                return View("Index");
+            }
+            
             return View("SuccessView");
         }
 
@@ -307,7 +326,13 @@ namespace Newzic.Website.Controllers
                 return View("acessoNegado");
             }
             var mod = getMod(id);
-            mod.Jornalista.Ban();
+            if(!mod.isBanned())
+                mod.Jornalista.Ban();
+            else
+            {
+                ModelState.AddModelError("","Este utilizador já está banido");
+                return View("Index");
+            }
             return View("SuccessView");
         }
 
@@ -318,8 +343,27 @@ namespace Newzic.Website.Controllers
                 return View("acessoNegado");
             }
             var mods = modList.fetchAll().ToList();
+            GerirModsModel model = new GerirModsModel();
+            model.Moderadores = mods;
+            model.searchQuery = "";
+            return View("GerirMods",model);
+        }
 
-            return View("GerirMods",mods);
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult GerirMods(GerirModsModel model)
+        {
+            string query = model.searchQuery;
+            //if (!isAdmin(email))
+            //{
+            //    return View("acessoNegado");
+            //}
+            var mods = modList.fetchAll();
+            var searchResult = (from m in mods where (m.Jornalista.Email.Contains(query)) select m).ToList();
+            //GerirModsModel model = new GerirModsModel();
+            model.Moderadores = searchResult;
+            model.searchQuery = query;
+            return View("GerirMods", model);
+
         }
     }
 }
