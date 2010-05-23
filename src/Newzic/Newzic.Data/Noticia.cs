@@ -8,6 +8,8 @@ namespace Newzic.Core
     partial class Noticia : IEntity, ISoftDelete
     {
         NewzicDataContext db = new NewzicDataContext();
+        
+        public double rank { get; set; }
 
         Guid IEntity.Id
         {
@@ -54,6 +56,16 @@ namespace Newzic.Core
         public void removeTag(String tag)
         {
             this.Tags.Replace(tag, "").Replace("  ", " ");
+        }
+
+        public void calcRank()
+        {
+            double data = (this.Data - DateTime.Now).TotalDays;
+            double res = 0;
+            if (data == double.MinValue) { res = this.Pontuacao; }
+            else { res = this.Pontuacao / data; }
+
+            this.rank = res;
         }
     }
 }
