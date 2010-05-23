@@ -77,7 +77,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\BanModel.cs" />
+    <Compile Include="Models\JornBanModel.cs" />
+    <Compile Include="Models\ModBanModel.cs" />
+    <Compile Include="Models\GerirJornsModel.cs" />
     <Compile Include="Models\GerirModsModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\SearchQueryModel.cs" />
@@ -95,12 +97,18 @@
     <Content Include="Views\Account\Register.aspx" />
     <Content Include="Views\Account\VerPerfil.aspx" />
     <Content Include="Views\Admin\AcessoNegado.aspx" />
-    <Content Include="Views\Admin\BanConfirmView.aspx" />
-    <Content Include="Views\Admin\BanModView.aspx" />
+    <Content Include="Views\Admin\JornBanConfirmView.aspx" />
+    <Content Include="Views\Admin\JornBanView.aspx" />
+    <Content Include="Views\Admin\JornPromoteView.aspx" />
+    <Content Include="Views\Admin\JornUnBanView.aspx" />
+    <Content Include="Views\Admin\JornUnPromoteView.aspx" />
+    <Content Include="Views\Admin\ModBanConfirmView.aspx" />
+    <Content Include="Views\Admin\ModBanView.aspx" />
+    <Content Include="Views\Admin\GerirJorns.aspx" />
     <Content Include="Views\Admin\GerirMods.aspx" />
     <Content Include="Views\Admin\Index.aspx" />
     <Content Include="Views\Admin\ModDetails.aspx" />
-    <Content Include="Views\Admin\PromoteView.aspx" />
+    <Content Include="Views\Admin\ModPromoteView.aspx" />
     <Content Include="Views\Admin\QueixaDetails.aspx" />
     <Content Include="Views\Admin\Queixas.aspx" />
     <Content Include="Views\Mod\Banir.aspx" />
@@ -108,8 +116,8 @@
     <Content Include="Views\Mod\GerirJornalistas.aspx" />
     <Content Include="Views\Mod\GerirJornalistasBanidos.aspx" />
     <Content Include="Views\Mod\Index.aspx" />
-    <Content Include="Views\Admin\UnBanView.aspx" />
-    <Content Include="Views\Admin\UnPromoteView.aspx" />
+    <Content Include="Views\Admin\ModUnBanView.aspx" />
+    <Content Include="Views\Admin\ModUnPromoteView.aspx" />
     <Content Include="Views\News\Create.aspx" />
     <Content Include="Views\News\Index.aspx" />
     <Content Include="Views\Perfil\Index.aspx" />
@@ -170,7 +178,6 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>45523</DevelopmentServerPort>
           <DevelopmentServerPort>49174</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>

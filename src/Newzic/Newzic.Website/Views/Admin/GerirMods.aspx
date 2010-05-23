@@ -6,7 +6,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Lista de Moderadores</h2>
+    <h2>Lista de Moderadores | <%: Html.ActionLink("Ver Jornalistas", "GerirJorns", "Admin", new { email = Page.User.Identity.Name }, null)%></h2>
     <table>
 
      <% using (Html.BeginForm()) {%>
@@ -18,10 +18,7 @@
         </div>
         <div class="editor-field">
             <%: Html.TextBoxFor(m => m.searchQuery) %>
-             <%: Html.ActionLink("Pesquisar Moderador", "Pesquisar", new { query = Model.searchQuery, email = Page.User.Identity.Name })%>
-          <%-- <p>
-                <input type="submit" value="Pesquisar" />
-           </p>--%>
+            <input type="submit" value="Pesquisar" />
         </div>
     </div>
     </fieldset>
@@ -47,10 +44,10 @@
         <tr>
             <td>
                 <%: Html.ActionLink("Ver Moderador", "ModDetais", new { id = item.ModeradorId, email = Page.User.Identity.Name })%> |
-                <%: Html.ActionLink("Banir", "BanModView", new { id = item.ModeradorId, email = Page.User.Identity.Name })%> |
-                <%: Html.ActionLink("Desbanir", "UnbanView", new { id = item.ModeradorId, email = Page.User.Identity.Name })%> |
-                <%: Html.ActionLink("Promover", "PromoteView", new { id = item.ModeradorId, email = Page.User.Identity.Name })%> |
-                 <%: Html.ActionLink("Despromover", "UnPromoteView", new { id = item.ModeradorId, email = Page.User.Identity.Name })%> |
+                <%: Html.ActionLink("Banir", "ModBanView", new { id = item.ModeradorId, email = Page.User.Identity.Name })%> |
+                <%: Html.ActionLink("Desbanir", "ModUnbanView", new { id = item.ModeradorId, email = Page.User.Identity.Name })%> |
+                <%: Html.ActionLink("Promover", "ModPromoteView", new { id = item.ModeradorId, email = Page.User.Identity.Name })%> |
+                 <%: Html.ActionLink("Despromover", "ModUnPromoteView", new { id = item.ModeradorId, email = Page.User.Identity.Name })%> |
             </td>
             <td>
                 <%: item.Jornalista.Nome %>
