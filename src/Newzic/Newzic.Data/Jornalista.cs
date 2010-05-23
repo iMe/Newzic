@@ -55,5 +55,18 @@ namespace Newzic.Core
             return true;
         }
 
+        public bool isBanned()
+        {
+            try
+            {
+                var a = this.Banidos.Single(n => n.JornalistaId == this.JornalistaId);
+                return true;
+            }
+            catch (InvalidOperationException)
+            {
+                return false;
+            }
+        }
+
     }
 }

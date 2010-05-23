@@ -1,12 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Newzic.Website.Models.SearchQueryModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	searchView
+	Pesquisa
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>searchView</h2>
+    <h2>Pesquisa</h2>
 
      <% using (Html.BeginForm()) {%>
         <%: Html.ValidationSummary(true, "") %>
@@ -14,19 +14,18 @@
             <legend>Fields</legend>
             
             <div class="editor-label">
-                <%= Html.LabelFor(model => model.query) %>
+                <%= Html.Label("Pesquisa") %>
             </div>
             <div class="editor-field">
                 <%= Html.TextBoxFor(model => model.query) %>
                 <%= Html.ValidationMessageFor(model => model.query) %>
             </div>
-            
+           
             <div class="editor-label">
-                <%= Html.LabelFor(model => model.type) %>
+                <%= Html.Label("Tipo") %>
             </div>
             <div class="editor-field">
-                <%= Html.TextBoxFor(model => model.type) %>
-                <%= Html.ValidationMessageFor(model => model.type) %>
+                <%=Html.DropDownList("typeSelected", Model.type)%>
             </div>
            
             <p>
@@ -40,24 +39,21 @@
         <tr>
             <th></th>
             <th>
-                NoticiaId
+                 <%:Html.ActionLink("Rank", "Order", "Search", new { q = Model.query, t = Model.typeSelected.ToString(), o = 5.ToString() }, null)%>
             </th>
             <th>
-                Titulo
+                <%:Html.ActionLink("Titulo", "Order", "Search", new { q = Model.query, t = Model.typeSelected.ToString(), o = 0.ToString() }, null)%>
             </th>
-            <th>
+<%--            <th>
                 Corpo
-            </th>
+            </th>--%>
+ <%--               <th>
+                    FlagCount
+                </th>--%>
             <th>
-                Pontuacao
+                <%:Html.ActionLink("Data", "Order", "Search", new { q = Model.query, t = Model.typeSelected.ToString(), o = 4.ToString() }, null)%>
             </th>
-            <th>
-                Data
-            </th>
-            <th>
-                FlagCount
-            </th>
-            <th>
+<%--            <th>
                 Deleted
             </th>
             <th>
@@ -71,7 +67,7 @@
             </th>
             <th>
                 MapaId
-            </th>
+            </th>--%>
         </tr>
 
     <% foreach (var item in Model.noticias) { %>
@@ -82,21 +78,21 @@
                 <%= Html.ActionLink("Details", "Details", new { id=item.NoticiaId })%>
             </td>
             <td>
-                <%= Html.Encode(item.NoticiaId) %>
+                <%= Html.Encode(item.rank) %>
             </td>
             <td>
                 <%= Html.Encode(item.Titulo) %>
             </td>
-            <td>
+            <%--<td>
                 <%= Html.Encode(item.Corpo) %>
             </td>
             <td>
                 <%= Html.Encode(item.Pontuacao) %>
-            </td>
+            </td>--%>
             <td>
                 <%= Html.Encode(String.Format("{0:g}", item.Data)) %>
             </td>
-            <td>
+            <%--<td>
                 <%= Html.Encode(item.FlagCount) %>
             </td>
             <td>
@@ -113,7 +109,7 @@
             </td>
             <td>
                 <%= Html.Encode(item.MapaId) %>
-            </td>
+            </td>--%>
         </tr>
     
     <% } %>

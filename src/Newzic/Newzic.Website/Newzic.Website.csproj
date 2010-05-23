@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Scripts\upload.js" />
     <Content Include="Views\Account\EditarPerfil.aspx" />
     <Content Include="Views\Account\LoggedIn.aspx" />
     <Content Include="Views\Account\Login.aspx" />
@@ -100,7 +101,8 @@
     <Content Include="Views\Admin\PromoteView.aspx" />
     <Content Include="Views\Admin\QueixaDetails.aspx" />
     <Content Include="Views\Admin\Queixas.aspx" />
-    <Content Include="Views\Admin\resolved.aspx" />
+    <Content Include="Views\Mod\GerirJornalistasBanidos.aspx" />
+    <Content Include="Views\Mod\Index.aspx" />
     <Content Include="Views\Admin\UnBanView.aspx" />
     <Content Include="Views\Admin\UnPromoteView.aspx" />
     <Content Include="Views\News\Create.aspx" />
@@ -108,6 +110,7 @@
     <Content Include="Views\Perfil\Index.aspx" />
     <Content Include="Views\Search\Search.aspx" />
     <Content Include="Views\Search\Results.aspx" />
+    <Content Include="Views\Shared\AcessoNegado.aspx" />
     <Content Include="Views\Shared\SuccessView.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -140,7 +143,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Mod\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Newzic.Data\Newzic.Core.csproj">

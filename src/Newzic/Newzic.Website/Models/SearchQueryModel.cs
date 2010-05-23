@@ -16,12 +16,16 @@ namespace Newzic.Website.Models
         [DisplayName("Query")]
         public string query { get; set; }
 
-        [Required]
-        [DataType(DataType.Text)]
-        [DisplayName("Type")]
-        public string type { get; set; }
+        //[Required]
+        //[DataType(DataType.Text)]
+        //[DisplayName("Type")]
+        public List<SelectListItem> type { get; set; }
 
-       public List<Noticia> noticias { get; set; }
+        public int typeSelected { get; set; }
+
+        public List<Noticia> noticias { get; set; }
+
+        public int order { get; set; }
 
     }
 }
