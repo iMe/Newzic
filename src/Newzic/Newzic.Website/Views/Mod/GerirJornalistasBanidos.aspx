@@ -27,11 +27,11 @@
 
     <% foreach (var item in Model) { %>
     
-        <tr>item
+        <tr>
             <td>
                 <%--<%= Html.ActionLink("Edit", "Edit", new { id=item.BanidoId }) %> |
                 <%= Html.ActionLink("Details", "Details", new { id=item.BanidoId })%>--%>
-                <%=Html.ActionLink("Levantar Ban", "Unban", new {Id = item.BanidoId })%>
+                <%=Html.ActionLink("Levantar Ban", "Unban", new {Id = item.BanidoId, email = Page.User.Identity.Name })%>
             </td>
            <%-- <td>
                 <%= Html.Encode(item.BanidoId) %>
@@ -50,6 +50,8 @@
     <% } %>
 
     </table>
+
+    <%=Html.ActionLink("", "Unban", new {Id = item.BanidoId, email = Page.User.Identity.Name })%>
 
 </asp:Content>
 

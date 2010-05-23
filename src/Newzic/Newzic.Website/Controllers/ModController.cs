@@ -35,26 +35,66 @@ namespace Newzic.Website.Controllers
 
         public ActionResult GerirJornalistasBanidos(string email)
         {
-            Jornalista user = repJornalistas.fetchAll().Single(n => n.Email.Equals(email));
-            if (!user.isModerador())
-                return View("acessoNegado");
+            try
+            {
+                Jornalista user = repJornalistas.fetchAll().Single(n => n.Email.Equals(email));
+                if (!user.isModerador())
+                    return View("acessoNegado");
 
-            var listaBanidos = repBanidos.fetchAll().ToList();
-            return View("GerirJornalistasBanidos",listaBanidos);
+                var listaBanidos = repBanidos.fetchAll().ToList();
+                return View("GerirJornalistasBanidos", listaBanidos);
+            }
+            catch (Exception)
+            {
+                return View("acessoNegado");
+            }
+            
         }
 
-        public ActionResult Unban(string id)
+        public ActionResult Unban(string id, string email)
         {
-            //throw new NotImplementedException();
-            //Jornalista user = repJornalistas.fetchAll().Single(n => n.Email.Equals(email));
-            Guid gid = new Guid(id);
-            /*if (!user.isModerador())
+            try
+            {
+                Jornalista user = repJornalistas.fetchAll().Single(n => n.Email.Equals(email));
+                if (!user.isModerador())
+                    return View("acessoNegado");
+
+                Guid gid = new Guid(id);
+
+                var listaBanidos = repBanidos.fetchAll().ToList();
+                var jornalista = repBanidos.fetchAll().Single(n => n.BanidoId == gid).Jornalista;
+                return View("ConfirmarUnban", jornalista);
+            }
+            catch (InvalidOperationException)
+            {
                 return View("acessoNegado");
-            */
-            var listaBanidos = repBanidos.fetchAll().ToList();
-            var moderador = repBanidos.fetchAll().Single(n => n.BanidoId == gid);
-            return View("ConfirmarUnban", moderador);
+            }
             
+            
+        }
+
+        public ActionResult ConfirmaUnban(string id, string email)
+        {
+            try
+            {
+                Jornalista user = repJornalistas.fetchAll().Single(n => n.Email.Equals(email));
+                if (!user.isModerador())
+                    return View("acessoNegado");
+
+                Guid gid = new Guid(id);
+                Banido jornalista = repBanidos.fetchAll().Single(n => n.JornalistaId == gid);
+                jornalista.Jornalista.Unban();
+                repBanidos.Save();
+
+                var listaBanidos = repBanidos.fetchAll().ToList();
+                return View("GerirJornalistasBanidos", listaBanidos);
+            }
+            catch (InvalidOperationException)
+            {
+                return View("acessoNegado");
+            }
+            
+
         }
     }
 }
