@@ -52,9 +52,6 @@ namespace Newzic.Website.Controllers
         
         public ActionResult Login(LoginModel login)
         {
-            //string email = Request.Form["email"];
-            //string pass = Request.Form["password"];
-
             String email = login.Email;
             String pass = login.Password;
             string res = null;

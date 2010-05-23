@@ -10,7 +10,7 @@
     <h2>Index - Pagina Principal para Moderadores</h2>
 
     <%if (Request.IsAuthenticated) { %>
-        <li><%: Html.ActionLink("Gerir Jornalistas", "GerirJornalistasBanidos", "Mod", new {email = Page.User.Identity.Name}, null)%></li>   
+        <li><%: Html.ActionLink("Gerir Jornalistas", "GerirJornalistas", "Mod", new {email = Page.User.Identity.Name}, null)%></li>   
     <%} %>
     
     </form>

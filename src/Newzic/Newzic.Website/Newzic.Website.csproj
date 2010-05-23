@@ -78,6 +78,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BanModel.cs" />
+    <Compile Include="Models\GerirModsModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\SearchQueryModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
@@ -85,6 +86,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Scripts\jLinq-2.2.1.js" />
+    <Content Include="Scripts\jLinq-2.2.1.min.js" />
+    <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.4.1.js" />
+    <Content Include="Scripts\jquery-1.4.1.min.js" />
+    <Content Include="Scripts\maps.js" />
     <Content Include="Scripts\upload.js" />
     <Content Include="Views\Account\EditarPerfil.aspx" />
     <Content Include="Views\Account\LoggedIn.aspx" />
@@ -94,6 +101,7 @@
     <Content Include="Views\Account\Register.aspx" />
     <Content Include="Views\Account\VerPerfil.aspx" />
     <Content Include="Views\Admin\AcessoNegado.aspx" />
+    <Content Include="Views\Admin\BanConfirmView.aspx" />
     <Content Include="Views\Admin\BanModView.aspx" />
     <Content Include="Views\Admin\GerirMods.aspx" />
     <Content Include="Views\Admin\Index.aspx" />
@@ -101,7 +109,9 @@
     <Content Include="Views\Admin\PromoteView.aspx" />
     <Content Include="Views\Admin\QueixaDetails.aspx" />
     <Content Include="Views\Admin\Queixas.aspx" />
+    <Content Include="Views\Mod\Banir.aspx" />
     <Content Include="Views\Mod\ConfirmarUnban.aspx" />
+    <Content Include="Views\Mod\GerirJornalistas.aspx" />
     <Content Include="Views\Mod\GerirJornalistasBanidos.aspx" />
     <Content Include="Views\Mod\Index.aspx" />
     <Content Include="Views\Admin\UnBanView.aspx" />
@@ -166,6 +176,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>45523</DevelopmentServerPort>
           <DevelopmentServerPort>49174</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>

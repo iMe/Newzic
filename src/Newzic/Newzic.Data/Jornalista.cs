@@ -15,16 +15,20 @@ namespace Newzic.Core
 
         public void Ban()
         {
+            IDataCRUD<Banido> data = new DataCRUD<Banido>();
             var banido = new Banido();
             banido.BanidoId = Guid.NewGuid();
             banido.Permanente = true;
             banido.Jornalista = this;
             banido.JornalistaId = this.JornalistaId;
             this.Banidos.Add(banido);
+            data.create(banido);
+            data.Save();
         }
 
         public void Ban(DateTime dataFim)
         {
+            IDataCRUD<Banido> data = new DataCRUD<Banido>();
             var banido = new Banido();
             banido.BanidoId = Guid.NewGuid();
             banido.Permanente = false;
@@ -32,6 +36,8 @@ namespace Newzic.Core
             banido.JornalistaId = this.JornalistaId;
             banido.DataFim = dataFim;
             this.Banidos.Add(banido);
+            data.create(banido);
+            data.Save();
         }
 
         public void Unban()
