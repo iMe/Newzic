@@ -11,6 +11,7 @@
 
     <%if (Request.IsAuthenticated) { %>
         <li><%: Html.ActionLink("Gerir Jornalistas", "GerirJornalistas", "Mod", new {email = Page.User.Identity.Name}, null)%></li>   
+        <li><%:Html.ActionLink("Gerir Queixas de Noticias", "GerirQueixasNoticias","Mod",new {email = Page.User.Identity.Name}) %></li>
     <%} %>
     
     </form>
