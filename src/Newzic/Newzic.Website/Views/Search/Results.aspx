@@ -35,41 +35,30 @@
 
     <% } %>
 
+    <% if (Model.noticias.Count!=0) {%>
     <table>
-        <tr>
-            <th></th>
-            <th>
-                 <%:Html.ActionLink("Rank", "Order", "Search", new { q = Model.query, t = Model.typeSelected.ToString(), o = 5.ToString() }, null)%>
+        <tr style="width:900px;">
+            <th style="width:5%;"></th>
+            <th style="width:5%;">
+                <% string var = 11.ToString();%>
+                <%if (Model.state == 11) var = 10.ToString(); else var = 11.ToString(); %>
+                <%:Html.ActionLink("Rank", "Order", "Search", new { q = Model.query, t = Model.typeSelected.ToString(), o = 5.ToString(), s=var}, null)%>
             </th>
-            <th>
-                <%:Html.ActionLink("Titulo", "Order", "Search", new { q = Model.query, t = Model.typeSelected.ToString(), o = 0.ToString() }, null)%>
+            <th style="width:50%;">
+                <%if (Model.state == 17) var = 16.ToString(); else var = 17.ToString(); %>
+                <%:Html.ActionLink("Titulo", "Order", "Search", new { q = Model.query, t = Model.typeSelected.ToString(), o = 0.ToString(), s=var}, null)%>
             </th>
-<%--            <th>
-                Corpo
-            </th>--%>
- <%--               <th>
-                    FlagCount
-                </th>--%>
-            <th>
-                <%:Html.ActionLink("Data", "Order", "Search", new { q = Model.query, t = Model.typeSelected.ToString(), o = 4.ToString() }, null)%>
+            <th style="width:20%;">
+                <%if (Model.state == 15) var = 14.ToString(); else var = 15.ToString(); %>
+                <%:Html.ActionLink("Jornalista", "Order", "Search", new { q = Model.query, t = Model.typeSelected.ToString(), o = 1.ToString(), s=var}, null)%>
             </th>
-<%--            <th>
-                Deleted
+            <th style="width:20%;">
+                <%if (Model.state == 13) var = 12.ToString(); else var = 13.ToString(); %>
+                <%:Html.ActionLink("Data", "Order", "Search", new { q = Model.query, t = Model.typeSelected.ToString(), o = 4.ToString(), s=var}, null)%>
             </th>
-            <th>
-                Marked
-            </th>
-            <th>
-                JornalistaId
-            </th>
-            <th>
-                Tags
-            </th>
-            <th>
-                MapaId
-            </th>--%>
         </tr>
 
+    
     <% foreach (var item in Model.noticias) { %>
     
         <tr>
@@ -78,40 +67,33 @@
                 <%= Html.ActionLink("Details", "Details", new { id=item.NoticiaId })%>
             </td>
             <td>
+                <b>
                 <%= Html.Encode(item.rank) %>
+                </b>
             </td>
             <td>
-                <%= Html.Encode(item.Titulo) %>
-            </td>
-            <%--<td>
-                <%= Html.Encode(item.Corpo) %>
+                <b>
+                <%= Html.Encode(item.Titulo) %> </b><br>
+                <%= Html.Encode(item.Corpo)%>
             </td>
             <td>
-                <%= Html.Encode(item.Pontuacao) %>
-            </td>--%>
+                <b>
+                <%= Html.Encode(item.Jornalista.Nome) %>
+                </b>
+            </td>
             <td>
+                <b>
                 <%= Html.Encode(String.Format("{0:g}", item.Data)) %>
+                </b>
             </td>
-            <%--<td>
-                <%= Html.Encode(item.FlagCount) %>
-            </td>
-            <td>
-                <%= Html.Encode(item.Deleted) %>
-            </td>
-            <td>
-                <%= Html.Encode(item.Marked) %>
-            </td>
-            <td>
-                <%= Html.Encode(item.JornalistaId) %>
-            </td>
-            <td>
-                <%= Html.Encode(item.Tags) %>
-            </td>
-            <td>
-                <%= Html.Encode(item.MapaId) %>
-            </td>--%>
+
         </tr>
     
+        <% } %>
+    <% } %>
+    
+    <%else {%>
+        <h3> Nao existem resultados para esta pesquisa</h3>
     <% } %>
 
     </table>

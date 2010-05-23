@@ -11,7 +11,7 @@ namespace Newzic.Website.Models
 {
     public class SearchQueryModel : Controller
     {
-        [Required]
+        //[Required]
         [DataType(DataType.Text)]
         [DisplayName("Query")]
         public string query { get; set; }
@@ -26,6 +26,10 @@ namespace Newzic.Website.Models
         public List<Noticia> noticias { get; set; }
 
         public int order { get; set; }
+
+        public int state { get; set; }
+
+        public int page { get; set; }
 
     }
 }
