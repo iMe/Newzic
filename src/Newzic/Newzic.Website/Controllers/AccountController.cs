@@ -18,7 +18,7 @@ namespace Newzic.Website.Controllers
     public class AccountController : Controller
     {
         
-        private DataCRUD<Jornalista> acRepo = new DataCRUD<Jornalista>();
+        private IDataCRUD<Jornalista> jornList= new DataCRUD<Jornalista>();
         //private AccountsRepo acRepo = new AccountsRepo();
 
         private bool autenticado = false;
@@ -31,7 +31,7 @@ namespace Newzic.Website.Controllers
         public string iniciarSessao(string email, string password)
         {
             string res = "naoAutenticado";
-            var jList = acRepo.fetchAll();
+            var jList = jornList.fetchAll();
             var jornalista = from j in jList
                     //where (j.Email == email ) && (j.Password == Hash.generate(password))
                              where (j.Email == email) && (j.Password == password)
@@ -54,6 +54,10 @@ namespace Newzic.Website.Controllers
         {
             String email = login.Email;
             String pass = login.Password;
+            //if (pass != null)
+            //{
+            //    pass = Hash.generate(pass);
+            //}
             string res = null;
             if ((email != null ) && (pass != null))
                 res = iniciarSessao(email, pass);
@@ -76,7 +80,7 @@ namespace Newzic.Website.Controllers
         //gets jornalista by email
         public IQueryable<Jornalista> getJornalistaByEmail(string email)
         {
-            var jList = acRepo.fetchAll();
+            var jList = jornList.fetchAll();
             var jornalista = from j in jList
                              where (j.Email == email)
                              select j;
@@ -134,8 +138,8 @@ namespace Newzic.Website.Controllers
                 j.First().Nome = name;
                 j.First().Password = password;
 
-                acRepo.update(j.First());
-                acRepo.Save();
+                jornList.update(j.First());
+                jornList.Save();
                 //ModelState.AddModelError("", "Perfil alterado com sucesso.");
 
             }
@@ -175,8 +179,8 @@ namespace Newzic.Website.Controllers
                 newJornalista.Password = Hash.generate(password);
 
                 newJornalista.JornalistaId = Guid.NewGuid();
-                acRepo.create(newJornalista);
-                acRepo.Save();
+                jornList.create(newJornalista);
+                jornList.Save();
             }
 
             return View();
