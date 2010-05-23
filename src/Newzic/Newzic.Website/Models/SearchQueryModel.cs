@@ -31,7 +31,5 @@ namespace Newzic.Website.Models
 
         public int page { get; set; }
 
-        public bool merda { get; set; }
-
     }
 }

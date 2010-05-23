@@ -81,6 +81,7 @@
     <Compile Include="Models\ModBanModel.cs" />
     <Compile Include="Models\GerirJornsModel.cs" />
     <Compile Include="Models\GerirModsModel.cs" />
+    <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\SearchQueryModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />

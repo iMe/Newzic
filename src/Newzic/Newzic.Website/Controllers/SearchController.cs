@@ -42,7 +42,6 @@ namespace Newzic.Website.Controllers
             model.noticias= new List<Noticia>();
             model.state = RankDSC;
             model.page = 1;
-            model.merda = false;
             return View("Results",model);
         }
 
