@@ -63,7 +63,7 @@ namespace Newzic.Website.Controllers
 
                 var listaBanidos = repBanidos.fetchAll().ToList();
                 var jornalista = repBanidos.fetchAll().Single(n => n.JornalistaId == gid).Jornalista;
-                //return View("ConfirmarUnban", jornalista);
+                return View("ConfirmarUnban", jornalista);
                 
             }
             catch (InvalidOperationException)
