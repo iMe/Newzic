@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Newzic.Website.Models.BanModel>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Newzic.Website.Models.ModBanModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	BanModView
@@ -46,6 +46,13 @@
             </div>
 
             <div class="editor-label">
+                <%= Html.Label("Tipo") %>
+            </div>
+            <div class="editor-field">
+                <%=Html.DropDownList("banType", Model.banTypeList)%>
+            </div>
+
+            <div class="editor-label">
                 <%: Html.LabelFor(model => model.reason) %>
             </div>
             <div class="editor-field">
@@ -54,7 +61,7 @@
             </div>
             
             <p>
-                <input type="submit" value="Ban" />
+                <input type="submit" value="Banir" />
             </p>
         </fieldset>
 

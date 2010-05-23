@@ -28,7 +28,7 @@
                 <% if (item.isBanned()) %>
                        <%:Html.ActionLink("Levantar Ban", "Unban", new { Id = item.JornalistaId, email = Page.User.Identity.Name })%>
                 <% if (!item.isBanned())%>
-                       <%: Html.ActionLink("Banir", "Banir", new {id = item.JornalistaId, email = Page.User.Identity.Name})%>
+                       <%: Html.ActionLink("Banir", "BanirJornalista", new {id = item.JornalistaId, email = Page.User.Identity.Name})%>
             </td>
             <td>
                 <%= Html.Encode(item.Nome) %>

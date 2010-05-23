@@ -1,12 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Newzic.Core.Moderador>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	UnBanView
+	PromoteView
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Desbanir moderador</h2>
+    <h2>Promover Moderador</h2>
 
     <fieldset>
         <legend>Moderador</legend>
@@ -17,7 +17,7 @@
     </fieldset>
     <p>
 
-        <%: Html.ActionLink("Desbanir Moderador", "UnBanMod", new { id=Model.ModeradorId }) %> |
+        <%: Html.ActionLink("Promover Moderador", "ModPromote", new { id=Model.ModeradorId }) %> |
         <%: Html.ActionLink("Voltar", "Index") %>
     </p>
 

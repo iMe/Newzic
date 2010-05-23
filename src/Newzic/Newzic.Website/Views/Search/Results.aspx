@@ -6,19 +6,22 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Pesquisa</h2>
+    <form id="form1" runat="server">
 
-     <% using (Html.BeginForm()) {%>
-        <%: Html.ValidationSummary(true, "") %>
+    <h2>Pesquisa</h2>
+         <%using (Html.BeginForm("Results","Search"))
+        {%>
+        <% } %>
         <fieldset>
+                    <%using (Html.BeginForm("Results","Search"))
+        {%>
             <legend>Fields</legend>
-            
             <div class="editor-label">
                 <%= Html.Label("Pesquisa") %>
             </div>
             <div class="editor-field">
                 <%= Html.TextBoxFor(model => model.query) %>
-                <%= Html.ValidationMessageFor(model => model.query) %>
+                <%--<%= Html.ValidationMessageFor(model => model.query) %>--%>
             </div>
            
             <div class="editor-label">
@@ -27,13 +30,12 @@
             <div class="editor-field">
                 <%=Html.DropDownList("typeSelected", Model.type)%>
             </div>
-           
             <p>
                 <input type="submit" value="Search" />
             </p>
-        </fieldset>
-
     <% } %>
+
+        </fieldset>
 
     <% if (Model.noticias.Count!=0) {%>
     <table>
@@ -42,14 +44,15 @@
             <th style="width:5%;">
                 <% string var = 11.ToString();%>
                 <%if (Model.state == 11) var = 10.ToString(); else var = 11.ToString(); %>
+                <%--<%:Html.ActionLink("Rank", "Order", "Search", null, new Model {.class="tab"})%>--%>
                 <%:Html.ActionLink("Rank", "Order", "Search", new { q = Model.query, t = Model.typeSelected.ToString(), o = 5.ToString(), s=var}, null)%>
             </th>
             <th style="width:50%;">
-                <%if (Model.state == 17) var = 16.ToString(); else var = 17.ToString(); %>
+                <%if (Model.state == 16) var = 17.ToString(); else var = 16.ToString(); %>
                 <%:Html.ActionLink("Titulo", "Order", "Search", new { q = Model.query, t = Model.typeSelected.ToString(), o = 0.ToString(), s=var}, null)%>
             </th>
             <th style="width:20%;">
-                <%if (Model.state == 15) var = 14.ToString(); else var = 15.ToString(); %>
+                <%if (Model.state == 14) var = 15.ToString(); else var = 14.ToString(); %>
                 <%:Html.ActionLink("Jornalista", "Order", "Search", new { q = Model.query, t = Model.typeSelected.ToString(), o = 1.ToString(), s=var}, null)%>
             </th>
             <th style="width:20%;">
@@ -68,13 +71,15 @@
             </td>
             <td>
                 <b>
-                <%= Html.Encode(item.rank) %>
+                <%= Html.Encode(item.Pontuacao) %>
                 </b>
             </td>
             <td>
                 <b>
                 <%= Html.Encode(item.Titulo) %> </b><br>
+                <small>
                 <%= Html.Encode(item.Corpo)%>
+                </small>
             </td>
             <td>
                 <b>
@@ -105,6 +110,8 @@
     <div>
         <%=Html.ActionLink("Back to List", "Index") %>
     </div>
+
+    </form>
 
 </asp:Content>
 

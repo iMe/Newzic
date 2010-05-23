@@ -15,7 +15,7 @@ namespace Newzic.Website.Controllers
         // GET: /Admin/
 
         private readonly IDataCRUD<Queixa> qrepo = new DataCRUD<Queixa>();
-        private readonly IDataCRUD<Jornalista> qjorn = new DataCRUD<Jornalista>();
+        private readonly IDataCRUD<Jornalista> jornList = new DataCRUD<Jornalista>();
         private readonly IDataCRUD<Moderador> modList = new DataCRUD<Moderador>();
 
 
@@ -23,11 +23,21 @@ namespace Newzic.Website.Controllers
         //gets jornalista by email
         public Jornalista getJornalistaByEmail(string email)
         {
-            var jList = qjorn.fetchAll();
+            var jList = jornList.fetchAll();
             var jornalista = (from j in jList
                              where (j.Email == email)
                              select j).Single();
             return jornalista;
+        }
+
+        //gets jornalista by email
+        public Moderador getModeradorByEmail(string email)
+        {
+            var mList = modList.fetchAll();
+            var moderador = (from m in mList
+                              where (m.Jornalista.Email == email)
+                              select m).Single();
+            return moderador;
         }
 
         //creates a list of strings to populate the dropLists
@@ -114,19 +124,19 @@ namespace Newzic.Website.Controllers
 
        
 
-        public ActionResult UnPromoteView(string id, string email)
+        public ActionResult ModUnPromoteView(string id, string email)
         {
             if (!isAdmin(email))
             {
                 return View("acessoNegado");
             }
             var mod = getMod(id);
-            return View("unPromoteView", mod);
+            return View("ModunPromoteView", mod);
         }
 
 
         //promote section
-        public ActionResult UnPromoteMod(string id, string email)
+        public ActionResult ModUnPromote(string id, string email)
         {
             if (!isAdmin(email))
             {
@@ -143,17 +153,17 @@ namespace Newzic.Website.Controllers
             return View("SuccessView");
         }
 
-        public ActionResult PromoteView(string id, string email)
+        public ActionResult ModPromoteView(string id, string email)
         {
             if (!isAdmin(email))
             {
                 return View("acessoNegado");
             }
             var mod = getMod(id);
-            return View("PromoteView", mod);
+            return View("ModPromoteView", mod);
         }
 
-        public ActionResult PromoteMod(string id, string email)
+        public ActionResult ModPromote(string id, string email)
         {
             if (!isAdmin(email))
             {
@@ -172,24 +182,27 @@ namespace Newzic.Website.Controllers
         }
 
         //ban section
-        public ActionResult UnBanView(string id, string email)
+        public ActionResult ModUnBanView(string id, string email)
         {
             if (!isAdmin(email))
             {
                 return View("acessoNegado");
             }
             var mod = getMod(id);
-            return View("UnBanView", mod);
+            return View("ModUnBanView", mod);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult BanModView(BanModel Ban)
+        public ActionResult ModBanView(ModBanModel Ban)
         {
 
             if (!isAdmin(Ban.Email))
             {
                 return View("acessoNegado");
             }
+
+            Ban.banTypeList = createDropList(new string[2] {"Permanente", "Temporario"});
+
             string[] meses = new string[12] { "Janeiro", "Fevereiro", "Março", "Abril,", "Maio", "Junho", "Julho", "Agosto", "Setembro,", "Outubro", "Novembro", "Dezembro" };
             List<SelectListItem> diaList = new List<SelectListItem>();
             for (int i = 1; i <= 31;i++)
@@ -245,21 +258,23 @@ namespace Newzic.Website.Controllers
             }
             if (ModelState.IsValid)
             {
-                return View("BanConfirmView", Ban.Email);
+                return View("ModBanConfirmView", Ban);
             }
             return View(Ban);
 
         }
 
-        public ActionResult BanModView(string id, string email)
+        public ActionResult ModBanView(string id, string email)
         {
             if (!isAdmin(email))
             {
                 return View("acessoNegado");
             }
             var mod = getMod(id);
-            BanModel Ban = new BanModel();
-            
+            ModBanModel Ban = new ModBanModel();
+
+            Ban.banTypeList = createDropList(new string[2] { "Permanente", "Temporario" });
+
             string[] meses = new string[12] { "Janeiro", "Fevereiro", "Março", "Abril,", "Maio", "Junho", "Julho", "Agosto", "Setembro,", "Outubro", "Novembro", "Dezembro" };
             List<SelectListItem> diaList = new List<SelectListItem>();
             for (int i = 1; i <= 31; i++)
@@ -297,11 +312,11 @@ namespace Newzic.Website.Controllers
             Ban.mesList = mesList;
 
 
-            return View("BanModView", Ban);
+            return View("ModBanView", Ban);
        }
 
 
-        public ActionResult UnBanMod(string id, string email)
+        public ActionResult ModUnBan(string id, string email)
         {
             if (!isAdmin(email))
             {
@@ -319,15 +334,26 @@ namespace Newzic.Website.Controllers
             return View("SuccessView");
         }
 
-        public ActionResult BanMod(string id, string email)
+        public ActionResult ModBan(string id, string year, string month, string day, string type, string email)
         {
             if (!isAdmin(email))
             {
                 return View("acessoNegado");
             }
-            var mod = getMod(id);
+            var mod = getModeradorByEmail(id);
             if(!mod.isBanned())
-                mod.Jornalista.Ban();
+            {
+                 if (type == "1")
+                {
+                    mod.Jornalista.Ban();
+                }
+                if (type == "2")
+                {
+                    DateTime date = new DateTime(int.Parse(year), int.Parse(month), int.Parse(day));
+                    mod.Ban(date);
+                }
+            }
+               
             else
             {
                 ModelState.AddModelError("","Este utilizador já está banido");
@@ -353,17 +379,290 @@ namespace Newzic.Website.Controllers
         public ActionResult GerirMods(GerirModsModel model)
         {
             string query = model.searchQuery;
-            //if (!isAdmin(email))
-            //{
-            //    return View("acessoNegado");
-            //}
-            var mods = modList.fetchAll();
-            var searchResult = (from m in mods where (m.Jornalista.Email.Contains(query)) select m).ToList();
-            //GerirModsModel model = new GerirModsModel();
-            model.Moderadores = searchResult;
+            var mods = modList.fetchAll().ToList();
             model.searchQuery = query;
+            if (query!= null)
+            {
+                var searchResult = (from m in mods where (m.Jornalista.Email.Contains(query)) select m).ToList();
+                model.Moderadores = searchResult;
+                model.searchQuery = query;
+                return View("GerirMods", model);
+            }
+            model.Moderadores = mods;
+            model.searchQuery = "";
             return View("GerirMods", model);
+        }
+
+        //----------------------------------------Jornalistas--------------------------------------------------------
+
+
+        private Jornalista getJorn(string id)
+        {
+            var jList = jornList.fetchAll();
+            var jorn = (from j in jList where (j.JornalistaId.ToString() == id) select j).Single();
+            return jorn;
+        }
+        
+        public ActionResult GerirJorns(string email)
+        {
+            if (!isAdmin(email))
+            {
+                return View("acessoNegado");
+            }
+            var jorns = jornList.fetchAll().ToList();
+            GerirJornsModel model = new GerirJornsModel();
+            model.Jornalistas = jorns;
+            model.searchQuery = "";
+            return View("GerirJorns",model);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult GerirJorns(GerirJornsModel model)
+        {
+            string query = model.searchQuery;
+            var jorns = jornList.fetchAll().ToList();
+            model.searchQuery = query;
+            if (query != null)
+            {
+                var searchResult = (from j in jorns where (j.Email.Contains(query)) select j).ToList();
+                model.Jornalistas = searchResult;
+                model.searchQuery = query;
+                return View("GerirMods", model);
+            }
+            model.Jornalistas = jorns;
+            model.searchQuery = "";
+            return View("GerirMods", model);
+        }
+
+        //promote section
+        public ActionResult JornUnPromoteView(string id, string email)
+        {
+            if (!isAdmin(email))
+            {
+                return View("acessoNegado");
+            }
+            var jorn = getJorn(id);
+            return View("JornUnPromoteView", jorn);
+        }
+
+
+
+        public ActionResult JornUnPromote(string id, string email)
+        {
+            if (!isAdmin(email))
+            {
+                return View("acessoNegado");
+            }
+            var jorn = getJorn(id);
+            if (jorn.isModerador())
+                jorn.demote();
+            else
+            {
+                ModelState.AddModelError("", "Este utilizador já é jornalista");
+                return View("Index");
+            }
+            return View("SuccessView");
+        }
+
+        public ActionResult JornPromoteView(string id, string email)
+        {
+            if (!isAdmin(email))
+            {
+                return View("acessoNegado");
+            }
+            var jorn = getJorn(id);
+            return View("JornPromoteView", jorn);
+        }
+
+        public ActionResult JornPromote(string id, string email)
+        {
+            if (!isAdmin(email))
+            {
+                return View("acessoNegado");
+            }
+
+            var jorn = getJorn(id);
+            if (!jorn.isModerador())
+                jorn.promote();
+            else
+            {
+                ModelState.AddModelError("", "Este utilizador ja é Moderador");
+                return View("Index");
+            }
+            return View("SuccessView");
+        }
+
+        //ban section
+        public ActionResult JornUnBanView(string id, string email)
+        {
+            if (!isAdmin(email))
+            {
+                return View("acessoNegado");
+            }
+            var jorn = getJorn(id);
+            return View("JornUnBanView", jorn);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult JornBanView(JornBanModel Ban)
+        {
+
+            if (!isAdmin(Ban.Email))
+            {
+                return View("acessoNegado");
+            }
+
+            Ban.banTypeList = createDropList(new string[2] { "Permanente", "Temporario" });
+            
+            string[] meses = new string[12] { "Janeiro", "Fevereiro", "Março", "Abril,", "Maio", "Junho", "Julho", "Agosto", "Setembro,", "Outubro", "Novembro", "Dezembro" };
+            List<SelectListItem> diaList = new List<SelectListItem>();
+            for (int i = 1; i <= 31; i++)
+            {
+                SelectListItem item = new SelectListItem();
+                item.Text = i.ToString();
+                item.Value = i.ToString();
+                diaList.Add(item);
+            }
+
+            int nowYear = DateTime.Now.Year;
+            List<SelectListItem> anoList = new List<SelectListItem>();
+            for (int i = nowYear; i <= nowYear + 10; i++)
+            {
+                SelectListItem item = new SelectListItem();
+                item.Text = i.ToString();
+                item.Value = i.ToString();
+                anoList.Add(item);
+            }
+
+            List<SelectListItem> mesList = new List<SelectListItem>();
+            int mes = 1;
+            List<SelectListItem> res = new List<SelectListItem>();
+            foreach (string m in meses)
+            {
+                SelectListItem item = new SelectListItem();
+                item.Text = m;
+                item.Value = mes.ToString();
+                mesList.Add(item);
+                mes++;
+            }
+
+            Ban.diaList = diaList;
+            Ban.anoList = anoList;
+            Ban.mesList = mesList;
+
+            
+
+            if ((Ban.selectedMes == 2) && (Ban.selectedDia > 29))
+            {
+                ModelState.AddModelError("", "A data introduzida é inválida. Por favor corrija e tente novamente.");
+                return View();
+            }
+
+            
+            if (ModelState.IsValid)
+            {
+                return View("JornBanConfirmView", Ban);
+            }
+            return View(Ban);
 
         }
+
+        public ActionResult JornBanView(string id, string email)
+        {
+            if (!isAdmin(email))
+            {
+                return View("acessoNegado");
+            }
+            var jorn = getJorn(id);
+            JornBanModel Ban = new JornBanModel();
+            Ban.banTypeList = createDropList(new string[2] { "Permanente", "Temporario" });
+
+            string[] meses = new string[12] { "Janeiro", "Fevereiro", "Março", "Abril,", "Maio", "Junho", "Julho", "Agosto", "Setembro,", "Outubro", "Novembro", "Dezembro" };
+            List<SelectListItem> diaList = new List<SelectListItem>();
+            for (int i = 1; i <= 31; i++)
+            {
+                SelectListItem item = new SelectListItem();
+                item.Text = i.ToString();
+                item.Value = i.ToString();
+                diaList.Add(item);
+            }
+
+            int nowYear = DateTime.Now.Year;
+            List<SelectListItem> anoList = new List<SelectListItem>();
+            for (int i = nowYear; i <= nowYear + 10; i++)
+            {
+                SelectListItem item = new SelectListItem();
+                item.Text = i.ToString();
+                item.Value = i.ToString();
+                anoList.Add(item);
+            }
+
+            List<SelectListItem> mesList = new List<SelectListItem>();
+            int m = 1;
+            List<SelectListItem> res = new List<SelectListItem>();
+            foreach (string mes in meses)
+            {
+                SelectListItem item = new SelectListItem();
+                item.Text = mes;
+                item.Value = m.ToString();
+                mesList.Add(item);
+                m++;
+            }
+
+            Ban.diaList = diaList;
+            Ban.anoList = anoList;
+            Ban.mesList = mesList;
+
+
+            return View("JornBanView", Ban);
+        }
+
+
+        public ActionResult JornUnBan(string id, string email)
+        {
+            if (!isAdmin(email))
+            {
+                return View("acessoNegado");
+            }
+            var jorn = getJorn(id);
+            if (jorn.isBanned())
+                jorn.Unban();
+            else
+            {
+                ModelState.AddModelError("", "Este utilizador não está banido");
+                return View("Index");
+            }
+
+            return View("SuccessView");
+        }
+        
+        public ActionResult JornBan(string id, string year, string month, string day, string type)
+        {
+           
+            var jorn = getJornalistaByEmail(id);
+            if (!jorn.isBanned())
+            {
+                if (type == "1")
+                {
+                    jorn.Ban();
+                }
+                if (type == "2")
+                {
+                    DateTime date = new DateTime(int.Parse(year), int.Parse(month), int.Parse(day));
+                    jorn.Ban(date);
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Este utilizador já está banido");
+                return View("Index");
+            }
+            return View("SuccessView");
+        }
+
     }
 }
+
+
+
+
