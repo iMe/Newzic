@@ -20,6 +20,14 @@ namespace Newzic.Website.Controllers
 
 
 
+        //gets queixa por id
+        public Queixa getQueixa(string id)
+        {
+            var listaqueixas = qrepo.fetchAll();
+            var queixa = (from q in listaqueixas where q.QueixaId.ToString() == id select q).Single();
+            return queixa;
+        }
+
         //gets jornalista by email
         public Jornalista getJornalistaByEmail(string email)
         {
@@ -89,15 +97,20 @@ namespace Newzic.Website.Controllers
                 return View("acessoNegado");
             }
 
-            var listaQueixas = qrepo.fetchAll().ToList();
-
-            return View("Queixas", listaQueixas);
+            var allQueixas = qrepo.fetchAll().ToList();
+            var listaQueixas = (from q in allQueixas where q.Resolved == false select q);
+            return View("Queixas", listaQueixas.ToList());
         }
 
         public ActionResult resolv(string id)
         {
-            //resolver queixa
-            return View("queixaResolvida");
+            var q = getQueixa(id);
+            //q.Resolved = true;
+            q.MarcarResolvida();
+            qrepo.update(q);
+            qrepo.Save();
+
+            return View("QueixaResolvida");
         }
 
         public ActionResult Details(string id)
@@ -105,7 +118,6 @@ namespace Newzic.Website.Controllers
             Guid g = new Guid(id);
             var jList = qrepo.fetchAll();
             var q = (from n in jList where (n.QueixaId.ToString() == id) select n).ToList();
-
             //var q = qrepo.fetch(g);
             return View("QueixaDetails", q.First());
         }
