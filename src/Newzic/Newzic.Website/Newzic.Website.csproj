@@ -83,6 +83,7 @@
     <Compile Include="Models\GerirModsModel.cs" />
     <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\NewsDetailsModel.cs" />
     <Compile Include="Models\SearchQueryModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -129,6 +130,7 @@
     <Content Include="Views\Admin\ModUnPromoteView.aspx" />
     <Content Include="Views\News\Create.aspx" />
     <Content Include="Views\News\Index.aspx" />
+    <Content Include="Views\News\Show.aspx" />
     <Content Include="Views\Perfil\Index.aspx" />
     <Content Include="Views\Search\Search.aspx" />
     <Content Include="Views\Search\Results.aspx" />

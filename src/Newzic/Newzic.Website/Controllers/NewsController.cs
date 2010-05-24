@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Newzic.Core;
+using Newzic.Website.Models;
 
 namespace Newzic.Website.Controllers
 {
@@ -23,9 +24,21 @@ namespace Newzic.Website.Controllers
         //
         // GET: /Noticia/Details/5
 
-        public ActionResult Details(int id)
+        public ActionResult Details(string id)
         {
-            return View();
+            NewsDetailsModel model = new NewsDetailsModel();
+            IDataCRUD<Noticia> db = new DataCRUD<Noticia>();
+            
+            model.noticia = (from Noticia n in db.fetchAll() where n.NoticiaId.ToString().Equals(id) select n).Single();
+            model.comments = null;
+            model.comentario = null;
+            return View("Show",model);
+        }
+
+        public ActionResult Comentario(NewsDetailsModel model)
+        {
+            if (!Request.IsAuthenticated) return View("AcessoNegado");
+            return View("Show", model);
         }
 
         //
