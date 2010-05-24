@@ -6,26 +6,24 @@
 
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2><%= Html.Encode(ViewData["Message"]) %></h2>
-    
+    <table border="0" width="100%">
+    <%int i=1;%>
     <%foreach (var c in Model.noticias.ToList())
     {%>
   
-    
-    <table>
-        <tr>
-            <td style="width:50%;">
-                <fieldset>
-                    <h3>sadasdsdfffffffffffffffff</h3>
-                </fieldset>
-            </td>
+    <%if((i%2)==1) {%>
+        <tr style="width:100%;"> <%} %>
             <td style="width:50%;">
                 <fieldset>
                     <h3><%=Html.Encode(c.Titulo) %></h3>
                     <%=Html.Encode(c.Corpo) %>
-                    <center> <%=Html.Encode(c.Jornalista.Nome) %></center>
+                    <p align="right"> <%=Html.Encode(c.Jornalista.Nome) %></p>
                 </fieldset>
             </td>
-        </tr>
-    </table>
+        <%i++; %>
+        <%if((i%2)==1) {%>
+        </tr><%} %>
+ 
    <% } %>
+      </table>
 </asp:Content>
