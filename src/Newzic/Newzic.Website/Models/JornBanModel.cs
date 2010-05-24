@@ -46,6 +46,8 @@ namespace Newzic.Website.Models
         public int selectedAno { get; set; }
         public int banType { get; set; }
 
+        public JornBanModel() { }
+
         public JornBanModel(string email)
         {
             banTypeList = createDropList(new string[2] { "Permanente", "Temporario" });

@@ -31,7 +31,7 @@
             </div>
             <div class="editor-field">
                 <%=Html.DropDownList("selectedDia", Model.diaList)%>
-                <%: Html.ValidationMessageFor(model => model.diaList) %>
+                <%--<%: Html.ValidationMessageFor(model => model.diaList) %>--%>
             </div>
 
              <div class="editor-label">
@@ -39,7 +39,7 @@
             </div>
             <div class="editor-field">
                 <%=Html.DropDownList("selectedMes", Model.mesList)%>
-                <%: Html.ValidationMessageFor(model => model.mesList) %>
+                <%--<%: Html.ValidationMessageFor(model => model.mesList) %>--%>
             </div>
 
              <div class="editor-label">
@@ -47,7 +47,7 @@
             </div>
             <div class="editor-field">
                 <%=Html.DropDownList("selectedAno", Model.anoList)%>
-                <%: Html.ValidationMessageFor(model => model.anoList) %>
+                <%--<%: Html.ValidationMessageFor(model => model.anoList) %>--%>
             </div>
 
             <div class="editor-label">
@@ -55,7 +55,7 @@
             </div>
             <div class="editor-field">
                 <%=Html.DropDownList("banType", Model.banTypeList)%>
-                <%: Html.ValidationMessageFor(model => model.banTypeList) %>
+                <%--<%: Html.ValidationMessageFor(model => model.banTypeList) %>--%>
             </div>
 
             <div class="editor-label">
@@ -70,14 +70,14 @@
                 <input type="submit" value="Banir" />
             </p>
         </fieldset>
-        <div>
+<%--        <div>
         <%:Html.ActionLink("Back to List", "Index") %>
-    </div>
+    </div>--%>
 
     <% } %>
 
     <div>
-       <%-- <%:Html.ActionLink("Back to List", "Index") %>--%>
+        <%:Html.ActionLink("Back to List", "Index") %>
     </div>
 
 </asp:Content>
