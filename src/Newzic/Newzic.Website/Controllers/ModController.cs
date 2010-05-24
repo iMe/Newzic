@@ -108,6 +108,7 @@ namespace Newzic.Website.Controllers
             throw new NotImplementedException();
         }
 
+        //id = Model.Email, year = Model.selectedAno, month = Model.selectedMes, day = Model.selectedDia, type = Model.banType
         public ActionResult ConfirmaBanir(string id, string email)
         {
             Jornalista user = getAutenticatedJornalista(email);
