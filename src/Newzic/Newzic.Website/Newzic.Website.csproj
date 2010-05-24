@@ -133,6 +133,7 @@
     <Content Include="Views\Search\Search.aspx" />
     <Content Include="Views\Search\Results.aspx" />
     <Content Include="Views\Shared\AcessoNegado.aspx" />
+    <Content Include="Views\Shared\JornBanConfirmView.aspx" />
     <Content Include="Views\Shared\JornBanView.aspx" />
     <Content Include="Views\Shared\SuccessView.aspx" />
     <Content Include="Web.config" />
