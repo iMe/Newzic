@@ -44,7 +44,6 @@
             <th style="width:5%;">
                 <% string var = 11.ToString();%>
                 <%if (Model.state == 11) var = 10.ToString(); else var = 11.ToString(); %>
-                <%--<%:Html.ActionLink("Rank", "Order", "Search", null, new Model {.class="tab"})%>--%>
                 <%:Html.ActionLink("Rank", "Order", "Search", new { q = Model.query, t = Model.typeSelected.ToString(), o = 5.ToString(), s=var}, null)%>
             </th>
             <th style="width:50%;">
