@@ -13,5 +13,6 @@ namespace Newzic.Website.Models
         public Noticia noticia { get; set; }
         public List<Comentario> comments { get; set; }
         public string comentario { get; set; }
+        public string guid { get; set; }
     }
 }
