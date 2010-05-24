@@ -208,11 +208,12 @@ namespace Newzic.Website.Controllers
         public ActionResult ModBanView(ModBanModel Ban)
         {
 
-            if (!isAdmin(Ban.Email))
-            {
-                return View("acessoNegado");
-            }
-
+            //if (!isAdmin(Ban.Email))
+            //{
+            //    return View("acessoNegado");
+            //}
+            
+            //Ban.Email = mod.Jornalista.Email;
             Ban.banTypeList = createDropList(new string[2] {"Permanente", "Temporario"});
 
             string[] meses = new string[12] { "Janeiro", "Fevereiro", "Março", "Abril,", "Maio", "Junho", "Julho", "Agosto", "Setembro,", "Outubro", "Novembro", "Dezembro" };
@@ -278,12 +279,13 @@ namespace Newzic.Website.Controllers
 
         public ActionResult ModBanView(string id, string email)
         {
-            if (!isAdmin(email))
-            {
-                return View("acessoNegado");
-            }
+            //if (!isAdmin(email))
+            //{
+            //    return View("acessoNegado");
+            //}
             var mod = getMod(id);
             ModBanModel Ban = new ModBanModel();
+            Ban.Email = mod.Jornalista.Email;
 
             Ban.banTypeList = createDropList(new string[2] { "Permanente", "Temporario" });
 
@@ -348,10 +350,10 @@ namespace Newzic.Website.Controllers
 
         public ActionResult ModBan(string id, string year, string month, string day, string type, string email)
         {
-            if (!isAdmin(email))
-            {
-                return View("acessoNegado");
-            }
+            //if (!isAdmin(email))
+            //{
+            //    return View("acessoNegado");
+            //}
             var mod = getModeradorByEmail(id);
             if(!mod.isBanned())
             {
@@ -362,7 +364,7 @@ namespace Newzic.Website.Controllers
                 if (type == "2")
                 {
                     DateTime date = new DateTime(int.Parse(year), int.Parse(month), int.Parse(day));
-                    mod.Ban(date);
+                    mod.Jornalista.Ban(date);
                 }
             }
                
@@ -519,10 +521,10 @@ namespace Newzic.Website.Controllers
         public ActionResult JornBanView(JornBanModel Ban)
         {
 
-            if (!isAdmin(Ban.Email))
-            {
-                return View("acessoNegado");
-            }
+            //if (!isAdmin(Ban.Email))
+            //{
+            //    return View("acessoNegado");
+            //}
 
             Ban.banTypeList = createDropList(new string[2] { "Permanente", "Temporario" });
             
@@ -581,10 +583,10 @@ namespace Newzic.Website.Controllers
 
         public ActionResult JornBanView(string id, string email)
         {
-            if (!isAdmin(email))
-            {
-                return View("acessoNegado");
-            }
+            //if (!isAdmin(email))
+            //{
+            //    return View("acessoNegado");
+            //}
             var jorn = getJorn(id);
             JornBanModel Ban = new JornBanModel();
             Ban.banTypeList = createDropList(new string[2] { "Permanente", "Temporario" });
