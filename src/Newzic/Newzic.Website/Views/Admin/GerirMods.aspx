@@ -43,11 +43,11 @@
     
         <tr>
             <td>
-                <%: Html.ActionLink("Ver Moderador", "ModDetais", new { id = item.ModeradorId, email = Page.User.Identity.Name })%> |
-                <%: Html.ActionLink("Banir", "ModBanView", new { id = item.ModeradorId, email = item.Jornalista.Email })%> |
-                <%: Html.ActionLink("Desbanir", "ModUnbanView", new { id = item.ModeradorId, email = Page.User.Identity.Name })%> |
-                <%: Html.ActionLink("Promover", "ModPromoteView", new { id = item.ModeradorId, email = Page.User.Identity.Name })%> |
-                 <%: Html.ActionLink("Despromover", "ModUnPromoteView", new { id = item.ModeradorId, email = Page.User.Identity.Name })%> |
+                <%: Html.ActionLink("Ver Moderador", "ModDetais", new { id = item.ModeradorId })%> |
+                <%: Html.ActionLink("Banir", "ModBanView", new { id = item.ModeradorId })%> |
+                <%: Html.ActionLink("Desbanir", "ModUnbanView", new { id = item.ModeradorId })%> |
+                <%: Html.ActionLink("Promover", "ModPromoteView", new { id = item.ModeradorId})%> |
+                 <%: Html.ActionLink("Despromover", "ModUnPromoteView", new { id = item.ModeradorId})%> |
             </td>
             <td>
                 <%: item.Jornalista.Nome %>

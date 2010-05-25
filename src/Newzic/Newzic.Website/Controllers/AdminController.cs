@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -17,6 +19,7 @@ namespace Newzic.Website.Controllers
         private readonly IDataCRUD<Queixa> qrepo = new DataCRUD<Queixa>();
         private readonly IDataCRUD<Jornalista> jornList = new DataCRUD<Jornalista>();
         private readonly IDataCRUD<Moderador> modList = new DataCRUD<Moderador>();
+        private readonly IDataCRUD<Administrador> adminList = new DataCRUD<Administrador>();
 
 
 
@@ -69,10 +72,10 @@ namespace Newzic.Website.Controllers
         
         public ActionResult Index(string email)
         {
-            if (!isAdmin(email))
-            {
-                return View("acessoNegado");
-            }
+            //if (!isAdmin(email))
+            //{
+            //    return View("acessoNegado");
+            //}
 
             return View("Index");
         }
@@ -90,12 +93,12 @@ namespace Newzic.Website.Controllers
         }
 
 
-        public ActionResult Queixas(string email)
+        public ActionResult Queixas()
         {
-            if (!isAdmin(email))
-            {
-                return View("acessoNegado");
-            }
+            //if (!isAdmin(email))
+            //{
+            //    return View("acessoNegado");
+            //}
 
             var allQueixas = qrepo.fetchAll().ToList();
             var listaQueixas = (from q in allQueixas where q.Resolved == false select q);
@@ -122,12 +125,12 @@ namespace Newzic.Website.Controllers
             return View("QueixaDetails", q.First());
         }
 
-        public ActionResult ModDetais(string id, string email)
+        public ActionResult ModDetais(string id)
         {
-            if (!isAdmin(email))
-            {
-                return View("acessoNegado");
-            }
+            //if (!isAdmin(email))
+            //{
+            //    return View("acessoNegado");
+            //}
             var modsList = modList.fetchAll();
             var mod = (from m in modsList where (m.Jornalista.JornalistaId.ToString() == id) select m).Single();
             return View("ModDetails", mod);
@@ -136,24 +139,24 @@ namespace Newzic.Website.Controllers
 
        
 
-        public ActionResult ModUnPromoteView(string id, string email)
+        public ActionResult ModUnPromoteView(string id)
         {
-            if (!isAdmin(email))
-            {
-                return View("acessoNegado");
-            }
+            //if (!isAdmin(email))
+            //{
+            //    return View("acessoNegado");
+            //}
             var mod = getMod(id);
             return View("ModunPromoteView", mod);
         }
 
 
         //promote section
-        public ActionResult ModUnPromote(string id, string email)
+        public ActionResult ModUnPromote(string id)
         {
-            if (!isAdmin(email))
-            {
-                return View("acessoNegado");
-            }
+            //if (!isAdmin(email))
+            //{
+            //    return View("acessoNegado");
+            //}
             var mod = getMod(id);
             if (mod.Jornalista.isModerador())
                 mod.Jornalista.demote();
@@ -165,23 +168,23 @@ namespace Newzic.Website.Controllers
             return View("SuccessView");
         }
 
-        public ActionResult ModPromoteView(string id, string email)
+        public ActionResult ModPromoteView(string id)
         {
-            if (!isAdmin(email))
-            {
-                return View("acessoNegado");
-            }
+            //if (!isAdmin(email))
+            //{
+            //    return View("acessoNegado");
+            //}
             var mod = getMod(id);
             return View("ModPromoteView", mod);
         }
 
-        public ActionResult ModPromote(string id, string email)
+        public ActionResult ModPromote(string id)
         {
-            if (!isAdmin(email))
-            {
-                return View("acessoNegado");
-            }
-
+            //if (!isAdmin(email))
+            //{
+            //    return View("acessoNegado");
+            //}
+            /*
             var mod = getMod(id);
             if (!mod.Jornalista.isModerador())
                 mod.Jornalista.promote();
@@ -191,15 +194,25 @@ namespace Newzic.Website.Controllers
                 return View("Index");
             }
             return View("SuccessView");
+             */
+            var jorn = getJorn(id);
+            if (!jorn.isModerador())
+                jorn.promote();
+            else
+            {
+                ModelState.AddModelError("", "Este utilizador ja é Moderador");
+                return View("Index");
+            }
+            return View("SuccessView");
         }
 
         //ban section
-        public ActionResult ModUnBanView(string id, string email)
+        public ActionResult ModUnBanView(string id)
         {
-            if (!isAdmin(email))
-            {
-                return View("acessoNegado");
-            }
+            //if (!isAdmin(email))
+            //{
+            //    return View("acessoNegado");
+            //}
             var mod = getMod(id);
             return View("ModUnBanView", mod);
         }
@@ -277,7 +290,7 @@ namespace Newzic.Website.Controllers
 
         }
 
-        public ActionResult ModBanView(string id, string email)
+        public ActionResult ModBanView(string id)
         {
             //if (!isAdmin(email))
             //{
@@ -330,12 +343,12 @@ namespace Newzic.Website.Controllers
        }
 
 
-        public ActionResult ModUnBan(string id, string email)
+        public ActionResult ModUnBan(string id)
         {
-            if (!isAdmin(email))
-            {
-                return View("acessoNegado");
-            }
+            //if (!isAdmin(email))
+            //{
+            //    return View("acessoNegado");
+            //}
             var mod = getMod(id);
             if(mod.isBanned())
                 mod.Jornalista.Unban();
@@ -348,7 +361,7 @@ namespace Newzic.Website.Controllers
             return View("SuccessView");
         }
 
-        public ActionResult ModBan(string id, string year, string month, string day, string type, string email)
+        public ActionResult ModBan(string id, string year, string month, string day, string type)
         {
             //if (!isAdmin(email))
             //{
@@ -376,12 +389,13 @@ namespace Newzic.Website.Controllers
             return View("SuccessView");
         }
 
-        public ActionResult GerirMods(string email)
+
+        public ActionResult GerirMods()
         {
-            if (!isAdmin(email))
-            {
-                return View("acessoNegado");
-            }
+            //if (!isAdmin(email))
+            //{
+            //    return View("acessoNegado");
+            //}
             var mods = modList.fetchAll().ToList();
             GerirModsModel model = new GerirModsModel();
             model.Moderadores = mods;
@@ -417,12 +431,12 @@ namespace Newzic.Website.Controllers
             return jorn;
         }
         
-        public ActionResult GerirJorns(string email)
+        public ActionResult GerirJorns()
         {
-            if (!isAdmin(email))
-            {
-                return View("acessoNegado");
-            }
+            //if (!isAdmin(email))
+            //{
+            //    return View("acessoNegado");
+            //}
             var jorns = jornList.fetchAll().ToList();
             GerirJornsModel model = new GerirJornsModel();
             model.Jornalistas = jorns;
@@ -449,24 +463,24 @@ namespace Newzic.Website.Controllers
         }
 
         //promote section
-        public ActionResult JornUnPromoteView(string id, string email)
+        public ActionResult JornUnPromoteView(string id)
         {
-            if (!isAdmin(email))
-            {
-                return View("acessoNegado");
-            }
+            //if (!isAdmin(email))
+            //{
+            //    return View("acessoNegado");
+            //}
             var jorn = getJorn(id);
             return View("JornUnPromoteView", jorn);
         }
 
 
 
-        public ActionResult JornUnPromote(string id, string email)
+        public ActionResult JornUnPromote(string id)
         {
-            if (!isAdmin(email))
-            {
-                return View("acessoNegado");
-            }
+            //if (!isAdmin(email))
+            //{
+            //    return View("acessoNegado");
+            //}
             var jorn = getJorn(id);
             if (jorn.isModerador())
                 jorn.demote();
@@ -478,22 +492,22 @@ namespace Newzic.Website.Controllers
             return View("SuccessView");
         }
 
-        public ActionResult JornPromoteView(string id, string email)
+        public ActionResult JornPromoteView(string id)
         {
-            if (!isAdmin(email))
-            {
-                return View("acessoNegado");
-            }
+            //if (!isAdmin(email))
+            //{
+            //    return View("acessoNegado");
+            //}
             var jorn = getJorn(id);
             return View("JornPromoteView", jorn);
         }
 
-        public ActionResult JornPromote(string id, string email)
+        public ActionResult JornPromote(string id)
         {
-            if (!isAdmin(email))
-            {
-                return View("acessoNegado");
-            }
+            //if (!isAdmin(email))
+            //{
+            //    return View("acessoNegado");
+            //}
 
             var jorn = getJorn(id);
             if (!jorn.isModerador())
@@ -507,12 +521,12 @@ namespace Newzic.Website.Controllers
         }
 
         //ban section
-        public ActionResult JornUnBanView(string id, string email)
+        public ActionResult JornUnBanView(string id)
         {
-            if (!isAdmin(email))
-            {
-                return View("acessoNegado");
-            }
+            //if (!isAdmin(email))
+            //{
+            //    return View("acessoNegado");
+            //}
             var jorn = getJorn(id);
             return View("JornUnBanView", jorn);
         }
@@ -521,10 +535,10 @@ namespace Newzic.Website.Controllers
         public ActionResult JornBanView(JornBanModel Ban)
         {
 
-            if (!isAdmin(Ban.jEmail))
-            {
-                return View("acessoNegado");
-            }
+            //if (!isAdmin(Ban.Email))
+            //{
+            //    return View("acessoNegado");
+            //}
 
             Ban.banTypeList = createDropList(new string[2] { "Permanente", "Temporario" });
             
@@ -581,14 +595,14 @@ namespace Newzic.Website.Controllers
 
         }
 
-        public ActionResult JornBanView(string id, string email)
+        public ActionResult JornBanView(string id)
         {
             //if (!isAdmin(email))
             //{
             //    return View("acessoNegado");
             //}
             var jorn = getJorn(id);
-            JornBanModel Ban = new JornBanModel(email);
+            JornBanModel Ban = new JornBanModel(jorn.Email);
             Ban.banTypeList = createDropList(new string[2] { "Permanente", "Temporario" });
 
             string[] meses = new string[12] { "Janeiro", "Fevereiro", "Março", "Abril,", "Maio", "Junho", "Julho", "Agosto", "Setembro,", "Outubro", "Novembro", "Dezembro" };
@@ -632,12 +646,12 @@ namespace Newzic.Website.Controllers
         }
 
 
-        public ActionResult JornUnBan(string id, string email)
+        public ActionResult JornUnBan(string id)
         {
-            if (!isAdmin(email))
-            {
-                return View("acessoNegado");
-            }
+            //if (!isAdmin(email))
+            //{
+            //    return View("acessoNegado");
+            //}
             var jorn = getJorn(id);
             if (jorn.isBanned())
                 jorn.Unban();
@@ -649,10 +663,23 @@ namespace Newzic.Website.Controllers
 
             return View("SuccessView");
         }
-        
+
+        public string getAdmins()
+        {
+            var admins = adminList.fetchAll().ToList();
+            StringBuilder res = new StringBuilder();
+            foreach(Administrador a in admins)
+            {
+                res.Append(a.Jornalista.Email);
+                res.Append(",");
+            }
+            return res.ToString();
+        }
+
+       
         public ActionResult JornBan(string id, string year, string month, string day, string type)
         {
-           
+            
             var jorn = getJornalistaByEmail(id);
             if (!jorn.isBanned())
             {
