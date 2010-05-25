@@ -58,7 +58,13 @@ namespace Newzic.Core
 
         public IQueryable<T> fetchAll()
         {
-            return db.GetTable<T>();
+            if (typeof(ISoftDelete).IsAssignableFrom(typeof(T)))
+            {
+                return db.GetTable<T>().Cast<ISoftDelete>()
+                    .Where(n => !n.Deleted)
+                    .Cast<T>();
+            }
+            else return db.GetTable<T>();
         }
     }
 }
