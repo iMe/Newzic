@@ -138,5 +138,32 @@ namespace Newzic.Website.Controllers
             }
             
         }
+
+        public ActionResult GerirNoticiasFlagged()
+        {
+            var noticiasFlagged = repNoticias.fetchAll().Where(n => n.NoticiaFlaggeds.Any());
+
+            return View("GerirNoticiasFlagged",noticiasFlagged);
+        }
+
+        public ActionResult ApagarNoticia(string id)
+        {
+            var gid = new Guid(id);
+            var noticia = repNoticias.fetchAll().Single(n => n.NoticiaId == gid);
+
+            return View("ConfirmaApagarNoticia", noticia);
+            throw new NotImplementedException();
+        }
+
+        public ActionResult ConfirmaApagarNoticia(string id)
+        {
+            var gid = new Guid(id);
+            var noticia = repNoticias.fetchAll().Single(n => n.NoticiaId == gid);
+            repNoticias.remove(noticia);
+            repNoticias.Save();
+
+            return View("SuccessView");
+
+        }
     }
 }
