@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -146,6 +147,20 @@ namespace Newzic.Website.Controllers
             return View();
         }
 
+        public ActionResult AddVideo ()
+        {
+            var nameValueCollection = Request.Form;
+            return View();
+        }
+
+        public void addMapaPoint (float longitude, float latitude, string localidade)
+        {
+            
+
+
+
+        }
+
         //
         // POST: /Noticia/Create
 
@@ -174,20 +189,32 @@ namespace Newzic.Website.Controllers
                             noticia.Imagems.Add(img);
 
                         }
+
+                        string listaVideos = noticia.listaVideos;
+                        string[] arrayVideos = listaVideos.Split('\n');
+                        /**
+                         * Adição dos links youtube.
+                         */
+                        foreach (var arrayVideo in arrayVideos)
+                        {
+                            Video vs = new Video();
+                            vs.Url = arrayVideo;
+                            noticia.Videos.Add(vs);
+                        }
+                        var ss = noticia.Videos;
+  
                         var email = User.Identity.Name;
                         IDataCRUD<Jornalista> jornalistaConsulta = new DataCRUD<Jornalista>();
                         IQueryable<Jornalista> jornalistas = jornalistaConsulta.fetchAll();
                         Jornalista jorn =
                             (from Jornalista j in jornalistas where j.Email.Equals(email) select j).Single();
                         var jornalistaId = jorn.JornalistaId;
-
                         noticia.Data = DateTime.Now;
                         noticia.JornalistaId = jornalistaId;
-
                         IDataCRUD<Noticia> noticiaAdd = new DataCRUD<Noticia>();
-
-
-
+                        //noticia.Mapa.InsertTour(234.342f, 23409.234f, "Braga");
+                        //noticia.Mapa.InsertTour(29123.23f, 1032.123f, "Lisboa");
+                        //noticia.Mapa.Tours.
                         noticiaAdd.create(noticia);
                         noticiaAdd.Save();
                         return RedirectToAction("Index");
@@ -204,7 +231,7 @@ namespace Newzic.Website.Controllers
             }
             else
             {
-                throw new Exception("Utilizador nao está autenticado!");
+                return RedirectToAction("Index");
             }
         }
 
