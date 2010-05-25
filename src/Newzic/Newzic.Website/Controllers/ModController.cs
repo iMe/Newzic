@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Newzic.Core;
+using Newzic.Website.Models;
 
 namespace Newzic.Website.Controllers
 {
@@ -18,60 +19,36 @@ namespace Newzic.Website.Controllers
         // GET: /Mod/
         public ActionResult Index(string email)
         {
-            try
-            {
-                Jornalista user = repJornalistas.fetchAll().Single(n => n.Email.Equals(email));
-                if (!user.isModerador())
-                    return View("acessoNegado");
+            if (!Request.IsAuthenticated) return View("acessoNegado");
 
-                return View("Index");
-            }
-            catch (InvalidOperationException)
-            {
-                return View("acessoNegado");
-            }
-            
+            Jornalista user = getAutenticatedJornalista(email);
+            return View("Index");
         }
 
         public ActionResult GerirJornalistas(string email)
         {
-            try
-            {
-                Jornalista user = repJornalistas.fetchAll().Single(n => n.Email.Equals(email));
-                if (!user.isModerador())
-                    return View("acessoNegado");
+            if (!Request.IsAuthenticated) return View("acessoNegado");
 
-                var listaJornalistas = repJornalistas.fetchAll().ToList();
-                return View("GerirJornalistas", listaJornalistas);
-            }
-            catch (Exception)
-            {
-                return View("acessoNegado");
-            }
+            Jornalista user = getAutenticatedJornalista(email);
+
+            var listaJornalistas = repJornalistas.fetchAll().ToList();
+            return View("GerirJornalistas", listaJornalistas);
             
         }
 
         public ActionResult Unban(string id, string email)
         {
-            try
-            {
-                Jornalista user = repJornalistas.fetchAll().Single(n => n.Email.Equals(email));
-                if (!user.isModerador())
-                    return View("acessoNegado");
+            if (!Request.IsAuthenticated) return View("acessoNegado");
 
-                Guid gid = new Guid(id);
+            Jornalista user = getAutenticatedJornalista(email);
 
-                var listaBanidos = repBanidos.fetchAll().ToList();
-                var jornalista = repBanidos.fetchAll().Single(n => n.JornalistaId == gid).Jornalista;
-                return View("ConfirmarUnban", jornalista);
-                
-            }
-            catch (InvalidOperationException)
-            {
-                return View("acessoNegado");
-            }
+            if (user == null || !user.isModerador()) return View("acessoNegado");
             
-            
+            var gid = new Guid(id);
+
+            var listaBanidos = repBanidos.fetchAll().ToList();
+            var jornalista = repBanidos.fetchAll().Single(n => n.JornalistaId == gid).Jornalista;
+            return View("ConfirmarUnban", jornalista);   
         }
 
         public ActionResult ConfirmaUnban(string id, string email)
@@ -99,9 +76,35 @@ namespace Newzic.Website.Controllers
             
             Guid gid = new Guid(id);
 
+            
             var jornalista = repJornalistas.fetchAll().Single(n => n.JornalistaId == gid);
-            return View("BanirJornalista", jornalista);
+            var ban = new JornBanModel(jornalista.Email);
+            
+
+
+            return View("BanirJornalista", ban);
+
             //return View("BanirJornalista", jornalista);
+            
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult BanirJornalista2(JornBanModel Ban)
+        {
+
+
+            if ((Ban.selectedMes == 2) && (Ban.selectedDia > 29))
+            {
+                ModelState.AddModelError("", "A data introduzida é inválida. Por favor corrija e tente novamente.");
+                return View();
+            }
+
+
+            if (ModelState.IsValid)
+            {
+                return View("JornBanConfirmView", Ban);
+            }
+            return View(Ban);
             
         }
 

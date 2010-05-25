@@ -8,7 +8,7 @@ namespace Newzic.Core
     public partial class Jornalista : IEntity
     {
         IDataCRUD<Banido> repBanidos = new DataCRUD<Banido>();
-        IDataCRUD<Jornalista> repJornalistas = new DataCRUD<Jornalista>();
+        IDataCRUD<Moderador> repModerador = new DataCRUD<Moderador>();
 
         Guid IEntity.Id
         {
@@ -35,14 +35,14 @@ namespace Newzic.Core
         {
             IDataCRUD<Banido> data = new DataCRUD<Banido>();
             var banido = new Banido();
-            banido.BanidoId = Guid.NewGuid();
+            //banido.BanidoId = Guid.NewGuid();
             banido.Permanente = false;
-            banido.Jornalista = this;
+            //banido.Jornalista = this;
             banido.JornalistaId = this.JornalistaId;
             banido.DataFim = dataFim;
-            this.Banidos.Add(banido);
-            data.create(banido);
-            data.Save();
+            //this.Banidos.Add(banido);
+            repBanidos.create(banido);
+            repBanidos.Save();
         }
 
         public void Unban()
@@ -83,7 +83,12 @@ namespace Newzic.Core
 
         public void promote()
         {
-            throw new NotImplementedException();
+            var repModData = new ModeradorData();
+            var moderador = new Moderador();
+            moderador.ModeradorId = this.JornalistaId;
+            Guid gid = repModData.create(moderador);
+            repModData.Save();
+            //throw new NotImplementedException();
         }
 
         public void demote()

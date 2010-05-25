@@ -17,7 +17,9 @@
                 <fieldset>
                     <h3><%=Html.Encode(c.Titulo) %></h3>
                     <%=Html.Encode(c.Corpo) %>
-                    <p align="right"> <%=Html.Encode(c.Jornalista.Nome) %></p>
+                    <p align="right"> <%=Html.Encode(c.Jornalista.Nome) %>
+                     <%:Html.ActionLink("+", "Details", "News", new { id = c.NoticiaId.ToString() }, null)%>
+                    </p>
                 </fieldset>
             </td>
         <%i++; %>

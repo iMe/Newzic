@@ -184,13 +184,23 @@ namespace Newzic.Website.Controllers
             {
                 return View("acessoNegado");
             }
-
+            /*
             var mod = getMod(id);
             if (!mod.Jornalista.isModerador())
                 mod.Jornalista.promote();
             else
             {
                 ModelState.AddModelError("","Este utilizador ja é Moderador");
+                return View("Index");
+            }
+            return View("SuccessView");
+             */
+            var jorn = getJorn(id);
+            if (!jorn.isModerador())
+                jorn.promote();
+            else
+            {
+                ModelState.AddModelError("", "Este utilizador ja é Moderador");
                 return View("Index");
             }
             return View("SuccessView");
@@ -525,10 +535,10 @@ namespace Newzic.Website.Controllers
         public ActionResult JornBanView(JornBanModel Ban)
         {
 
-            //if (!isAdmin(Ban.Email))
-            //{
-            //    return View("acessoNegado");
-            //}
+            if (!isAdmin(Ban.jEmail))
+            {
+                return View("acessoNegado");
+            }
 
             Ban.banTypeList = createDropList(new string[2] { "Permanente", "Temporario" });
             
@@ -592,7 +602,7 @@ namespace Newzic.Website.Controllers
             //    return View("acessoNegado");
             //}
             var jorn = getJorn(id);
-            JornBanModel Ban = new JornBanModel();
+            JornBanModel Ban = new JornBanModel(email);
             Ban.banTypeList = createDropList(new string[2] { "Permanente", "Temporario" });
 
             string[] meses = new string[12] { "Janeiro", "Fevereiro", "Março", "Abril,", "Maio", "Junho", "Julho", "Agosto", "Setembro,", "Outubro", "Novembro", "Dezembro" };
