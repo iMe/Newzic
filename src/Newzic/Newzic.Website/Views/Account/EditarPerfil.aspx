@@ -9,7 +9,8 @@
 
     <h2>editarPerfil</h2>
 
-    <% using (Html.BeginForm()) {%>
+    <% using (Html.BeginForm("EditarPerfil", "Account"))
+       {%>
         <%: Html.ValidationSummary(true) %>
         <div>
         <fieldset>

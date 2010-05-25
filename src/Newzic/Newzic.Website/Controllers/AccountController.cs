@@ -97,7 +97,6 @@ namespace Newzic.Website.Controllers
             return res;
         }
 
-
         public ActionResult VerPerfil(string email)
         {
             var j = getJornalistaByEmail(email);
@@ -116,9 +115,31 @@ namespace Newzic.Website.Controllers
             return View("VerPerfil", perfil);
         }
 
-        //[AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult VerProprioPerfil(string email)
+        {
+            if (!Request.IsAuthenticated) return View("AcessoNegado");
+
+            IDataCRUD<Jornalista> dbj = new DataCRUD<Jornalista>();
+            
+            Jornalista jorn = (from Jornalista j in dbj.fetchAll() where j.Email.Equals(User.Identity.Name) select j).SingleOrDefault();
+            if (jorn == null || !jorn.Email.Equals(email)) return View("AcessoNegado");
+
+            RegisterModel model = new RegisterModel();
+            model.Name = jorn.Nome;
+            model.Email = jorn.Email;
+            model.Password = "";
+            model.ConfirmPassword = "";
+
+            return View("EditarPerfil", model);
+
+
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult EditarPerfil(RegisterModel model)
         {
+            if (!Request.IsAuthenticated) return View("AcessoNegado");
+
             var j = getJornalistaByEmail(model.Email);
             if (ModelState.IsValid)
             {

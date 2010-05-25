@@ -13,12 +13,26 @@
         <p align="right">
             <small>escrito por </small>
             <%=Html.Encode(Model.noticia.Jornalista.Nome) %>
+            <%:Html.ActionLink("+", "VerPerfil", "Account", new { email = Model.noticia.Jornalista.Email}, null)%>
         </p>
+
+        <center>
+        <table style="width:30%;">
+        <tr></tr>
+        <tr><td>
+            <fieldset>
+            <legend>Tags</legend>
+            <center><p><%= Html.Encode(Model.noticia.Tags)%></p></center>
+            </fieldset>
+        </td></tr>
+        </table>
+        </center>
+
     </fieldset>
     <center>
-        <big><b><%:Html.ActionLink("⇧","","")%></b></big>
+        <big><b><%:Html.ActionLink("⇧","UpVote","News",new { id = Model.noticia.NoticiaId.ToString()}, null)%></b></big>
         <h3><%=Html.Encode(Model.noticia.Pontuacao)%></h3>
-        <big><b><%:Html.ActionLink("⇩", "", "")%></b></big>
+        <big><b><%:Html.ActionLink("⇩", "DownVote", "News",new { id = Model.noticia.NoticiaId.ToString()}, null)%></b></big>
     </center>
 
     <%--<fieldset>--%>
@@ -57,7 +71,7 @@
             <%= Html.TextAreaFor(model => model.comentario, 5,50,null) %>
         </div>
         <div>
-            <%=Html.TextBoxFor(model => model.guid, new { @readonly = "readonly" })%>
+            <%=Html.HiddenFor(model => model.guid, new { @readonly = "readonly" })%>
         </div>
         <p>
             <input type="submit" value="Comentar" />
