@@ -13,7 +13,7 @@
         <legend>Fields</legend>
         
         <div class="display-label">Email</div>
-        <div class="display-field"><%: Model.jEmail%></div>
+        <div class="display-field"><%: Model.Email%></div>
         
         <div class="display-label">ano</div>
         <div class="display-field"><%: Model.ano%></div>
@@ -42,7 +42,7 @@
     </fieldset>
     
     <p>
-        <%: Html.ActionLink("Banir Jornalista", "JornBan", "Admin", new { id = Model.jEmail, year = Model.selectedAno, month = Model.selectedMes, day = Model.selectedDia, type = Model.banType }, null)%> |
+        <%: Html.ActionLink("Banir Jornalista", "JornBan", "Admin", new { id = Model.Email, year = Model.selectedAno, month = Model.selectedMes, day = Model.selectedDia, type = Model.banType }, null)%> |
         <%--<%: Html.ActionLink("Back to List", "GerirJornalistas", "Mod", new { email = Page.User.Identity.Name })%>--%>
     </p>
      <% }%>

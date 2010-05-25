@@ -17,32 +17,32 @@ namespace Newzic.Website.Controllers
 
         //
         // GET: /Mod/
-        public ActionResult Index(string email)
+        public ActionResult Index()
         {
-            if (!Request.IsAuthenticated) return View("acessoNegado");
+            //if (!Request.IsAuthenticated) return View("acessoNegado");
 
-            Jornalista user = getAutenticatedJornalista(email);
+            //Jornalista user = getAutenticatedJornalista(email);
             return View("Index");
         }
 
-        public ActionResult GerirJornalistas(string email)
+        public ActionResult GerirJornalistas()
         {
-            if (!Request.IsAuthenticated) return View("acessoNegado");
+            //if (!Request.IsAuthenticated) return View("acessoNegado");
 
-            Jornalista user = getAutenticatedJornalista(email);
+            //Jornalista user = getAutenticatedJornalista(email);
 
             var listaJornalistas = repJornalistas.fetchAll().ToList();
             return View("GerirJornalistas", listaJornalistas);
             
         }
 
-        public ActionResult Unban(string id, string email)
+        public ActionResult Unban(string id)
         {
             if (!Request.IsAuthenticated) return View("acessoNegado");
 
-            Jornalista user = getAutenticatedJornalista(email);
+            //Jornalista user = getAutenticatedJornalista(V);
 
-            if (user == null || !user.isModerador()) return View("acessoNegado");
+            //if (user == null || !user.isModerador()) return View("acessoNegado");
             
             var gid = new Guid(id);
 
@@ -51,12 +51,12 @@ namespace Newzic.Website.Controllers
             return View("ConfirmarUnban", jornalista);   
         }
 
-        public ActionResult ConfirmaUnban(string id, string email)
+        public ActionResult ConfirmaUnban(string id)
         {
             
-            Jornalista user = getAutenticatedJornalista(email);
+            //Jornalista user = getAutenticatedJornalista(email);
 
-            if (user == null || !user.isModerador()) return View("acessoNegado");
+            //if (user == null || !user.isModerador()) return View("acessoNegado");
 
             Guid gid = new Guid(id);
             Banido jornalista = repBanidos.fetchAll().Single(n => n.JornalistaId == gid);
@@ -68,11 +68,11 @@ namespace Newzic.Website.Controllers
             
         }
 
-        public ActionResult BanirJornalista(string id, string email)
+        public ActionResult BanirJornalista(string id)
         {
-            Jornalista user = getAutenticatedJornalista(email);
+            ////Jornalista user = getAutenticatedJornalista(email);
 
-            if (user == null || !user.isModerador()) return View("acessoNegado");
+            //if (user == null || !user.isModerador()) return View("acessoNegado");
             
             Guid gid = new Guid(id);
 
@@ -108,11 +108,11 @@ namespace Newzic.Website.Controllers
             
         }
 
-        public ActionResult ConfirmaBanir(string id, string email)
+        public ActionResult ConfirmaBanir(string id)
         {
-            Jornalista user = getAutenticatedJornalista(email);
+            //Jornalista user = getAutenticatedJornalista(email);
 
-            if (user == null || !user.isModerador()) return View("acessoNegado");
+            //if (user == null || !user.isModerador()) return View("acessoNegado");
             
             Guid gid = new Guid(id);
             Jornalista jornalista = repJornalistas.fetchAll().Single(n => n.JornalistaId == gid);
