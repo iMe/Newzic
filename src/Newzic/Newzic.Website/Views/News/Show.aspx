@@ -4,9 +4,22 @@
 	Show
 </asp:Content>
 
+<asp:Content ID="Content4" ContentPlaceHolderID="scripts" runat="server">
+    
+<%--    <script type="text/javascript" src="../../Scripts/pics.js"></script>
+     <%
+        var array = Model.noticia.Imagems.Select(i => "\"" +i.ImagemId.ToString()+"\"").ToArray();
+        var s = "var imageIds = {" + string.Join(",", array) + "};"; %>
+    <script type="text/javascript">
+    <%= s %>
+    </script>--%>
+</asp:Content>
+
+
+
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2><%=Html.Encode(Model.noticia.Titulo) %></h2>
+    <h2><%=Html.Encode(Model.noticia.Titulo) %></h2>  
     <fieldset>
         <%=Html.Encode(Model.noticia.Corpo) %>
         <p></p>
@@ -27,6 +40,11 @@
         </td></tr>
         </table>
         </center>
+
+        <fieldset>
+        <center>
+        </center>
+        </fieldset>
 
     </fieldset>
     <center>
@@ -81,7 +99,4 @@
 
     </fieldset>
 
-</asp:Content>
-
-<asp:Content ID="Content3" ContentPlaceHolderID="scripts" runat="server">
 </asp:Content>

@@ -125,6 +125,7 @@ namespace Newzic.Website.Controllers
             perfil.Email = "";
             perfil.Name = "";
             perfil.Password = "";
+            perfil.Status = "";
             return View("VerPerfil", perfil);
         }
 
@@ -142,9 +143,16 @@ namespace Newzic.Website.Controllers
             model.Email = jorn.Email;
             model.Password = "";
             model.ConfirmPassword = "";
+            model.Status = "";
 
             return View("EditarPerfil", model);
 
+
+        }
+
+        private string getRole(Guid id)
+        {
+            return "";
 
         }
 
@@ -153,7 +161,8 @@ namespace Newzic.Website.Controllers
         {
             if (!Request.IsAuthenticated) return View("AcessoNegado");
 
-            var j = getJornalistaByEmail(model.Email);
+            var j = getJornalistaByEmail(model.Email).SingleOrDefault();
+            if (j == null) return View("Error");
             if (ModelState.IsValid)
             {
                 string name = Request.Form["Name"];
@@ -168,17 +177,19 @@ namespace Newzic.Website.Controllers
                     ModelState.AddModelError("", "A password é diferente da sua confirmação.");
                     return View("EditarPerfil");
                 }
-                j.First().Email = email;
-                j.First().Nome = name;
-                j.First().Password = password;
+                j.Email = email;
+                j.Nome = name;
+                j.Password = password;
 
-                jornList.update(j.First());
+                jornList.update(j);
                 jornList.Save();
+                jornList.Dispose();
                 //ModelState.AddModelError("", "Perfil alterado com sucesso.");
 
             }
             
-            model.Name = j.First().Nome;
+            model.Name = j.Nome;
+            model.Status = "";
 
             return View("EditarPerfil", model);
         }
