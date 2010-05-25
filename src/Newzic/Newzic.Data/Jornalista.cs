@@ -88,12 +88,14 @@ namespace Newzic.Core
             moderador.ModeradorId = this.JornalistaId;
             Guid gid = repModData.create(moderador);
             repModData.Save();
-            //throw new NotImplementedException();
         }
 
         public void demote()
         {
-            throw new NotImplementedException();
+            var repModData = new ModeradorData();
+            var moderador = repModData.fetchAll().Single(n => n.ModeradorId == this.JornalistaId);
+            repModData.demote(moderador);
+            repModData.Save();
         }
 
     }

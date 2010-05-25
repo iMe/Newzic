@@ -6,7 +6,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Lista de Moderadores | <%: Html.ActionLink("Ver Jornalistas", "GerirJorns", "Admin", new { email = Page.User.Identity.Name }, null)%></h2>
+    <h2>Lista de Moderadores | <%: Html.ActionLink("Ver Jornalistas", "GerirJorns", "Admin", null)%></h2>
     <table>
 
      <% using (Html.BeginForm()) {%>
@@ -44,10 +44,15 @@
         <tr>
             <td>
                 <%: Html.ActionLink("Ver Moderador", "ModDetais", new { id = item.ModeradorId })%> |
-                <%: Html.ActionLink("Banir", "ModBanView", new { id = item.ModeradorId })%> |
+                <%if (!item.isBanned()) {%>
+                <%:Html.ActionLink("Banir", "ModBanView", new {id = item.ModeradorId})%> |
+                <%}%>
+                <%if (item.isBanned()) {%>
                 <%: Html.ActionLink("Desbanir", "ModUnbanView", new { id = item.ModeradorId })%> |
-                <%: Html.ActionLink("Promover", "ModPromoteView", new { id = item.ModeradorId})%> |
-                 <%: Html.ActionLink("Despromover", "ModUnPromoteView", new { id = item.ModeradorId})%> |
+                <%}%>
+                <%: Html.ActionLink("Despromover", "JornUnPromoteView", new { id = item.Jornalista.JornalistaId })%>
+               <%-- <%: Html.ActionLink("Promover", "ModPromoteView", new { id = item.ModeradorId})%> |
+                <%: Html.ActionLink("Despromover", "ModUnPromoteView", new { id = item.ModeradorId})%> |--%>
             </td>
             <td>
                 <%: item.Jornalista.Nome %>
