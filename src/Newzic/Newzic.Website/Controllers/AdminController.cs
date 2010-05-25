@@ -64,7 +64,49 @@ namespace Newzic.Website.Controllers
             return false;
 
         }
-        
+
+        public static string getRole(Guid id)
+        {
+            IDataCRUD<Administrador> dba = new DataCRUD<Administrador>();
+            IDataCRUD<Moderador> dbm = new DataCRUD<Moderador>();
+            IDataCRUD<Jornalista> dbj = new DataCRUD<Jornalista>();
+            string res;
+
+            bool r = (from Administrador a in dba.fetchAll() where a.AdministradorId.Equals(id) select a).Any();
+            if (r) return "Administrador";
+
+            r = (from Moderador m in dbm.fetchAll() where m.ModeradorId.Equals(id) select m).Any();
+            if (r) return "Moderador";
+
+            r = (from Jornalista j in dbj.fetchAll() where j.JornalistaId.Equals(id) select j).Any();
+            if (r) return "Jornalista";
+
+            return null;
+
+        }
+
+        public static string getRole(String email)
+        {
+            IDataCRUD<Administrador> dba = new DataCRUD<Administrador>();
+            IDataCRUD<Moderador> dbm = new DataCRUD<Moderador>();
+            IDataCRUD<Jornalista> dbj = new DataCRUD<Jornalista>();
+            string res;
+
+            Guid id = (from Jornalista jj in dbj.fetchAll() where jj.Email.Equals(email) select jj.JornalistaId).SingleOrDefault();
+
+            bool r = (from Administrador a in dba.fetchAll() where a.AdministradorId.Equals(id) select a).Any();
+            if (r) return "Administrador";
+
+            r = (from Moderador m in dbm.fetchAll() where m.ModeradorId.Equals(id) select m).Any();
+            if (r) return "Moderador";
+
+            r = (from Jornalista j in dbj.fetchAll() where j.JornalistaId.Equals(id) select j).Any();
+            if (r) return "Jornalista";
+
+            return null;
+
+        }
+
         //gets queixa por id
         public Queixa getQueixa(string id)
         {
