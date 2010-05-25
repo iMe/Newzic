@@ -52,7 +52,7 @@ namespace Newzic.Website.Models
         {
             banTypeList = createDropList(new string[2] { "Permanente", "Temporario" });
             this.Email = email;
-            string[] meses = new string[12] { "Janeiro", "Fevereiro", "Março", "Abril,", "Maio", "Junho", "Julho", "Agosto", "Setembro,", "Outubro", "Novembro", "Dezembro" };
+            string[] meses = new string[12] { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" };
             diaList = new List<SelectListItem>();
             for (int i = 1; i <= 31; i++)
             {
