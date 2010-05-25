@@ -269,7 +269,7 @@ namespace Newzic.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="Imagem", Storage="_ImageFile", DbType="Image NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImageFile", DbType="Image NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
 		public System.Data.Linq.Binary ImageFile
 		{
 			get

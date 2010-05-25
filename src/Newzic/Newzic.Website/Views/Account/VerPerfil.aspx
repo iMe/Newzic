@@ -10,7 +10,13 @@
 
     <fieldset>
         <legend>Perfil</legend>
-        
+        <center>
+        <p>
+        <big> Estatuto:</big>
+        <%= Html.Encode(Model.Status) %>
+        </p>
+        </center>
+
         <p>
             Nome:
             <%= Html.Encode(Model.Name ) %>
@@ -25,10 +31,25 @@
             Palavra chave:
             <%= Html.Encode(Model.Password ) %>
         </p>--%>
+
+        <p>
+        <%:Html.ActionLink("Editar", "VerProprioPerfil", "Account", new { email = User.Identity.Name}, null)%>
+        </p>
         
     </fieldset>
+
+    <fieldset>
+    <legend>Noticias</legend>
+        <%foreach (var n in Model.noticias) { %>
+            <p>
+            <%= Html.ActionLink("Edit", "Edit", new { id=n.NoticiaId }) %> |
+                <%= Html.ActionLink("Details", "Details", "News",new { id=n.NoticiaId },null)%> |
+            <%=Html.Encode(n.Titulo) %>
+            </p>
+        <% } %>
+    </fieldset>
+    
     <p>
-        <%:Html.ActionLink("Editar", "VerProprioPerfil", "Account", new { email = User.Identity.Name}, null)%>
         <%: Html.ActionLink("Back to List", "/Home/Index") %>
     </p>
 
