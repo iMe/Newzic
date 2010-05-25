@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -17,6 +19,7 @@ namespace Newzic.Website.Controllers
         private readonly IDataCRUD<Queixa> qrepo = new DataCRUD<Queixa>();
         private readonly IDataCRUD<Jornalista> jornList = new DataCRUD<Jornalista>();
         private readonly IDataCRUD<Moderador> modList = new DataCRUD<Moderador>();
+        private readonly IDataCRUD<Administrador> adminList = new DataCRUD<Administrador>();
 
 
 
@@ -376,6 +379,7 @@ namespace Newzic.Website.Controllers
             return View("SuccessView");
         }
 
+
         public ActionResult GerirMods(string email)
         {
             if (!isAdmin(email))
@@ -649,10 +653,23 @@ namespace Newzic.Website.Controllers
 
             return View("SuccessView");
         }
-        
+
+        public string getAdmins()
+        {
+            var admins = adminList.fetchAll().ToList();
+            StringBuilder res = new StringBuilder();
+            foreach(Administrador a in admins)
+            {
+                res.Append(a.Jornalista.Email);
+                res.Append(",");
+            }
+            return res.ToString();
+        }
+
+        [Authorize(Roles = "Admin")]
         public ActionResult JornBan(string id, string year, string month, string day, string type)
         {
-           
+            
             var jorn = getJornalistaByEmail(id);
             if (!jorn.isBanned())
             {

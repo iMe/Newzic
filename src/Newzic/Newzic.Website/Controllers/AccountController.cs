@@ -66,6 +66,8 @@ namespace Newzic.Website.Controllers
                 autenticado = true;
                 FormsAuthentication.Authenticate(email, pass);
                 FormsAuthentication.SetAuthCookie(email, true);
+                HttpContext.User.IsInRole("Admin");
+
 
                 return RedirectToAction("Index", "");
                 //return View("LogedIn");

@@ -44,10 +44,8 @@
         <tr>
             <td>
                 <%: Html.ActionLink("Ver Jornalista", "ModDetais", new { id = item.JornalistaId, email = Page.User.Identity.Name })%> |
-                <%: Html.ActionLink("Banir", "JornBanView", new { id = item.JornalistaId, email = item.Email })%> |
-                <%: Html.ActionLink("Desbanir", "JornUnbanView", new { id = item.JornalistaId, email = Page.User.Identity.Name })%> |
                 <%: Html.ActionLink("Promover", "JornPromoteView", new { id = item.JornalistaId, email = Page.User.Identity.Name })%> |
-                 <%: Html.ActionLink("Despromover", "JornUnPromoteView", new { id = item.JornalistaId, email = Page.User.Identity.Name })%> |
+                <%: Html.ActionLink("Despromover", "JornUnPromoteView", new { id = item.JornalistaId, email = Page.User.Identity.Name })%> |
             </td>
             <td>
                 <%: item.Nome %>
