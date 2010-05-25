@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 
 namespace Newzic.Core
 {
@@ -41,7 +42,11 @@ namespace Newzic.Core
 
         public void Save()
         {
-            db.SubmitChanges();
+            using (var ts = new TransactionScope())
+            {
+                db.SubmitChanges();
+                ts.Complete();
+            }
         }
 
         public virtual T fetch(Guid id)
