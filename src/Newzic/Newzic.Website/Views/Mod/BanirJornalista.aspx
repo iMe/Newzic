@@ -18,11 +18,11 @@
             
             
             <div class="editor-label">
-                <%: Html.LabelFor(model => model.jEmail) %>
+                <%: Html.LabelFor(model => model.Email) %>
             </div>
             <div class="editor-field">
-                <%: Html.TextBoxFor(model => model.jEmail) %>
-                <%: Html.ValidationMessageFor(model => model.jEmail) %>
+                <%: Html.TextBoxFor(model => model.Email) %>
+                <%: Html.ValidationMessageFor(model => model.Email) %>
             </div>
             
 

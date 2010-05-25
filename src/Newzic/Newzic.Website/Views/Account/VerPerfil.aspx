@@ -28,7 +28,7 @@
         
     </fieldset>
     <p>
-        <%:Html.ActionLink("Editar", "EditarPerfil", "Account", new {email = Model.Email, name = Model.Name}, null) %>
+        <%:Html.ActionLink("Editar", "VerProprioPerfil", "Account", new { email = User.Identity.Name}, null)%>
         <%: Html.ActionLink("Back to List", "/Home/Index") %>
     </p>
 

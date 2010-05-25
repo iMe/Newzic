@@ -4,21 +4,53 @@
 	Show
 </asp:Content>
 
+<asp:Content ID="Content4" ContentPlaceHolderID="scripts" runat="server">
+    
+<%--    <script type="text/javascript" src="../../Scripts/pics.js"></script>
+     <%
+        var array = Model.noticia.Imagems.Select(i => "\"" +i.ImagemId.ToString()+"\"").ToArray();
+        var s = "var imageIds = {" + string.Join(",", array) + "};"; %>
+    <script type="text/javascript">
+    <%= s %>
+    </script>--%>
+</asp:Content>
+
+
+
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2><%=Html.Encode(Model.noticia.Titulo) %></h2>
+    <h2><%=Html.Encode(Model.noticia.Titulo) %></h2>  
     <fieldset>
         <%=Html.Encode(Model.noticia.Corpo) %>
         <p></p>
         <p align="right">
             <small>escrito por </small>
             <%=Html.Encode(Model.noticia.Jornalista.Nome) %>
+            <%:Html.ActionLink("+", "VerPerfil", "Account", new { email = Model.noticia.Jornalista.Email}, null)%>
         </p>
+
+        <center>
+        <table style="width:30%;">
+        <tr></tr>
+        <tr><td>
+            <fieldset>
+            <legend>Tags</legend>
+            <center><p><%= Html.Encode(Model.noticia.Tags)%></p></center>
+            </fieldset>
+        </td></tr>
+        </table>
+        </center>
+
+        <fieldset>
+        <center>
+        </center>
+        </fieldset>
+
     </fieldset>
     <center>
-        <big><b><%:Html.ActionLink("⇧","","")%></b></big>
+        <big><b><%:Html.ActionLink("⇧","UpVote","News",new { id = Model.noticia.NoticiaId.ToString()}, null)%></b></big>
         <h3><%=Html.Encode(Model.noticia.Pontuacao)%></h3>
-        <big><b><%:Html.ActionLink("⇩", "", "")%></b></big>
+        <big><b><%:Html.ActionLink("⇩", "DownVote", "News",new { id = Model.noticia.NoticiaId.ToString()}, null)%></b></big>
     </center>
 
     <%--<fieldset>--%>
@@ -57,7 +89,7 @@
             <%= Html.TextAreaFor(model => model.comentario, 5,50,null) %>
         </div>
         <div>
-            <%=Html.TextBoxFor(model => model.guid, new { @readonly = "readonly" })%>
+            <%=Html.HiddenFor(model => model.guid, new { @readonly = "readonly" })%>
         </div>
         <p>
             <input type="submit" value="Comentar" />
@@ -67,7 +99,4 @@
 
     </fieldset>
 
-</asp:Content>
-
-<asp:Content ID="Content3" ContentPlaceHolderID="scripts" runat="server">
 </asp:Content>

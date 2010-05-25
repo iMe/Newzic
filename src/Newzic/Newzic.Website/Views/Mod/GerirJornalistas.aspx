@@ -24,11 +24,11 @@
     
         <tr>
             <td>
-                <%: Html.ActionLink("Ver Jornalista", "VerJornalista", new { id = item.JornalistaId, email = Page.User.Identity.Name })%> |
+                <%: Html.ActionLink("Ver Jornalista", "VerJornalista", new { id = item.JornalistaId})%> |
                 <% if (item.isBanned()) %>
-                       <%:Html.ActionLink("Levantar Ban", "Unban", new { Id = item.JornalistaId, email = Page.User.Identity.Name })%>
+                       <%:Html.ActionLink("Levantar Ban", "Unban", new { Id = item.JornalistaId})%>
                 <% if (!item.isBanned())%>
-                       <%: Html.ActionLink("Banir", "BanirJornalista", new {id = item.JornalistaId, email = Page.User.Identity.Name})%>
+                       <%: Html.ActionLink("Banir", "BanirJornalista", new {id = item.JornalistaId})%>
             </td>
             <td>
                 <%= Html.Encode(item.Nome) %>

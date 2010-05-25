@@ -14,7 +14,7 @@ namespace Newzic.Website.Models
         [Required]
         [DataType(DataType.Text)]
         [DisplayName("Email do utilizador")]
-        public string jEmail { get; set; }
+        public string Email { get; set; }
         
        // [Required]
         [DataType(DataType.Text)]
@@ -51,8 +51,8 @@ namespace Newzic.Website.Models
         public JornBanModel(string email)
         {
             banTypeList = createDropList(new string[2] { "Permanente", "Temporario" });
-            this.jEmail = email;
-            string[] meses = new string[12] { "Janeiro", "Fevereiro", "Março", "Abril,", "Maio", "Junho", "Julho", "Agosto", "Setembro,", "Outubro", "Novembro", "Dezembro" };
+            this.Email = email;
+            string[] meses = new string[12] { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" };
             diaList = new List<SelectListItem>();
             for (int i = 1; i <= 31; i++)
             {

@@ -1,4 +1,6 @@
-﻿namespace Newzic.Core
+﻿using System;
+
+namespace Newzic.Core
 {
     class ModeradorData: DataCRUD<Moderador>
     {
@@ -7,10 +9,17 @@
             moderador.Ban();
         }
 
-        public void demoteModerador(Moderador moderador)
+        public void demote(Moderador moderador)
         {
             db.GetTable<Moderador>().DeleteOnSubmit(moderador);
         }
+
+        public override Guid create(Moderador moderador)
+        {
+            db.GetTable<Moderador>().InsertOnSubmit(moderador);
+            return moderador.ModeradorId;
+        }
+
     }
     
 }
