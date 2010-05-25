@@ -13,6 +13,7 @@
     <h2>
         Create</h2>
     <% using (Html.BeginForm())
+           
        {%>
     <form action="/news/Create" method="post" enctype="multipart/form-data">
     <fieldset>
@@ -28,7 +29,7 @@
             <%= Html.LabelFor(model => model.Corpo) %>
         </div>
         <div class="editor-field">
-            <%= Html.TextBoxFor(model => model.Corpo) %>
+            <%= Html.TextAreaFor (model => model.Corpo, 10, 30, null) %>
             <%= Html.ValidationMessageFor(model => model.Corpo) %>
         </div>
         <div class="editor-label">
@@ -41,9 +42,14 @@
         <div class="editor-label">
             <%= Html.LabelFor(model => model.Imagems) %>
         </div>
-        
         <div id="uploads">
             <input type="file" name="file1" id="file1" />
+        </div>
+        <div class="editor-label">
+            <%= Html.LabelFor(model => model.Videos) %>
+        </div>
+        <div>
+            <%= Html.TextAreaFor(model=>model.listaVideos)%>
         </div>
         <div class="editor-label">
             <%= Html.LabelFor(model => model.Mapa) %>
@@ -51,7 +57,6 @@
         <div id="map">
         </div>
         <input type="submit" value="Create" />
-        
     </fieldset>
     </form>
     <% } %>

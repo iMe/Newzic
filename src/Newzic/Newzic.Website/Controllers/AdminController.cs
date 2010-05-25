@@ -112,12 +112,10 @@ namespace Newzic.Website.Controllers
             return res;
         }
         
-        public ActionResult Index(string email)
+        public ActionResult Index()
         {
-            //if (!isAdmin(email))
-            //{
-            //    return View("acessoNegado");
-            //}
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
 
             return View("Index");
         }
@@ -213,17 +211,6 @@ namespace Newzic.Website.Controllers
         {
             if (!UserIsInRole("Admin"))
                 return View("AcessoNegado");
-            /*
-            var mod = getMod(id);
-            if (!mod.Jornalista.isModerador())
-                mod.Jornalista.promote();
-            else
-            {
-                ModelState.AddModelError("","Este utilizador ja é Moderador");
-                return View("Index");
-            }
-            return View("SuccessView");
-             */
             var jorn = getJorn(id);
             if (!jorn.isModerador())
                 jorn.promote();
@@ -246,43 +233,43 @@ namespace Newzic.Website.Controllers
             if (!UserIsInRole("Admin"))
                 return View("AcessoNegado");
             
-            Ban.banTypeList = createDropList(new string[2] {"Permanente", "Temporario"});
+            //Ban.banTypeList = createDropList(new string[2] {"Permanente", "Temporario"});
 
-            string[] meses = new string[12] { "Janeiro", "Fevereiro", "Março", "Abril,", "Maio", "Junho", "Julho", "Agosto", "Setembro,", "Outubro", "Novembro", "Dezembro" };
-            List<SelectListItem> diaList = new List<SelectListItem>();
-            for (int i = 1; i <= 31;i++)
-            {
-                SelectListItem item = new SelectListItem();
-                item.Text = i.ToString();
-                item.Value = i.ToString();
-                diaList.Add(item);
-            }
+            //string[] meses = new string[12] { "Janeiro", "Fevereiro", "Março", "Abril,", "Maio", "Junho", "Julho", "Agosto", "Setembro,", "Outubro", "Novembro", "Dezembro" };
+            //List<SelectListItem> diaList = new List<SelectListItem>();
+            //for (int i = 1; i <= 31;i++)
+            //{
+            //    SelectListItem item = new SelectListItem();
+            //    item.Text = i.ToString();
+            //    item.Value = i.ToString();
+            //    diaList.Add(item);
+            //}
 
-            int nowYear = DateTime.Now.Year;
-            List<SelectListItem> anoList = new List<SelectListItem>();
-            for (int i = nowYear; i <= nowYear+10; i++)
-            {
-                SelectListItem item = new SelectListItem(); 
-                item.Text = i.ToString();
-                item.Value = i.ToString();
-                anoList.Add(item);
-            }
+            //int nowYear = DateTime.Now.Year;
+            //List<SelectListItem> anoList = new List<SelectListItem>();
+            //for (int i = nowYear; i <= nowYear+10; i++)
+            //{
+            //    SelectListItem item = new SelectListItem(); 
+            //    item.Text = i.ToString();
+            //    item.Value = i.ToString();
+            //    anoList.Add(item);
+            //}
             
-            List<SelectListItem> mesList = new List<SelectListItem>();
-            int mes = 1;
-            List<SelectListItem> res = new List<SelectListItem>();
-            foreach (string m in meses)
-            {
-                SelectListItem item = new SelectListItem();
-                item.Text = m;
-                item.Value = mes.ToString();
-                mesList.Add(item);
-                mes++;
-            }
+            //List<SelectListItem> mesList = new List<SelectListItem>();
+            //int mes = 1;
+            //List<SelectListItem> res = new List<SelectListItem>();
+            //foreach (string m in meses)
+            //{
+            //    SelectListItem item = new SelectListItem();
+            //    item.Text = m;
+            //    item.Value = mes.ToString();
+            //    mesList.Add(item);
+            //    mes++;
+            //}
 
-            Ban.diaList = diaList;
-            Ban.anoList = anoList;
-            Ban.mesList = mesList;
+            //Ban.diaList = diaList;
+            //Ban.anoList = anoList;
+            //Ban.mesList = mesList;
 
             if (Ban.selectedMes > 12 || Ban.selectedMes < 1)
             {
@@ -314,46 +301,8 @@ namespace Newzic.Website.Controllers
             if (!UserIsInRole("Admin"))
                 return View("AcessoNegado");
             var mod = getMod(id);
-            ModBanModel Ban = new ModBanModel();
+            ModBanModel Ban = new ModBanModel(mod.Jornalista.Email);
             Ban.Email = mod.Jornalista.Email;
-
-            Ban.banTypeList = createDropList(new string[2] { "Permanente", "Temporario" });
-
-            string[] meses = new string[12] { "Janeiro", "Fevereiro", "Março", "Abril,", "Maio", "Junho", "Julho", "Agosto", "Setembro,", "Outubro", "Novembro", "Dezembro" };
-            List<SelectListItem> diaList = new List<SelectListItem>();
-            for (int i = 1; i <= 31; i++)
-            {
-                SelectListItem item = new SelectListItem();
-                item.Text = i.ToString();
-                item.Value = i.ToString();
-                diaList.Add(item);
-            }
-
-            int nowYear = DateTime.Now.Year;
-            List<SelectListItem> anoList = new List<SelectListItem>();
-            for (int i = nowYear; i <= nowYear + 10; i++)
-            {
-                SelectListItem item = new SelectListItem();
-                item.Text = i.ToString();
-                item.Value = i.ToString();
-                anoList.Add(item);
-            }
-
-            List<SelectListItem> mesList = new List<SelectListItem>();
-            int m = 1;
-            List<SelectListItem> res = new List<SelectListItem>();
-            foreach (string mes in meses)
-            {
-                SelectListItem item = new SelectListItem();
-                item.Text = mes;
-                item.Value = m.ToString();
-                mesList.Add(item);
-                m++;
-            }
-
-            Ban.diaList = diaList;
-            Ban.anoList = anoList;
-            Ban.mesList = mesList;
             return View("ModBanView", Ban);
        }
 
@@ -541,41 +490,41 @@ namespace Newzic.Website.Controllers
 
             Ban.banTypeList = createDropList(new string[2] { "Permanente", "Temporario" });
             
-            string[] meses = new string[12] { "Janeiro", "Fevereiro", "Março", "Abril,", "Maio", "Junho", "Julho", "Agosto", "Setembro,", "Outubro", "Novembro", "Dezembro" };
-            List<SelectListItem> diaList = new List<SelectListItem>();
-            for (int i = 1; i <= 31; i++)
-            {
-                SelectListItem item = new SelectListItem();
-                item.Text = i.ToString();
-                item.Value = i.ToString();
-                diaList.Add(item);
-            }
+            //string[] meses = new string[12] { "Janeiro", "Fevereiro", "Março", "Abril,", "Maio", "Junho", "Julho", "Agosto", "Setembro,", "Outubro", "Novembro", "Dezembro" };
+            //List<SelectListItem> diaList = new List<SelectListItem>();
+            //for (int i = 1; i <= 31; i++)
+            //{
+            //    SelectListItem item = new SelectListItem();
+            //    item.Text = i.ToString();
+            //    item.Value = i.ToString();
+            //    diaList.Add(item);
+            //}
 
-            int nowYear = DateTime.Now.Year;
-            List<SelectListItem> anoList = new List<SelectListItem>();
-            for (int i = nowYear; i <= nowYear + 10; i++)
-            {
-                SelectListItem item = new SelectListItem();
-                item.Text = i.ToString();
-                item.Value = i.ToString();
-                anoList.Add(item);
-            }
+            //int nowYear = DateTime.Now.Year;
+            //List<SelectListItem> anoList = new List<SelectListItem>();
+            //for (int i = nowYear; i <= nowYear + 10; i++)
+            //{
+            //    SelectListItem item = new SelectListItem();
+            //    item.Text = i.ToString();
+            //    item.Value = i.ToString();
+            //    anoList.Add(item);
+            //}
 
-            List<SelectListItem> mesList = new List<SelectListItem>();
-            int mes = 1;
-            List<SelectListItem> res = new List<SelectListItem>();
-            foreach (string m in meses)
-            {
-                SelectListItem item = new SelectListItem();
-                item.Text = m;
-                item.Value = mes.ToString();
-                mesList.Add(item);
-                mes++;
-            }
+            //List<SelectListItem> mesList = new List<SelectListItem>();
+            //int mes = 1;
+            //List<SelectListItem> res = new List<SelectListItem>();
+            //foreach (string m in meses)
+            //{
+            //    SelectListItem item = new SelectListItem();
+            //    item.Text = m;
+            //    item.Value = mes.ToString();
+            //    mesList.Add(item);
+            //    mes++;
+            //}
 
-            Ban.diaList = diaList;
-            Ban.anoList = anoList;
-            Ban.mesList = mesList;
+            //Ban.diaList = diaList;
+            //Ban.anoList = anoList;
+            //Ban.mesList = mesList;
 
             
 
@@ -600,43 +549,43 @@ namespace Newzic.Website.Controllers
                 return View("AcessoNegado");
             var jorn = getJorn(id);
             JornBanModel Ban = new JornBanModel(jorn.Email);
-            Ban.banTypeList = createDropList(new string[2] { "Permanente", "Temporario" });
+            //Ban.banTypeList = createDropList(new string[2] { "Permanente", "Temporario" });
 
-            string[] meses = new string[12] { "Janeiro", "Fevereiro", "Março", "Abril,", "Maio", "Junho", "Julho", "Agosto", "Setembro,", "Outubro", "Novembro", "Dezembro" };
-            List<SelectListItem> diaList = new List<SelectListItem>();
-            for (int i = 1; i <= 31; i++)
-            {
-                SelectListItem item = new SelectListItem();
-                item.Text = i.ToString();
-                item.Value = i.ToString();
-                diaList.Add(item);
-            }
+            //string[] meses = new string[12] { "Janeiro", "Fevereiro", "Março", "Abril,", "Maio", "Junho", "Julho", "Agosto", "Setembro,", "Outubro", "Novembro", "Dezembro" };
+            //List<SelectListItem> diaList = new List<SelectListItem>();
+            //for (int i = 1; i <= 31; i++)
+            //{
+            //    SelectListItem item = new SelectListItem();
+            //    item.Text = i.ToString();
+            //    item.Value = i.ToString();
+            //    diaList.Add(item);
+            //}
 
-            int nowYear = DateTime.Now.Year;
-            List<SelectListItem> anoList = new List<SelectListItem>();
-            for (int i = nowYear; i <= nowYear + 10; i++)
-            {
-                SelectListItem item = new SelectListItem();
-                item.Text = i.ToString();
-                item.Value = i.ToString();
-                anoList.Add(item);
-            }
+            //int nowYear = DateTime.Now.Year;
+            //List<SelectListItem> anoList = new List<SelectListItem>();
+            //for (int i = nowYear; i <= nowYear + 10; i++)
+            //{
+            //    SelectListItem item = new SelectListItem();
+            //    item.Text = i.ToString();
+            //    item.Value = i.ToString();
+            //    anoList.Add(item);
+            //}
 
-            List<SelectListItem> mesList = new List<SelectListItem>();
-            int m = 1;
-            List<SelectListItem> res = new List<SelectListItem>();
-            foreach (string mes in meses)
-            {
-                SelectListItem item = new SelectListItem();
-                item.Text = mes;
-                item.Value = m.ToString();
-                mesList.Add(item);
-                m++;
-            }
+            //List<SelectListItem> mesList = new List<SelectListItem>();
+            //int m = 1;
+            //List<SelectListItem> res = new List<SelectListItem>();
+            //foreach (string mes in meses)
+            //{
+            //    SelectListItem item = new SelectListItem();
+            //    item.Text = mes;
+            //    item.Value = m.ToString();
+            //    mesList.Add(item);
+            //    m++;
+            //}
 
-            Ban.diaList = diaList;
-            Ban.anoList = anoList;
-            Ban.mesList = mesList;
+            //Ban.diaList = diaList;
+            //Ban.anoList = anoList;
+            //Ban.mesList = mesList;
 
 
             return View("JornBanView", Ban);

@@ -6,7 +6,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Lista de Jornalistas | <%: Html.ActionLink("Ver Moderadores", "GerirMods", "Admin", new { email = Page.User.Identity.Name }, null)%></h2>
+    <h2>Lista de Jornalistas | <%: Html.ActionLink("Ver Moderadores", "GerirMods", "Admin", null)%></h2>
     <table>
 
      <% using (Html.BeginForm()) {%>
@@ -44,8 +44,14 @@
         <tr>
             <td>
                 <%: Html.ActionLink("Ver Jornalista", "ModDetais", new { id = item.JornalistaId })%> |
-                <%: Html.ActionLink("Promover", "JornPromoteView", new { id = item.JornalistaId})%> |
-                <%: Html.ActionLink("Despromover", "JornUnPromoteView", new { id = item.JornalistaId })%> |
+                <%if (!item.isModerador())
+                {%>
+                    <%:Html.ActionLink("Promover", "JornPromoteView", new {id = item.JornalistaId})%>
+                <%}%>
+                <%--<%if (item.isModerador())
+                {%>
+                <%: Html.ActionLink("Despromover", "JornUnPromoteView", new { id = item.JornalistaId })%>
+                <%}%>--%>
             </td>
             <td>
                 <%: item.Nome %>

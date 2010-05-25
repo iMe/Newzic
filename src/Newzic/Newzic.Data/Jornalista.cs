@@ -88,7 +88,6 @@ namespace Newzic.Core
             moderador.ModeradorId = this.JornalistaId;
             Guid gid = repModData.create(moderador);
             repModData.Save();
-            
         }
 
         public void demote()
