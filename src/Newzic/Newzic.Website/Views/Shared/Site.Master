@@ -40,7 +40,7 @@
                     <%if (!Request.IsAuthenticated)
                       { %>
                     <li>
-                        <%: Html.ActionLink("Registo", "Register", "Account")%></li>
+                        <%: Html.ActionLink("Registo", "RegisterForm", "Account")%></li>
                     <%} %>
                 </ul>
             </div>

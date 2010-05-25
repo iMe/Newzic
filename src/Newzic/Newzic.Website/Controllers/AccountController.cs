@@ -57,7 +57,7 @@ namespace Newzic.Website.Controllers
             return RedirectToAction("Index", "");
         }
 
-        
+        [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Login(LoginModel login)
         {
             String email = login.Email;
@@ -74,7 +74,7 @@ namespace Newzic.Website.Controllers
                 autenticado = true;
                 FormsAuthentication.Authenticate(email, pass);
                 FormsAuthentication.SetAuthCookie(email, true);
-                HttpContext.User.IsInRole("Admin");
+                //HttpContext.User.IsInRole("Admin");
                 return RedirectToAction("Index", "Home");
                 //return View("LogedIn");
             }
@@ -88,6 +88,14 @@ namespace Newzic.Website.Controllers
                     ModelState.AddModelError("","Palavra chave ou email inválido(s)");
             }
             return View("Login");
+        }
+
+        public ActionResult LoginForm()
+        {
+            LoginModel model = new LoginModel();
+            model.Email = "";
+            model.Password = "";
+            return View("Login", model);
         }
 
         //gets jornalista by email
@@ -224,6 +232,7 @@ namespace Newzic.Website.Controllers
             return View("EditarPerfil", model);
         }
 
+        [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Register(RegisterModel model)
         {
 
@@ -256,9 +265,25 @@ namespace Newzic.Website.Controllers
                 newJornalista.JornalistaId = Guid.NewGuid();
                 jornList.create(newJornalista);
                 jornList.Save();
+
+                return RedirectToAction("LoginForm", "Account");
             }
 
-            return View();
+            return View("Register",model);
+        }
+
+        public ActionResult RegisterForm()
+        {
+            RegisterModel model = new RegisterModel();
+            model.Status = "";
+            model.Email = "";
+            model.Name = "";
+            model.noticias = null;
+            model.Password = "";
+            model.ConfirmPassword = "";
+
+            return View("Register", model);
+
         }
 
 

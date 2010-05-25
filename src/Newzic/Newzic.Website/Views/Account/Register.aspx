@@ -11,7 +11,7 @@
         Use the form below to create a new account. 
     </p>
 
-    <% using (Html.BeginForm()) { %>
+    <% using (Html.BeginForm("Register","Account")) { %>
         <%: Html.ValidationSummary(true, "Account creation was unsuccessful. Please correct the errors and try again.") %>
         <div>
             <fieldset>
