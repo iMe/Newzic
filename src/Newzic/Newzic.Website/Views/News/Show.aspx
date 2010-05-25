@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Newzic.Website.Models.NewsDetailsModel>" %>
+<%@ Import Namespace="Newzic.Website.Controllers" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Show
@@ -19,7 +20,15 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2><%=Html.Encode(Model.noticia.Titulo) %></h2>  
+    <h2><%=Html.Encode(Model.noticia.Titulo) %></h2> 
+    <% //AdminController ad = new AdminController();
+       if (AdminController.getRole(User.Identity.Name).Equals("Administrador") || (AdminController.getRole(User.Identity.Name).Equals("Moderador") && (AdminController.getRole(Model.noticia.JornalistaId).Equals("Jornalista")))) {
+    %>
+    <%:Html.ActionLink("Apagar Noticia", "VerPerfil", "Account", new { email = Model.noticia.Jornalista.Email}, null)%> | 
+    <%:Html.ActionLink("Marcar Noticia", "VerPerfil", "Account", new { email = Model.noticia.Jornalista.Email}, null)%>
+
+
+    <% }%>
     <fieldset>
         <%=Html.Encode(Model.noticia.Corpo) %>
         <p></p>

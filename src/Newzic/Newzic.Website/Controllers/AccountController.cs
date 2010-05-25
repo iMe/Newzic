@@ -176,7 +176,7 @@ namespace Newzic.Website.Controllers
 
         }
 
-        public List<Noticia> doSearch(Guid jorn)
+        private List<Noticia> doSearch(Guid jorn)
         {
             List<Noticia> res = new List<Noticia>();
             IDataCRUD<Noticia> dbn = new DataCRUD<Noticia>();
