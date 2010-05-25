@@ -9,7 +9,7 @@ namespace Newzic.Core
             moderador.Ban();
         }
 
-        public void demoteModerador(Moderador moderador)
+        public void demote(Moderador moderador)
         {
             db.GetTable<Moderador>().DeleteOnSubmit(moderador);
         }
