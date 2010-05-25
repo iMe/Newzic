@@ -92,7 +92,10 @@ namespace Newzic.Core
 
         public void demote()
         {
-            throw new NotImplementedException();
+            var repModData = new ModeradorData();
+            var moderador = repModData.fetchAll().Single(n => n.ModeradorId == this.JornalistaId);
+            repModData.demote(moderador);
+            repModData.Save();
         }
 
     }
