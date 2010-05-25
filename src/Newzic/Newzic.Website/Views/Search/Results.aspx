@@ -15,13 +15,12 @@
         <fieldset>
                     <%using (Html.BeginForm("Results","Search"))
         {%>
-            <legend>Fields</legend>
+            <legend>Fassa a sua pesquisa</legend>
             <div class="editor-label">
                 <%= Html.Label("Pesquisa") %>
             </div>
             <div class="editor-field">
                 <%= Html.TextBoxFor(model => model.query) %>
-                <%--<%= Html.ValidationMessageFor(model => model.query) %>--%>
             </div>
            
             <div class="editor-label">
@@ -66,7 +65,7 @@
         <tr>
             <td>
                 <%= Html.ActionLink("Edit", "Edit", new { id=item.NoticiaId }) %> |
-                <%= Html.ActionLink("Details", "Details", new { id=item.NoticiaId })%>
+                <%= Html.ActionLink("Details", "Details", "News",new { id=item.NoticiaId },null)%>
             </td>
             <td>
                 <b>
@@ -82,7 +81,7 @@
             </td>
             <td>
                 <b>
-                <%= Html.Encode(item.Jornalista.Nome) %>
+                <%= Html.Encode(item.Jornalista.Nome) %> <%:Html.ActionLink("+", "VerPerfil", "Account", new { email = item.Jornalista.Email}, null)%>
                 </b>
             </td>
             <td>
