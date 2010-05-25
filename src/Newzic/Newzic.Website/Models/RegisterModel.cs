@@ -31,6 +31,11 @@ namespace Newzic.Website.Models
         [DisplayName("Confirm password")]
         public string ConfirmPassword { get; set; }
 
+        [Required]
+        [DataType(DataType.Text)]
+        [DisplayName("Captcha")]
+        public string Captcha { get; set; }
+
         public string Status { get; set; }
 
         public List<Noticia> noticias { get; set; }
