@@ -24,7 +24,7 @@
     
         <tr>
             <td>
-                <%: Html.ActionLink("Ver Jornalista", "VerPerfil", "Account", new { id = item.JornalistaId},null)%> |
+                <%: Html.ActionLink("Ver Jornalista", "VerPerfil", "Account", new { email = item.Email},null)%> |
                 <% if (item.isBanned()) %>
                        <%:Html.ActionLink("Levantar Ban", "Unban", new { Id = item.JornalistaId})%>
                 <% if (!item.isBanned())%>
