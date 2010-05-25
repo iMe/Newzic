@@ -96,6 +96,7 @@
     <Content Include="Scripts\jquery-1.4.1.js" />
     <Content Include="Scripts\jquery-1.4.1.min.js" />
     <Content Include="Scripts\maps.js" />
+    <Content Include="Scripts\pics.js" />
     <Content Include="Scripts\upload.js" />
     <Content Include="Views\Account\EditarPerfil.aspx" />
     <Content Include="Views\Account\LoggedIn.aspx" />

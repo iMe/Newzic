@@ -117,6 +117,12 @@ namespace Newzic.Website.Controllers
             return View("Show", model);
         }
 
+        public ActionResult getImage(String id)
+        {
+            IDataCRUD<Imagem> dbi = new DataCRUD<Imagem>();
+            byte[] res = dbi.fetchAll().Single(i => i.ImagemId.ToString().Equals(id)).ImageFile.ToArray();
+            return new FileContentResult(res, "image/jpeg");
+        }
 
         public NewsDetailsModel buildModel(string id)
         {
