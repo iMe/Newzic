@@ -7,6 +7,9 @@ namespace Newzic.Core
 {
     partial class Noticia : IEntity, ISoftDelete
     {
+        
+        public string listaVideos { get; set; }
+
         NewzicDataContext db = new NewzicDataContext();
         
         public double rank { get; set; }
@@ -17,6 +20,7 @@ namespace Newzic.Core
             set { NoticiaId = value; }
         }
 
+        
         public Video getVideo(Guid videoId)
         {
             throw new NotImplementedException();
@@ -67,5 +71,7 @@ namespace Newzic.Core
 
             this.rank = res;
         }
+
+
     }
 }
