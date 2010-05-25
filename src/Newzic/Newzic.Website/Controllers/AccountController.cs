@@ -30,17 +30,25 @@ namespace Newzic.Website.Controllers
 
         public string iniciarSessao(string email, string password)
         {
-            string res = "naoAutenticado";
             var jList = jornList.fetchAll();
-            var jornalista = from j in jList
-                    //where (j.Email == email ) && (j.Password == Hash.generate(password))
-                             where (j.Email == email) && (j.Password == password)
-                    select j;
+            
+            try
+            {
+                var jornalista = (from j in jList where (j.Email == email) && (j.Password == password) select j).Single();
+                if (jornalista.isBanned())
+                {
+                    return "Banido";
+                }
+                else
+                {
+                    return "Autenticado";
+                }
 
-            if (jornalista.Count() != 0)
-                res = "autenticado";
-
-            return res;
+            }
+            catch (Exception)
+            {
+                return "naoAutenticado";
+            }
         }
 
         public ActionResult LogOff(LoginModel model)
@@ -61,20 +69,23 @@ namespace Newzic.Website.Controllers
             string res = null;
             if ((email != null ) && (pass != null))
                 res = iniciarSessao(email, pass);
-            if (res == "autenticado")
+            if (res == "Autenticado")
             {
                 autenticado = true;
                 FormsAuthentication.Authenticate(email, pass);
                 FormsAuthentication.SetAuthCookie(email, true);
                 HttpContext.User.IsInRole("Admin");
-
-
-                return RedirectToAction("Index", "");
+                return RedirectToAction("Index", "Home");
                 //return View("LogedIn");
             }
             else
             {
-                ModelState.AddModelError("","Palavra chave ou email inválido(s)");
+                if (res == "Banido")
+                {
+                    ModelState.AddModelError("", "Este utilizador encontra-se banido");
+                }
+                else
+                    ModelState.AddModelError("","Palavra chave ou email inválido(s)");
             }
             return View("Login");
         }

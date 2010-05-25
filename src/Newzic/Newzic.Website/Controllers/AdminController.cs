@@ -22,7 +22,49 @@ namespace Newzic.Website.Controllers
         private readonly IDataCRUD<Administrador> adminList = new DataCRUD<Administrador>();
 
 
+        public bool UserIsInRole(string role)
+        {
+            string email = User.Identity.Name; 
+            if (role == "Admin")
+            {   
+                try
+                {
+                    var admins = adminList.fetchAll();
+                    var admin = (from a in admins where a.Jornalista.Email.Equals(email) select a).Single();
+                    if (admin.Jornalista.Email == email)
+                    {
+                        return true;
+                    }
+                }
+                catch (Exception e)
+                {
 
+                    return false;
+                }    
+            }
+
+            if (role == "Mod")
+            {
+                try
+                {
+                    var mods = modList.fetchAll();
+                    var mod = (from m in mods where m.Jornalista.Email == email select m).Single();
+                    if (mod.Jornalista.Email == email)
+                    {
+                        return true;
+                    }
+                }
+                catch (Exception e)
+                {
+
+                    return false;
+                }
+            }
+
+            return false;
+
+        }
+        
         //gets queixa por id
         public Queixa getQueixa(string id)
         {
@@ -95,11 +137,8 @@ namespace Newzic.Website.Controllers
 
         public ActionResult Queixas()
         {
-            //if (!isAdmin(email))
-            //{
-            //    return View("acessoNegado");
-            //}
-
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
             var allQueixas = qrepo.fetchAll().ToList();
             var listaQueixas = (from q in allQueixas where q.Resolved == false select q);
             return View("Queixas", listaQueixas.ToList());
@@ -107,8 +146,9 @@ namespace Newzic.Website.Controllers
 
         public ActionResult resolv(string id)
         {
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
             var q = getQueixa(id);
-            //q.Resolved = true;
             q.MarcarResolvida();
             qrepo.update(q);
             qrepo.Save();
@@ -118,33 +158,28 @@ namespace Newzic.Website.Controllers
 
         public ActionResult Details(string id)
         {
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
             Guid g = new Guid(id);
             var jList = qrepo.fetchAll();
             var q = (from n in jList where (n.QueixaId.ToString() == id) select n).ToList();
-            //var q = qrepo.fetch(g);
             return View("QueixaDetails", q.First());
         }
 
         public ActionResult ModDetais(string id)
         {
-            //if (!isAdmin(email))
-            //{
-            //    return View("acessoNegado");
-            //}
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
             var modsList = modList.fetchAll();
             var mod = (from m in modsList where (m.Jornalista.JornalistaId.ToString() == id) select m).Single();
             return View("ModDetails", mod);
         }
   
 
-       
-
         public ActionResult ModUnPromoteView(string id)
         {
-            //if (!isAdmin(email))
-            //{
-            //    return View("acessoNegado");
-            //}
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
             var mod = getMod(id);
             return View("ModunPromoteView", mod);
         }
@@ -153,10 +188,8 @@ namespace Newzic.Website.Controllers
         //promote section
         public ActionResult ModUnPromote(string id)
         {
-            //if (!isAdmin(email))
-            //{
-            //    return View("acessoNegado");
-            //}
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
             var mod = getMod(id);
             if (mod.Jornalista.isModerador())
                 mod.Jornalista.demote();
@@ -170,20 +203,16 @@ namespace Newzic.Website.Controllers
 
         public ActionResult ModPromoteView(string id)
         {
-            //if (!isAdmin(email))
-            //{
-            //    return View("acessoNegado");
-            //}
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
             var mod = getMod(id);
             return View("ModPromoteView", mod);
         }
 
         public ActionResult ModPromote(string id)
         {
-            //if (!isAdmin(email))
-            //{
-            //    return View("acessoNegado");
-            //}
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
             /*
             var mod = getMod(id);
             if (!mod.Jornalista.isModerador())
@@ -198,21 +227,14 @@ namespace Newzic.Website.Controllers
             var jorn = getJorn(id);
             if (!jorn.isModerador())
                 jorn.promote();
-            else
-            {
-                ModelState.AddModelError("", "Este utilizador ja é Moderador");
-                return View("Index");
-            }
             return View("SuccessView");
         }
 
         //ban section
         public ActionResult ModUnBanView(string id)
         {
-            //if (!isAdmin(email))
-            //{
-            //    return View("acessoNegado");
-            //}
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
             var mod = getMod(id);
             return View("ModUnBanView", mod);
         }
@@ -221,12 +243,9 @@ namespace Newzic.Website.Controllers
         public ActionResult ModBanView(ModBanModel Ban)
         {
 
-            //if (!isAdmin(Ban.Email))
-            //{
-            //    return View("acessoNegado");
-            //}
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
             
-            //Ban.Email = mod.Jornalista.Email;
             Ban.banTypeList = createDropList(new string[2] {"Permanente", "Temporario"});
 
             string[] meses = new string[12] { "Janeiro", "Fevereiro", "Março", "Abril,", "Maio", "Junho", "Julho", "Agosto", "Setembro,", "Outubro", "Novembro", "Dezembro" };
@@ -292,10 +311,8 @@ namespace Newzic.Website.Controllers
 
         public ActionResult ModBanView(string id)
         {
-            //if (!isAdmin(email))
-            //{
-            //    return View("acessoNegado");
-            //}
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
             var mod = getMod(id);
             ModBanModel Ban = new ModBanModel();
             Ban.Email = mod.Jornalista.Email;
@@ -337,18 +354,14 @@ namespace Newzic.Website.Controllers
             Ban.diaList = diaList;
             Ban.anoList = anoList;
             Ban.mesList = mesList;
-
-
             return View("ModBanView", Ban);
        }
 
 
         public ActionResult ModUnBan(string id)
         {
-            //if (!isAdmin(email))
-            //{
-            //    return View("acessoNegado");
-            //}
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
             var mod = getMod(id);
             if(mod.isBanned())
                 mod.Jornalista.Unban();
@@ -363,10 +376,8 @@ namespace Newzic.Website.Controllers
 
         public ActionResult ModBan(string id, string year, string month, string day, string type)
         {
-            //if (!isAdmin(email))
-            //{
-            //    return View("acessoNegado");
-            //}
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
             var mod = getModeradorByEmail(id);
             if(!mod.isBanned())
             {
@@ -392,10 +403,8 @@ namespace Newzic.Website.Controllers
 
         public ActionResult GerirMods()
         {
-            //if (!isAdmin(email))
-            //{
-            //    return View("acessoNegado");
-            //}
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
             var mods = modList.fetchAll().ToList();
             GerirModsModel model = new GerirModsModel();
             model.Moderadores = mods;
@@ -406,6 +415,8 @@ namespace Newzic.Website.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult GerirMods(GerirModsModel model)
         {
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
             string query = model.searchQuery;
             var mods = modList.fetchAll().ToList();
             model.searchQuery = query;
@@ -433,10 +444,8 @@ namespace Newzic.Website.Controllers
         
         public ActionResult GerirJorns()
         {
-            //if (!isAdmin(email))
-            //{
-            //    return View("acessoNegado");
-            //}
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
             var jorns = jornList.fetchAll().ToList();
             GerirJornsModel model = new GerirJornsModel();
             model.Jornalistas = jorns;
@@ -447,6 +456,8 @@ namespace Newzic.Website.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult GerirJorns(GerirJornsModel model)
         {
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
             string query = model.searchQuery;
             var jorns = jornList.fetchAll().ToList();
             model.searchQuery = query;
@@ -465,10 +476,8 @@ namespace Newzic.Website.Controllers
         //promote section
         public ActionResult JornUnPromoteView(string id)
         {
-            //if (!isAdmin(email))
-            //{
-            //    return View("acessoNegado");
-            //}
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
             var jorn = getJorn(id);
             return View("JornUnPromoteView", jorn);
         }
@@ -477,10 +486,8 @@ namespace Newzic.Website.Controllers
 
         public ActionResult JornUnPromote(string id)
         {
-            //if (!isAdmin(email))
-            //{
-            //    return View("acessoNegado");
-            //}
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
             var jorn = getJorn(id);
             if (jorn.isModerador())
                 jorn.demote();
@@ -494,20 +501,16 @@ namespace Newzic.Website.Controllers
 
         public ActionResult JornPromoteView(string id)
         {
-            //if (!isAdmin(email))
-            //{
-            //    return View("acessoNegado");
-            //}
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
             var jorn = getJorn(id);
             return View("JornPromoteView", jorn);
         }
 
         public ActionResult JornPromote(string id)
         {
-            //if (!isAdmin(email))
-            //{
-            //    return View("acessoNegado");
-            //}
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
 
             var jorn = getJorn(id);
             if (!jorn.isModerador())
@@ -523,10 +526,8 @@ namespace Newzic.Website.Controllers
         //ban section
         public ActionResult JornUnBanView(string id)
         {
-            //if (!isAdmin(email))
-            //{
-            //    return View("acessoNegado");
-            //}
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
             var jorn = getJorn(id);
             return View("JornUnBanView", jorn);
         }
@@ -535,10 +536,8 @@ namespace Newzic.Website.Controllers
         public ActionResult JornBanView(JornBanModel Ban)
         {
 
-            //if (!isAdmin(Ban.Email))
-            //{
-            //    return View("acessoNegado");
-            //}
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
 
             Ban.banTypeList = createDropList(new string[2] { "Permanente", "Temporario" });
             
@@ -597,10 +596,8 @@ namespace Newzic.Website.Controllers
 
         public ActionResult JornBanView(string id)
         {
-            //if (!isAdmin(email))
-            //{
-            //    return View("acessoNegado");
-            //}
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
             var jorn = getJorn(id);
             JornBanModel Ban = new JornBanModel(jorn.Email);
             Ban.banTypeList = createDropList(new string[2] { "Permanente", "Temporario" });
@@ -648,10 +645,8 @@ namespace Newzic.Website.Controllers
 
         public ActionResult JornUnBan(string id)
         {
-            //if (!isAdmin(email))
-            //{
-            //    return View("acessoNegado");
-            //}
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
             var jorn = getJorn(id);
             if (jorn.isBanned())
                 jorn.Unban();
@@ -679,7 +674,9 @@ namespace Newzic.Website.Controllers
        
         public ActionResult JornBan(string id, string year, string month, string day, string type)
         {
-            
+
+            if (!UserIsInRole("Admin"))
+                return View("AcessoNegado");
             var jorn = getJornalistaByEmail(id);
             if (!jorn.isBanned())
             {
