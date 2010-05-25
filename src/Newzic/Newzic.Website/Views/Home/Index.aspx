@@ -15,10 +15,10 @@
         <tr style="width:100%;"> <%} %>
             <td style="width:50%;">
                 <fieldset>
-                    <h3><%=Html.Encode(c.Titulo) %></h3>
+                    <h3><%:Html.ActionLink(c.Titulo, "Details", "News", new { id = c.NoticiaId.ToString() }, null) %></h3>
                     <%=Html.Encode(c.Corpo) %>
                     <p align="right"> <%=Html.Encode(c.Jornalista.Nome) %>
-                     <%:Html.ActionLink("+", "Details", "News", new { id = c.NoticiaId.ToString() }, null)%>
+                        <%:Html.ActionLink("+", "VerPerfil", "Account", new { email = c.Jornalista.Email}, null)%>
                     </p>
                 </fieldset>
             </td>
