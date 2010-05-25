@@ -10,7 +10,11 @@
 
     <fieldset>
         <legend>Perfil</legend>
-        
+        <p>
+        <big> Estatuto:</big>
+        <%= Html.Encode(Model.Status) %>
+        </p>
+
         <p>
             Nome:
             <%= Html.Encode(Model.Name ) %>

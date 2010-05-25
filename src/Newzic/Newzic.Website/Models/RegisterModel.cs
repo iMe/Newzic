@@ -30,5 +30,7 @@ namespace Newzic.Website.Models
         [DisplayName("Confirm password")]
         public string ConfirmPassword { get; set; }
 
+        public string Status { get; set; }
+
     }
 }
