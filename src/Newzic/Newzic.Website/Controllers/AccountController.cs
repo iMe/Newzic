@@ -112,21 +112,27 @@ namespace Newzic.Website.Controllers
 
         public ActionResult VerPerfil(string email)
         {
-            var j = getJornalistaByEmail(email);
+            IDataCRUD<Jornalista> dbj = new DataCRUD<Jornalista>();
+            Jornalista j =(from Jornalista jr in dbj.fetchAll() where jr.Email.Equals(email) select jr).SingleOrDefault();
+            //var j = getJornalistaByEmail(email);
             var perfil = new RegisterModel();
-            if (j.Count() != 0)
+
+            if (j != null)
             {
-                perfil.Email = j.First().Email;
-                perfil.Name = j.First().Nome;
+                perfil.Email = j.Email;
+                perfil.Name = j.Nome;
                 perfil.Password = "";
+                perfil.Status = getRole(j.JornalistaId);
+                perfil.noticias = doSearch(j.JornalistaId);
                 return View("VerPerfil", perfil);
             }
 
-            perfil.Email = "";
-            perfil.Name = "";
-            perfil.Password = "";
-            perfil.Status = "";
-            return View("VerPerfil", perfil);
+            //perfil.Email = "";
+            //perfil.Name = "";
+            //perfil.Password = "";
+            //perfil.Status = "";
+
+            return View("Error");
         }
 
         public ActionResult VerProprioPerfil(string email)
@@ -143,7 +149,7 @@ namespace Newzic.Website.Controllers
             model.Email = jorn.Email;
             model.Password = "";
             model.ConfirmPassword = "";
-            model.Status = "";
+            model.Status = getRole(jorn.JornalistaId);
 
             return View("EditarPerfil", model);
 
@@ -152,8 +158,32 @@ namespace Newzic.Website.Controllers
 
         private string getRole(Guid id)
         {
-            return "";
+            IDataCRUD<Administrador> dba = new DataCRUD<Administrador>();
+            IDataCRUD<Moderador> dbm = new DataCRUD<Moderador>();
+            IDataCRUD<Jornalista> dbj = new DataCRUD<Jornalista>();
+            string res;
 
+            bool r = (from Administrador a in dba.fetchAll() where a.AdministradorId.Equals(id) select a).Any();
+            if (r) return "Administrador";
+
+            r = (from Moderador m in dbm.fetchAll() where m.ModeradorId.Equals(id) select m).Any();
+            if (r) return "Moderador";
+
+            r = (from Jornalista j in dbj.fetchAll() where j.JornalistaId.Equals(id) select j).Any();
+            if (r) return "Jornalista";
+
+            return null;
+
+        }
+
+        public List<Noticia> doSearch(Guid jorn)
+        {
+            List<Noticia> res = new List<Noticia>();
+            IDataCRUD<Noticia> dbn = new DataCRUD<Noticia>();
+
+            res = (from Noticia n in dbn.fetchAll() where n.JornalistaId.Equals(jorn) select n).ToList();
+
+            return res;
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -189,7 +219,7 @@ namespace Newzic.Website.Controllers
             }
             
             model.Name = j.Nome;
-            model.Status = "";
+            model.Status = getRole(j.JornalistaId);
 
             return View("EditarPerfil", model);
         }

@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Newzic.Core;
 
 namespace Newzic.Website.Models
 {
@@ -31,6 +32,8 @@ namespace Newzic.Website.Models
         public string ConfirmPassword { get; set; }
 
         public string Status { get; set; }
+
+        public List<Noticia> noticias { get; set; }
 
     }
 }
