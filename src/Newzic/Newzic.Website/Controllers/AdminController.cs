@@ -181,13 +181,23 @@ namespace Newzic.Website.Controllers
             {
                 return View("acessoNegado");
             }
-
+            /*
             var mod = getMod(id);
             if (!mod.Jornalista.isModerador())
                 mod.Jornalista.promote();
             else
             {
                 ModelState.AddModelError("","Este utilizador ja é Moderador");
+                return View("Index");
+            }
+            return View("SuccessView");
+             */
+            var jorn = getJorn(id);
+            if (!jorn.isModerador())
+                jorn.promote();
+            else
+            {
+                ModelState.AddModelError("", "Este utilizador ja é Moderador");
                 return View("Index");
             }
             return View("SuccessView");
