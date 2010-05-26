@@ -26,17 +26,22 @@
        if (AdminController.getRole(User.Identity.Name).Equals("Administrador") || (AdminController.getRole(User.Identity.Name).Equals("Moderador") && (AdminController.getRole(Model.noticia.JornalistaId).Equals("Jornalista")))) {
     %>
     <%:Html.ActionLink("Apagar Noticia", "ApagarNoticia", "News", new { id = Model.noticia.NoticiaId, user = Page.User.Identity.Name}, null)%> | 
-    <%:Html.ActionLink("Marcar Noticia", "MarcarNoticia", "Mod", new { id = Model.noticia.NoticiaId}, null)%>
-
-    <% }%>
+    <%:Html.ActionLink("Marcar Noticia", "MarcarNoticia", "Mod", new { id = Model.noticia.NoticiaId}, null)%> 
+        <% if (Model.noticia.Jornalista.Email.Equals(User.Identity.Name)) {%>
+        | <%:Html.ActionLink("Editar Noticia", "Edit", "News", new { id = Model.noticia.NoticiaId}, null)%>
+    <% }}%>
     <%else
        {
            if(Model.noticia.Jornalista.Email.Equals(User.Identity.Name)){ %>
            <%:Html.ActionLink("Apagar Noticia", "ApagarNoticia", "News", new { id = Model.noticia.NoticiaId, user = Page.User.Identity.Name }, null)%>
-           <%:Html.ActionLink("Editar Noticia", "EditarNoticia", "News", new { email = Model.noticia.NoticiaId}, null)%>
+           <%:Html.ActionLink("Editar Noticia", "Edit", "News", new { id = Model.noticia.NoticiaId}, null)%>
        <% }
        }
     }%>
+
+    <%if (Model.noticia.Marked) {%>
+        | <font face="Arial" color="#ff0000"> <strong>Esta Noticia está a violar as regras e pode ser apagada a qualquer momento</strong> </font>
+    <% }%>
     <fieldset>
             <% var s = Model.noticia.Corpo.Split('\n'); foreach(var ss in s) {%>
                 <%=Html.Encode(ss) %>
@@ -63,6 +68,44 @@
         </center>
 
         <fieldset>
+        <legend>Imagens</legend>
+        <center>
+        </center>
+        </fieldset>
+
+        <%if (Model.noticia.Videos.Count!=0) {%>
+        <fieldset>
+            <legend>Videos</legend>
+            <table border="0" width="100%">
+            <%int i=1;%>
+            <%foreach (var c in Model.noticia.Videos) {%>
+                <% if (i==1) {%>
+                <tr style="width:100%;">
+                <%}%>
+                
+                <td style="width:33%;">
+                <center>
+                <object width="280" height="225"><param name="movie" value="
+                <%=Html.Encode(c.Url) %>
+                "></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="
+                <%=Html.Encode(c.Url) %>
+                " type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="280" height="225"></embed></object>
+                </center>
+                </td>
+            
+                <% if (i==3) {%>
+                </tr>
+                <%i=1;}%>
+                <%else i++; %>
+            <%}%>
+
+            <%if(i!=3) {%> </tr> <%}%>
+            </table>
+        </fieldset>
+        <%}%>
+
+        <fieldset>
+        <legend>Mapa</legend>
         <center>
         </center>
         </fieldset>

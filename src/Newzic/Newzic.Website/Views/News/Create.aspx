@@ -10,14 +10,13 @@
     <script type="text/javascript" src="../../Scripts/upload.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>
-        Create</h2>
-    <% using (Html.BeginForm())
-           
-       {%>
+    <h2>Criar Noticia</h2>
     <form action="/news/Create" method="post" enctype="multipart/form-data">
+
+    <% using (Html.BeginForm()) {%>
+    <%= Html.ValidationSummary(true, "Creation was unsuccessful. Please correct the errors and try again.") %>
+    
     <fieldset>
-        <legend>Fields</legend>
         <div class="editor-label">
             <%= Html.LabelFor(model => model.Titulo) %>
         </div>

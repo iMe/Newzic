@@ -226,6 +226,27 @@ namespace Newzic.Website.Controllers
 
         }
 
+        public bool camposNoticiaInvalidos (Noticia noticia)
+        {
+            bool erroPrenchimento = false;
+            if (string.IsNullOrWhiteSpace(noticia.Titulo))
+            {
+                ModelState.AddModelError("Titulo", "Preenchimento obrigatório");
+                erroPrenchimento = true;
+            }
+            if (string.IsNullOrWhiteSpace(noticia.Corpo))
+            {
+                ModelState.AddModelError("Corpo", "Preenchimento obrigatório");
+                erroPrenchimento = true;
+            }
+            if (string.IsNullOrWhiteSpace(noticia.Tags))
+            {
+                ModelState.AddModelError("Tags", "Preenchimento obrigatório");
+                erroPrenchimento = true;
+            }
+            return erroPrenchimento;
+        }
+        
         //
         // POST: /Noticia/Create
 
@@ -237,9 +258,12 @@ namespace Newzic.Website.Controllers
             {
                 if (ModelState.IsValid)
                 {
-
+                   
+                    if (camposNoticiaInvalidos(noticia) == true)
+                        return View(noticia);
                     try
                     {
+                        
                         foreach (string file in Request.Files)
                         {
                             HttpPostedFileBase hpf = Request.Files[file] as HttpPostedFileBase;
@@ -254,20 +278,14 @@ namespace Newzic.Website.Controllers
                             noticia.Imagems.Add(img);
 
                         }
-
+                        
                         string listaVideos = noticia.listaVideos;
                         string[] arrayVideos = listaVideos.Split('\n');
-                        /**
-                         * Adição dos links youtube.
-                         */
-                        foreach (var arrayVideo in arrayVideos)
-                        {
-                            Video vs = new Video();
-                            vs.Url = arrayVideo;
-                            noticia.Videos.Add(vs);
-                        }
-                        var ss = noticia.Videos;
-  
+                        
+                         //Adição dos links youtube.
+                        
+                        
+                        
                         var email = User.Identity.Name;
                         IDataCRUD<Jornalista> jornalistaConsulta = new DataCRUD<Jornalista>();
                         IQueryable<Jornalista> jornalistas = jornalistaConsulta.fetchAll();
@@ -277,11 +295,18 @@ namespace Newzic.Website.Controllers
                         noticia.Data = DateTime.Now;
                         noticia.JornalistaId = jornalistaId;
                         IDataCRUD<Noticia> noticiaAdd = new DataCRUD<Noticia>();
-                        //noticia.Mapa.InsertTour(234.342f, 23409.234f, "Braga");
-                        //noticia.Mapa.InsertTour(29123.23f, 1032.123f, "Lisboa");
-                        //noticia.Mapa.Tours.
-                        noticiaAdd.create(noticia);
+                        Guid id = noticiaAdd.create(noticia);
                         noticiaAdd.Save();
+                        IDataCRUD<Video> videoAdd = new DataCRUD<Video>();
+                        for (int i = 0; i < arrayVideos.Length; i++)
+                        {
+                            var novoVideo = new Video();
+                            string url = arrayVideos[i];
+                            novoVideo.Url = url;
+                            novoVideo.NoticiaId = id;
+                            Guid idVideo = videoAdd.create(novoVideo);
+                            videoAdd.Save();
+                        }
                         return RedirectToAction("Index");
                     }
                     catch
@@ -303,26 +328,38 @@ namespace Newzic.Website.Controllers
         //
         // GET: /Noticia/Edit/5
 
-        public ActionResult Edit(int id)
+        public ActionResult Edit(Guid id)
         {
-            return View();
+
+            IDataCRUD<Noticia> editaNew = new DataCRUD<Noticia>();
+            var dados = editaNew.fetchAll();
+            Noticia bla = (dados.SingleOrDefault(n => n.NoticiaId.Equals(id)));
+            return View(bla);
         }
 
         //
         // POST: /Noticia/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Guid id, Noticia noticia)
         {
+            IDataCRUD<Noticia> editaNew = new DataCRUD<Noticia>();
+            var dados = editaNew.fetchAll();
+            Noticia bla = (dados.SingleOrDefault(n => n.NoticiaId.Equals(id)));
+            if (camposNoticiaInvalidos(noticia) == true)
+                return View (noticia);
             try
             {
-                // TODO: Add update logic here
-
+                string dataEditado = ("\r\nEditado (" + DateTime.Now.ToString() + ")");
+                noticia.Corpo = noticia.Corpo + dataEditado;
+                bla.setObjecto(noticia);
+                editaNew.update(bla);
+                editaNew.Save();
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View(bla);
             }
         }
 
