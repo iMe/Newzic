@@ -226,6 +226,7 @@ namespace Newzic.Website.Controllers
 
         public ActionResult Create()
         {
+            if (!Request.IsAuthenticated) return View("AcessoNegado");
             return View();
         }
 
