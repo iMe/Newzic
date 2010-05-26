@@ -26,14 +26,14 @@
        if (AdminController.getRole(User.Identity.Name).Equals("Administrador") || (AdminController.getRole(User.Identity.Name).Equals("Moderador") && (AdminController.getRole(Model.noticia.JornalistaId).Equals("Jornalista")))) {
     %>
     <%:Html.ActionLink("Apagar Noticia", "ApagarNoticia", "News", new { id = Model.noticia.NoticiaId, user = Page.User.Identity.Name}, null)%> | 
-    <%:Html.ActionLink("Marcar Noticia", "MarcarNoticia", "Mod", new { email = Model.noticia.Jornalista.Email}, null)%>
+    <%:Html.ActionLink("Marcar Noticia", "MarcarNoticia", "Mod", new { id = Model.noticia.NoticiaId}, null)%>
 
     <% }%>
     <%else
        {
            if(Model.noticia.Jornalista.Email.Equals(User.Identity.Name)){ %>
            <%:Html.ActionLink("Apagar Noticia", "ApagarNoticia", "News", new { id = Model.noticia.NoticiaId, user = Page.User.Identity.Name }, null)%>
-           <%:Html.ActionLink("Editar Noticia", "EditarNoticia", "News", new { email = Model.noticia.Jornalista.Email}, null)%>
+           <%:Html.ActionLink("Editar Noticia", "EditarNoticia", "News", new { email = Model.noticia.NoticiaId}, null)%>
        <% }
        }
     }%>
