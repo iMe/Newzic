@@ -81,18 +81,13 @@ namespace Newzic.Website.Controllers
         {
             NewsDetailsModel model = buildModel(id);
             
-            var array = model.noticia.Imagems.Select(i => "\"" + i.ImagemId.ToString() + "\"").ToArray();
-            ViewData["PicIds"] = "window.picIds = [" + string.Join(",", array) + "];";
+            //var array = model.noticia.Imagems.Select(i => "\"" + i.ImagemId.ToString() + "\"").ToArray();
+            //ViewData["PicIds"] = "window.picIds = [" + string.Join(",", array) + "];";
 
-            var arrayPontos = model.noticia.Mapas.Select(m => "{ point: new GLatLng(" + m.Latitude + "," + m.Longitude + "), text: '" + m.Morada +"' }").ToArray();
-            ViewData["MapPoints"] = "window.MapPoints = [" + string.Join(",", arrayPontos) + "];";
+            //var arrayPontos = model.noticia.Mapas.Select(m => "{ point: new GLatLng(" + m.Latitude + "," + m.Longitude + "), text: '" + m.Morada +"' }").ToArray();
 
-            //var s = model.noticia.Corpo.Split('.');
-            //model.noticia.Corpo = "";
-            //foreach (string ss in s)
-            //{
-            //    model.noticia.Corpo = model.noticia.Corpo + '.' + '\n' + ss;
-            //})
+            //ViewData["MapPoints"] = "window.MapPoints = [" + string.Join(",", arrayPontos) + "];";
+
             return View("Show",model);
         }
 
@@ -193,8 +188,9 @@ namespace Newzic.Website.Controllers
         public ActionResult getImage(String id)
         {
             IDataCRUD<Imagem> dbi = new DataCRUD<Imagem>();
+            String tipo = dbi.fetchAll().Single(ii => ii.ImagemId.ToString().Equals(id)).Tipo;
             byte[] res = dbi.fetchAll().Single(i => i.ImagemId.ToString().Equals(id)).ImageFile.ToArray();
-            return new FileContentResult(res, "image/jpeg");
+            return new FileContentResult(res, "image/"+tipo);
         }
 
         public NewsDetailsModel buildModel(string id)
@@ -208,9 +204,23 @@ namespace Newzic.Website.Controllers
             //model.comments = null;
             model.comentario = null;
             model.guid = model.noticia.NoticiaId.ToString();
-            
+
+            var array = model.noticia.Imagems.Select(i => "\"" + i.ImagemId.ToString() + "\"").ToArray();
+            ViewData["PicIds"] = "window.picIds = [" + string.Join(",", array) + "];";
+
+            var arrayPontos = model.noticia.Mapas.Select(m => "{ point: new GLatLng(" + m.Latitude + "," + m.Longitude + "), text: '" + m.Morada + "' }").ToArray();
+            if (arrayPontos.Length == 0) model.hasMap = false;
+            else{
+                ViewData["MapPoints"] = "window.MapPoints = [" + string.Join(",", arrayPontos) + "];";
+                model.hasMap = true;
+            }
+
             return model;
         }
+
+
+
+
         //
         // GET: /Noticia/Create
 
