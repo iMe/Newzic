@@ -43,6 +43,11 @@
                     <li>
                         <%: Html.ActionLink("Registo", "RegisterForm", "Account")%></li>
                     <%} %>
+                     <%if (Request.IsAuthenticated)
+                      { %>
+                    <li>
+                        <%: Html.ActionLink("Efectuar Queixa", "FazerQueixas", "Home", new {email = Page.User.Identity.Name},null)%></li>
+                    <%} %>
                     <li><%: Html.ActionLink("Rss", "Rssfeed", "Home")%></li>
                 </ul>
             </div>

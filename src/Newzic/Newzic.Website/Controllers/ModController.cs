@@ -231,6 +231,21 @@ namespace Newzic.Website.Controllers
             return View("GerirNoticiasFlagged",noticiasFlagged);
         }
 
+        public ActionResult ReportResolvido(string id)
+        {
+            if (!Request.IsAuthenticated) return View("acessoNegado");
+            
+            var gid = new Guid(id);
+            var dc  = new NewzicDataContext();
+            Noticia nf = dc.Noticias.Single(n => n.NoticiaId == gid);
+            dc.NoticiaFlaggeds.DeleteOnSubmit(nf.NoticiaFlaggeds[0]);
+            dc.SubmitChanges();
+
+            
+            var noticiasFlagged = repNoticias.fetchAll().Where(n => n.NoticiaFlaggeds.Any() && n.Deleted == false);
+            return View("GerirNoticiasFlagged", noticiasFlagged);
+
+        }
 
         public ActionResult MarcarNoticia(string id)
         {

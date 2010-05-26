@@ -46,7 +46,7 @@
     <legend>Noticias</legend>
         <%foreach (var n in Model.noticias) { %>
             <p>
-            <%= Html.ActionLink("Editar", "Edit", new { id=n.NoticiaId }) %> |
+            <%= Html.ActionLink("Editar", "Edit","News", new { id=n.NoticiaId },null) %> |
                 <%= Html.ActionLink("Detalhes", "Details", "News",new { id=n.NoticiaId },null)%> |
             <%=Html.Encode(n.Titulo) %>
             </p>
