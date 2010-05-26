@@ -14,7 +14,7 @@ namespace Newzic.Website.Controllers
         public ActionResult Index()
         {
 
-            ViewData["Message"] = "Welcome to ASP.NET MVC!";
+            ViewData["Message"] = "Bem-vindo ao Newzic!";
             HomeModel model = new HomeModel();
             model.noticias = getNoticias();
 

@@ -111,28 +111,57 @@ namespace Newzic.Website.Controllers
         public Queixa getQueixa(string id)
         {
             var listaqueixas = qrepo.fetchAll();
-            var queixa = (from q in listaqueixas where q.QueixaId.ToString() == id select q).Single();
-            return queixa;
+            try
+            {
+                var queixa = (from q in listaqueixas where q.QueixaId.ToString() == id select q).Single();
+                return queixa;
+            }
+            catch (Exception)
+            {
+                var q = new Queixa();
+                return q;
+            }
+            
         }
 
         //gets jornalista by email
         public Jornalista getJornalistaByEmail(string email)
         {
             var jList = jornList.fetchAll();
-            var jornalista = (from j in jList
-                             where (j.Email == email)
-                             select j).Single();
-            return jornalista;
+            try
+            {
+                var jornalista = (from j in jList
+                                  where (j.Email == email)
+                                  select j).Single();
+                return jornalista;
+            }
+            catch (Exception)
+            {
+                
+                var j = new Jornalista();
+                return j;
+            }
+            
         }
 
         //gets jornalista by email
         public Moderador getModeradorByEmail(string email)
         {
             var mList = modList.fetchAll();
-            var moderador = (from m in mList
-                              where (m.Jornalista.Email == email)
-                              select m).Single();
-            return moderador;
+            try
+            {
+                var moderador = (from m in mList
+                                 where (m.Jornalista.Email == email)
+                                 select m).Single();
+                return moderador;
+            }
+            catch (Exception)
+            {
+                
+                var m = new Moderador();
+                return m;
+            }
+            
         }
 
         //creates a list of strings to populate the dropLists
@@ -165,8 +194,18 @@ namespace Newzic.Website.Controllers
         private Moderador getMod(string id)
         {
             var modsList = modList.fetchAll();
-            var mod = (from m in modsList where (m.Jornalista.JornalistaId.ToString() == id) select m).Single();
-            return mod;
+            try
+            {
+                var mod = (from m in modsList where (m.Jornalista.JornalistaId.ToString() == id) select m).Single();
+                return mod;
+            }
+            catch (Exception)
+            {
+                
+                var m = new Moderador();
+                return m;
+            }
+            
         }
 
         private static bool isAdmin(string email)
@@ -202,8 +241,17 @@ namespace Newzic.Website.Controllers
                 return View("AcessoNegado");
             Guid g = new Guid(id);
             var jList = qrepo.fetchAll();
-            var q = (from n in jList where (n.QueixaId.ToString() == id) select n).ToList();
-            return View("QueixaDetails", q.First());
+            try
+            {
+                var q = (from n in jList where (n.QueixaId.ToString() == id) select n).ToList();
+                return View("QueixaDetails", q.First());
+            }
+            catch (Exception)
+            {
+
+                return View("Error");
+            }
+           
         }
 
         public ActionResult ModDetais(string id)
@@ -211,8 +259,17 @@ namespace Newzic.Website.Controllers
             if (!UserIsInRole("Admin"))
                 return View("AcessoNegado");
             var modsList = modList.fetchAll();
-            var mod = (from m in modsList where (m.Jornalista.JornalistaId.ToString() == id) select m).Single();
-            return View("ModDetails", mod);
+            try
+            {
+                var mod = (from m in modsList where (m.Jornalista.JornalistaId.ToString() == id) select m).Single();
+                return View("ModDetails", mod);
+            }
+            catch (Exception)
+            {
+
+                return View("Error");
+            }
+            
         }
   
 
@@ -429,8 +486,18 @@ namespace Newzic.Website.Controllers
         private Jornalista getJorn(string id)
         {
             var jList = jornList.fetchAll();
-            var jorn = (from j in jList where (j.JornalistaId.ToString() == id) select j).Single();
-            return jorn;
+            try
+            {
+                var jorn = (from j in jList where (j.JornalistaId.ToString() == id) select j).Single();
+                return jorn;
+            }
+            catch (Exception)
+            {
+                
+                var j = new Jornalista();
+                return j;
+            }
+            
         }
         
         public ActionResult GerirJorns()
