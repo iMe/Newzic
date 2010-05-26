@@ -16,8 +16,9 @@
         m.html('Save')
         // TODO: Really save and change to <p>
     }
-    div.find('.edit-marker').click(toggle(edit, save))
-    div.find('.delete-marker').one('click', function () {
+    div.find('#edit-marker').click(toggle(edit, save))
+    div.find('#delete-marker').one('click', function () {
+        markers.splice(n, 1);
     })
     return div[0]
 }
