@@ -8,7 +8,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <h2>Login</h2>
-    <% using (Html.BeginForm()) {%>
+    <% using (Html.BeginForm("Login","Account")) {%>
         <%: Html.ValidationSummary(true, "") %>
     <div>
     <fieldset>

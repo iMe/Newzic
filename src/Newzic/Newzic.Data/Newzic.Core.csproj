@@ -98,7 +98,6 @@
     </Compile>
     <Compile Include="Queixa.cs" />
     <Compile Include="Sessao.cs" />
-    <Compile Include="Tour.cs" />
     <Compile Include="Video.cs" />
     <Compile Include="WebServiceData.cs" />
   </ItemGroup>

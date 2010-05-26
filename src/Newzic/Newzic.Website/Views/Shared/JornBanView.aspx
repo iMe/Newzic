@@ -8,7 +8,7 @@
 
     <h2>JornModView</h2>
 
-    <% using (Html.BeginForm()) {%>
+    <% using (Html.BeginForm("BanirJornalista2", "Mod")) {%>
         <%: Html.ValidationSummary(true,"Erro") %>
         
         <fieldset>

@@ -11,6 +11,7 @@ namespace Newzic.Website.Controllers
 {
     public class NewsController : Controller
     {
+        private IDataCRUD<Noticia> repNoticias = new DataCRUD<Noticia>();
         //
         // GET: /Noticia/
 
@@ -22,12 +23,69 @@ namespace Newzic.Website.Controllers
 
         }
 
+        public ActionResult ApagarNoticia(string id)
+        {
+
+
+            var gid = new Guid(id);
+            var noticia = repNoticias.fetchAll().Single(n => n.NoticiaId == gid);
+
+            return View("ConfirmaApagarNoticia", noticia);
+
+        }
+
+        public ActionResult ConfirmaApagarNoticia(string id, string user)
+        {
+            if (!Request.IsAuthenticated) return View("AcessoNegado");
+
+            var gid = new Guid(id);
+            var noticia = repNoticias.fetchAll().Single(n => n.NoticiaId == gid);
+            
+            if(AdminController.getRole(user).Equals("Administrador"))
+            {
+                podeApagar(noticia);
+                return View("SuccessView");
+            }
+            
+            if(AdminController.getRole(user).Equals("Moderador"))
+            {
+                if (!AdminController.getRole(noticia.Jornalista.Email).Equals("Moderador"))
+                {
+                    podeApagar(noticia);
+                    return View("SuccessView");
+                }
+                return View("Error");
+            }
+                
+            if(noticia.Jornalista.Email.Equals(user))
+            {
+                podeApagar(noticia);
+                return View("SuccessView");
+            }
+            return View("Error");
+                
+        }
+
+        private void podeApagar(Noticia noticia)
+        {
+            
+            //noticia.NoticiaFlaggeds.Clear();
+            repNoticias.remove(noticia);
+            repNoticias.Save();
+        }
+
         //
         // GET: /Noticia/Details/5
 
         public ActionResult Details(string id)
         {
             NewsDetailsModel model = buildModel(id);
+            //var s = model.noticia.Corpo.Split('.');
+            //model.noticia.Corpo = "";
+            //foreach (string ss in s)
+            //{
+            //    model.noticia.Corpo = model.noticia.Corpo + '.' + '\n' + ss;
+            //}
             return View("Show",model);
         }
 
@@ -40,9 +98,16 @@ namespace Newzic.Website.Controllers
             IDataCRUD<Comentario> dbc = new DataCRUD<Comentario>();
 
             Jornalista jorn = (from Jornalista j in dbj.fetchAll() where j.Email.Equals(email) select j).Single();
-            
+
+            var s = model.comentario.Split('\r');
+            String res = "";
+            foreach (String ss in s)
+            {
+                res = res + ss;
+            }
+
             Comentario c = new Comentario();
-            c.Texto = model.comentario;
+            c.Texto = res;
             c.JornalistaId = jorn.JornalistaId;
             //String s = ViewData["noticiaid"].ToString();
             c.NoticiaId = new Guid(model.guid);//model.noticia.NoticiaId;
@@ -52,7 +117,7 @@ namespace Newzic.Website.Controllers
             dbc.Dispose();
 
             model = buildModel(model.guid);
-            model.comentario = null;
+            model.comentario = "";
             //if (model.comments==null) model.comments=new List<Comentario>();
             //model.comments.Add(c);
             return View("Show", model);

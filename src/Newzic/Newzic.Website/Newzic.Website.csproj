@@ -38,6 +38,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -65,6 +66,10 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web.Mobile" />
+    <Reference Include="XCaptcha, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\XCaptcha.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
@@ -87,6 +92,7 @@
     <Compile Include="Models\SearchQueryModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rss\RssActionResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -123,9 +129,11 @@
     <Content Include="Views\Admin\Queixas.aspx" />
     <Content Include="Views\Mod\Banir.aspx" />
     <Content Include="Views\Mod\BanirJornalista.aspx" />
+    <Content Include="Views\News\ConfirmaApagarNoticia.aspx" />
     <Content Include="Views\Mod\ConfirmarUnban.aspx" />
     <Content Include="Views\Mod\GerirJornalistas.aspx" />
     <Content Include="Views\Mod\GerirJornalistasBanidos.aspx" />
+    <Content Include="Views\Mod\GerirNoticiasFlagged.aspx" />
     <Content Include="Views\Mod\Index.aspx" />
     <Content Include="Views\Admin\ModUnBanView.aspx" />
     <Content Include="Views\Admin\ModUnPromoteView.aspx" />

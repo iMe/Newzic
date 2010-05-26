@@ -9,7 +9,7 @@
     }
     else {
 %> 
-        [ <%: Html.ActionLink("Log On", "Login", "Account") %> ]
+        [ <%: Html.ActionLink("Log On", "LoginForm", "Account") %> ]
 <%
     }
 %>

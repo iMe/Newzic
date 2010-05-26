@@ -30,27 +30,33 @@ namespace Newzic.Core
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertImagem(Imagem instance);
-    partial void UpdateImagem(Imagem instance);
-    partial void DeleteImagem(Imagem instance);
-    partial void InsertComentario(Comentario instance);
-    partial void UpdateComentario(Comentario instance);
-    partial void DeleteComentario(Comentario instance);
-    partial void InsertJornalista(Jornalista instance);
-    partial void UpdateJornalista(Jornalista instance);
-    partial void DeleteJornalista(Jornalista instance);
-    partial void InsertVideo(Video instance);
-    partial void UpdateVideo(Video instance);
-    partial void DeleteVideo(Video instance);
     partial void InsertAdministrador(Administrador instance);
     partial void UpdateAdministrador(Administrador instance);
     partial void DeleteAdministrador(Administrador instance);
-    partial void InsertModerador(Moderador instance);
-    partial void UpdateModerador(Moderador instance);
-    partial void DeleteModerador(Moderador instance);
     partial void InsertVotoNoticia(VotoNoticia instance);
     partial void UpdateVotoNoticia(VotoNoticia instance);
     partial void DeleteVotoNoticia(VotoNoticia instance);
+    partial void InsertBanido(Banido instance);
+    partial void UpdateBanido(Banido instance);
+    partial void DeleteBanido(Banido instance);
+    partial void InsertComentario(Comentario instance);
+    partial void UpdateComentario(Comentario instance);
+    partial void DeleteComentario(Comentario instance);
+    partial void InsertImagem(Imagem instance);
+    partial void UpdateImagem(Imagem instance);
+    partial void DeleteImagem(Imagem instance);
+    partial void InsertJornalista(Jornalista instance);
+    partial void UpdateJornalista(Jornalista instance);
+    partial void DeleteJornalista(Jornalista instance);
+    partial void InsertMapa(Mapa instance);
+    partial void UpdateMapa(Mapa instance);
+    partial void DeleteMapa(Mapa instance);
+    partial void InsertModerador(Moderador instance);
+    partial void UpdateModerador(Moderador instance);
+    partial void DeleteModerador(Moderador instance);
+    partial void InsertNoticia(Noticia instance);
+    partial void UpdateNoticia(Noticia instance);
+    partial void DeleteNoticia(Noticia instance);
     partial void InsertNoticiaFlagged(NoticiaFlagged instance);
     partial void UpdateNoticiaFlagged(NoticiaFlagged instance);
     partial void DeleteNoticiaFlagged(NoticiaFlagged instance);
@@ -60,18 +66,9 @@ namespace Newzic.Core
     partial void InsertSessao(Sessao instance);
     partial void UpdateSessao(Sessao instance);
     partial void DeleteSessao(Sessao instance);
-    partial void InsertTour(Tour instance);
-    partial void UpdateTour(Tour instance);
-    partial void DeleteTour(Tour instance);
-    partial void InsertNoticia(Noticia instance);
-    partial void UpdateNoticia(Noticia instance);
-    partial void DeleteNoticia(Noticia instance);
-    partial void InsertMapa(Mapa instance);
-    partial void UpdateMapa(Mapa instance);
-    partial void DeleteMapa(Mapa instance);
-    partial void InsertBanido(Banido instance);
-    partial void UpdateBanido(Banido instance);
-    partial void DeleteBanido(Banido instance);
+    partial void InsertVideo(Video instance);
+    partial void UpdateVideo(Video instance);
+    partial void DeleteVideo(Video instance);
     #endregion
 		
 		public NewzicDataContext() : 
@@ -104,11 +101,27 @@ namespace Newzic.Core
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<Imagem> Imagems
+		public System.Data.Linq.Table<Administrador> Administradors
 		{
 			get
 			{
-				return this.GetTable<Imagem>();
+				return this.GetTable<Administrador>();
+			}
+		}
+		
+		public System.Data.Linq.Table<VotoNoticia> VotoNoticias
+		{
+			get
+			{
+				return this.GetTable<VotoNoticia>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Banido> Banidos
+		{
+			get
+			{
+				return this.GetTable<Banido>();
 			}
 		}
 		
@@ -120,6 +133,14 @@ namespace Newzic.Core
 			}
 		}
 		
+		public System.Data.Linq.Table<Imagem> Imagems
+		{
+			get
+			{
+				return this.GetTable<Imagem>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Jornalista> Jornalistas
 		{
 			get
@@ -128,19 +149,11 @@ namespace Newzic.Core
 			}
 		}
 		
-		public System.Data.Linq.Table<Video> Videos
+		public System.Data.Linq.Table<Mapa> Mapas
 		{
 			get
 			{
-				return this.GetTable<Video>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Administrador> Administradors
-		{
-			get
-			{
-				return this.GetTable<Administrador>();
+				return this.GetTable<Mapa>();
 			}
 		}
 		
@@ -152,11 +165,11 @@ namespace Newzic.Core
 			}
 		}
 		
-		public System.Data.Linq.Table<VotoNoticia> VotoNoticias
+		public System.Data.Linq.Table<Noticia> Noticias
 		{
 			get
 			{
-				return this.GetTable<VotoNoticia>();
+				return this.GetTable<Noticia>();
 			}
 		}
 		
@@ -184,50 +197,129 @@ namespace Newzic.Core
 			}
 		}
 		
-		public System.Data.Linq.Table<Tour> Tours
+		public System.Data.Linq.Table<Video> Videos
 		{
 			get
 			{
-				return this.GetTable<Tour>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Noticia> Noticias
-		{
-			get
-			{
-				return this.GetTable<Noticia>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Mapa> Mapas
-		{
-			get
-			{
-				return this.GetTable<Mapa>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Banido> Banidos
-		{
-			get
-			{
-				return this.GetTable<Banido>();
+				return this.GetTable<Video>();
 			}
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Imagem")]
-	public partial class Imagem : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Administrador")]
+	public partial class Administrador : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private System.Guid _ImagemId;
+		private System.Guid _AdministradorId;
 		
-		private System.Data.Linq.Binary _ImageFile;
+		private EntityRef<Jornalista> _Jornalista;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnAdministradorIdChanging(System.Guid value);
+    partial void OnAdministradorIdChanged();
+    #endregion
+		
+		public Administrador()
+		{
+			this._Jornalista = default(EntityRef<Jornalista>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AdministradorId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid AdministradorId
+		{
+			get
+			{
+				return this._AdministradorId;
+			}
+			set
+			{
+				if ((this._AdministradorId != value))
+				{
+					if (this._Jornalista.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAdministradorIdChanging(value);
+					this.SendPropertyChanging();
+					this._AdministradorId = value;
+					this.SendPropertyChanged("AdministradorId");
+					this.OnAdministradorIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Jornalista_Administrador", Storage="_Jornalista", ThisKey="AdministradorId", OtherKey="JornalistaId", IsForeignKey=true)]
+		public Jornalista Jornalista
+		{
+			get
+			{
+				return this._Jornalista.Entity;
+			}
+			set
+			{
+				Jornalista previousValue = this._Jornalista.Entity;
+				if (((previousValue != value) 
+							|| (this._Jornalista.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Jornalista.Entity = null;
+						previousValue.Administrador = null;
+					}
+					this._Jornalista.Entity = value;
+					if ((value != null))
+					{
+						value.Administrador = this;
+						this._AdministradorId = value.JornalistaId;
+					}
+					else
+					{
+						this._AdministradorId = default(System.Guid);
+					}
+					this.SendPropertyChanged("Jornalista");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.VotoNoticia")]
+	public partial class VotoNoticia : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private System.Guid _NoticiaId;
+		
+		private System.Guid _JornalistaId;
+		
+		private EntityRef<Jornalista> _Jornalista;
 		
 		private EntityRef<Noticia> _Noticia;
 		
@@ -235,61 +327,20 @@ namespace Newzic.Core
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnImagemIdChanging(System.Guid value);
-    partial void OnImagemIdChanged();
-    partial void OnImageFileChanging(System.Data.Linq.Binary value);
-    partial void OnImageFileChanged();
     partial void OnNoticiaIdChanging(System.Guid value);
     partial void OnNoticiaIdChanged();
+    partial void OnJornalistaIdChanging(System.Guid value);
+    partial void OnJornalistaIdChanged();
     #endregion
 		
-		public Imagem()
+		public VotoNoticia()
 		{
+			this._Jornalista = default(EntityRef<Jornalista>);
 			this._Noticia = default(EntityRef<Noticia>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImagemId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid ImagemId
-		{
-			get
-			{
-				return this._ImagemId;
-			}
-			set
-			{
-				if ((this._ImagemId != value))
-				{
-					this.OnImagemIdChanging(value);
-					this.SendPropertyChanging();
-					this._ImagemId = value;
-					this.SendPropertyChanged("ImagemId");
-					this.OnImagemIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="ImagemFile", Storage="_ImageFile", DbType="Image NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
-		public System.Data.Linq.Binary ImageFile
-		{
-			get
-			{
-				return this._ImageFile;
-			}
-			set
-			{
-				if ((this._ImageFile != value))
-				{
-					this.OnImageFileChanging(value);
-					this.SendPropertyChanging();
-					this._ImageFile = value;
-					this.SendPropertyChanged("ImageFile");
-					this.OnImageFileChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NoticiaId", DbType="UniqueIdentifier NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NoticiaId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
 		public System.Guid NoticiaId
 		{
 			get
@@ -313,7 +364,65 @@ namespace Newzic.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Noticia_Imagem", Storage="_Noticia", ThisKey="NoticiaId", OtherKey="NoticiaId", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JornalistaId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid JornalistaId
+		{
+			get
+			{
+				return this._JornalistaId;
+			}
+			set
+			{
+				if ((this._JornalistaId != value))
+				{
+					if (this._Jornalista.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnJornalistaIdChanging(value);
+					this.SendPropertyChanging();
+					this._JornalistaId = value;
+					this.SendPropertyChanged("JornalistaId");
+					this.OnJornalistaIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Jornalista_VotoNoticia", Storage="_Jornalista", ThisKey="JornalistaId", OtherKey="JornalistaId", IsForeignKey=true)]
+		public Jornalista Jornalista
+		{
+			get
+			{
+				return this._Jornalista.Entity;
+			}
+			set
+			{
+				Jornalista previousValue = this._Jornalista.Entity;
+				if (((previousValue != value) 
+							|| (this._Jornalista.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Jornalista.Entity = null;
+						previousValue.VotoNoticias.Remove(this);
+					}
+					this._Jornalista.Entity = value;
+					if ((value != null))
+					{
+						value.VotoNoticias.Add(this);
+						this._JornalistaId = value.JornalistaId;
+					}
+					else
+					{
+						this._JornalistaId = default(System.Guid);
+					}
+					this.SendPropertyChanged("Jornalista");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Noticia_VotoNoticia", Storage="_Noticia", ThisKey="NoticiaId", OtherKey="NoticiaId", IsForeignKey=true)]
 		public Noticia Noticia
 		{
 			get
@@ -330,12 +439,12 @@ namespace Newzic.Core
 					if ((previousValue != null))
 					{
 						this._Noticia.Entity = null;
-						previousValue.Imagems.Remove(this);
+						previousValue.VotoNoticias.Remove(this);
 					}
 					this._Noticia.Entity = value;
 					if ((value != null))
 					{
-						value.Imagems.Add(this);
+						value.VotoNoticias.Add(this);
 						this._NoticiaId = value.NoticiaId;
 					}
 					else
@@ -343,6 +452,181 @@ namespace Newzic.Core
 						this._NoticiaId = default(System.Guid);
 					}
 					this.SendPropertyChanged("Noticia");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Banido")]
+	public partial class Banido : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _BanidoId;
+		
+		private System.Guid _JornalistaId;
+		
+		private System.Nullable<System.DateTime> _DataFim;
+		
+		private bool _Permanente;
+		
+		private EntityRef<Jornalista> _Jornalista;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnBanidoIdChanging(System.Guid value);
+    partial void OnBanidoIdChanged();
+    partial void OnJornalistaIdChanging(System.Guid value);
+    partial void OnJornalistaIdChanged();
+    partial void OnDataFimChanging(System.Nullable<System.DateTime> value);
+    partial void OnDataFimChanged();
+    partial void OnPermanenteChanging(bool value);
+    partial void OnPermanenteChanged();
+    #endregion
+		
+		public Banido()
+		{
+			this._Jornalista = default(EntityRef<Jornalista>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BanidoId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid BanidoId
+		{
+			get
+			{
+				return this._BanidoId;
+			}
+			set
+			{
+				if ((this._BanidoId != value))
+				{
+					this.OnBanidoIdChanging(value);
+					this.SendPropertyChanging();
+					this._BanidoId = value;
+					this.SendPropertyChanged("BanidoId");
+					this.OnBanidoIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JornalistaId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid JornalistaId
+		{
+			get
+			{
+				return this._JornalistaId;
+			}
+			set
+			{
+				if ((this._JornalistaId != value))
+				{
+					if (this._Jornalista.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnJornalistaIdChanging(value);
+					this.SendPropertyChanging();
+					this._JornalistaId = value;
+					this.SendPropertyChanged("JornalistaId");
+					this.OnJornalistaIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DataFim", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DataFim
+		{
+			get
+			{
+				return this._DataFim;
+			}
+			set
+			{
+				if ((this._DataFim != value))
+				{
+					this.OnDataFimChanging(value);
+					this.SendPropertyChanging();
+					this._DataFim = value;
+					this.SendPropertyChanged("DataFim");
+					this.OnDataFimChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Permanente", DbType="Bit NOT NULL")]
+		public bool Permanente
+		{
+			get
+			{
+				return this._Permanente;
+			}
+			set
+			{
+				if ((this._Permanente != value))
+				{
+					this.OnPermanenteChanging(value);
+					this.SendPropertyChanging();
+					this._Permanente = value;
+					this.SendPropertyChanged("Permanente");
+					this.OnPermanenteChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Jornalista_Banido", Storage="_Jornalista", ThisKey="JornalistaId", OtherKey="JornalistaId", IsForeignKey=true)]
+		public Jornalista Jornalista
+		{
+			get
+			{
+				return this._Jornalista.Entity;
+			}
+			set
+			{
+				Jornalista previousValue = this._Jornalista.Entity;
+				if (((previousValue != value) 
+							|| (this._Jornalista.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Jornalista.Entity = null;
+						previousValue.Banidos.Remove(this);
+					}
+					this._Jornalista.Entity = value;
+					if ((value != null))
+					{
+						value.Banidos.Add(this);
+						this._JornalistaId = value.JornalistaId;
+					}
+					else
+					{
+						this._JornalistaId = default(System.Guid);
+					}
+					this.SendPropertyChanged("Jornalista");
 				}
 			}
 		}
@@ -584,64 +868,111 @@ namespace Newzic.Core
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Jornalista")]
-	public partial class Jornalista : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Imagem")]
+	public partial class Imagem : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
+		private System.Guid _ImagemId;
+		
+		private System.Data.Linq.Binary _ImageFile;
+		
+		private System.Guid _NoticiaId;
+		
 		private string _Nome;
 		
-		private string _Email;
+		private string _Tipo;
 		
-		private string _Password;
-		
-		private System.Guid _JornalistaId;
-		
-		private EntitySet<Comentario> _Comentarios;
-		
-		private EntityRef<Administrador> _Administrador;
-		
-		private EntityRef<Moderador> _Moderador;
-		
-		private EntitySet<VotoNoticia> _VotoNoticias;
-		
-		private EntitySet<Queixa> _Queixas;
-		
-		private EntityRef<Sessao> _Sessao;
-		
-		private EntitySet<Noticia> _Noticias;
-		
-		private EntitySet<Banido> _Banidos;
+		private EntityRef<Noticia> _Noticia;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
+    partial void OnImagemIdChanging(System.Guid value);
+    partial void OnImagemIdChanged();
+    partial void OnImageFileChanging(System.Data.Linq.Binary value);
+    partial void OnImageFileChanged();
+    partial void OnNoticiaIdChanging(System.Guid value);
+    partial void OnNoticiaIdChanged();
     partial void OnNomeChanging(string value);
     partial void OnNomeChanged();
-    partial void OnEmailChanging(string value);
-    partial void OnEmailChanged();
-    partial void OnPasswordChanging(string value);
-    partial void OnPasswordChanged();
-    partial void OnJornalistaIdChanging(System.Guid value);
-    partial void OnJornalistaIdChanged();
+    partial void OnTipoChanging(string value);
+    partial void OnTipoChanged();
     #endregion
 		
-		public Jornalista()
+		public Imagem()
 		{
-			this._Comentarios = new EntitySet<Comentario>(new Action<Comentario>(this.attach_Comentarios), new Action<Comentario>(this.detach_Comentarios));
-			this._Administrador = default(EntityRef<Administrador>);
-			this._Moderador = default(EntityRef<Moderador>);
-			this._VotoNoticias = new EntitySet<VotoNoticia>(new Action<VotoNoticia>(this.attach_VotoNoticias), new Action<VotoNoticia>(this.detach_VotoNoticias));
-			this._Queixas = new EntitySet<Queixa>(new Action<Queixa>(this.attach_Queixas), new Action<Queixa>(this.detach_Queixas));
-			this._Sessao = default(EntityRef<Sessao>);
-			this._Noticias = new EntitySet<Noticia>(new Action<Noticia>(this.attach_Noticias), new Action<Noticia>(this.detach_Noticias));
-			this._Banidos = new EntitySet<Banido>(new Action<Banido>(this.attach_Banidos), new Action<Banido>(this.detach_Banidos));
+			this._Noticia = default(EntityRef<Noticia>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nome", DbType="NChar(64) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImagemId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid ImagemId
+		{
+			get
+			{
+				return this._ImagemId;
+			}
+			set
+			{
+				if ((this._ImagemId != value))
+				{
+					this.OnImagemIdChanging(value);
+					this.SendPropertyChanging();
+					this._ImagemId = value;
+					this.SendPropertyChanged("ImagemId");
+					this.OnImagemIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImageFile", DbType="Image NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		public System.Data.Linq.Binary ImageFile
+		{
+			get
+			{
+				return this._ImageFile;
+			}
+			set
+			{
+				if ((this._ImageFile != value))
+				{
+					this.OnImageFileChanging(value);
+					this.SendPropertyChanging();
+					this._ImageFile = value;
+					this.SendPropertyChanged("ImageFile");
+					this.OnImageFileChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NoticiaId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid NoticiaId
+		{
+			get
+			{
+				return this._NoticiaId;
+			}
+			set
+			{
+				if ((this._NoticiaId != value))
+				{
+					if (this._Noticia.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnNoticiaIdChanging(value);
+					this.SendPropertyChanging();
+					this._NoticiaId = value;
+					this.SendPropertyChanged("NoticiaId");
+					this.OnNoticiaIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nome", DbType="VarChar(64) NOT NULL", CanBeNull=false)]
 		public string Nome
 		{
 			get
@@ -661,7 +992,159 @@ namespace Newzic.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="NChar(160) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Tipo", DbType="VarChar(20) NOT NULL", CanBeNull=false)]
+		public string Tipo
+		{
+			get
+			{
+				return this._Tipo;
+			}
+			set
+			{
+				if ((this._Tipo != value))
+				{
+					this.OnTipoChanging(value);
+					this.SendPropertyChanging();
+					this._Tipo = value;
+					this.SendPropertyChanged("Tipo");
+					this.OnTipoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Noticia_Imagem", Storage="_Noticia", ThisKey="NoticiaId", OtherKey="NoticiaId", IsForeignKey=true)]
+		public Noticia Noticia
+		{
+			get
+			{
+				return this._Noticia.Entity;
+			}
+			set
+			{
+				Noticia previousValue = this._Noticia.Entity;
+				if (((previousValue != value) 
+							|| (this._Noticia.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Noticia.Entity = null;
+						previousValue.Imagems.Remove(this);
+					}
+					this._Noticia.Entity = value;
+					if ((value != null))
+					{
+						value.Imagems.Add(this);
+						this._NoticiaId = value.NoticiaId;
+					}
+					else
+					{
+						this._NoticiaId = default(System.Guid);
+					}
+					this.SendPropertyChanged("Noticia");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Jornalista")]
+	public partial class Jornalista : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _Nome;
+		
+		private string _Email;
+		
+		private string _Password;
+		
+		private System.Guid _JornalistaId;
+		
+		private EntityRef<Administrador> _Administrador;
+		
+		private EntitySet<VotoNoticia> _VotoNoticias;
+		
+		private EntitySet<Banido> _Banidos;
+		
+		private EntitySet<Comentario> _Comentarios;
+		
+		private EntityRef<Moderador> _Moderador;
+		
+		private EntitySet<Noticia> _Noticias;
+		
+		private EntitySet<Queixa> _Queixas;
+		
+		private EntityRef<Sessao> _Sessao;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnNomeChanging(string value);
+    partial void OnNomeChanged();
+    partial void OnEmailChanging(string value);
+    partial void OnEmailChanged();
+    partial void OnPasswordChanging(string value);
+    partial void OnPasswordChanged();
+    partial void OnJornalistaIdChanging(System.Guid value);
+    partial void OnJornalistaIdChanged();
+    #endregion
+		
+		public Jornalista()
+		{
+			this._Administrador = default(EntityRef<Administrador>);
+			this._VotoNoticias = new EntitySet<VotoNoticia>(new Action<VotoNoticia>(this.attach_VotoNoticias), new Action<VotoNoticia>(this.detach_VotoNoticias));
+			this._Banidos = new EntitySet<Banido>(new Action<Banido>(this.attach_Banidos), new Action<Banido>(this.detach_Banidos));
+			this._Comentarios = new EntitySet<Comentario>(new Action<Comentario>(this.attach_Comentarios), new Action<Comentario>(this.detach_Comentarios));
+			this._Moderador = default(EntityRef<Moderador>);
+			this._Noticias = new EntitySet<Noticia>(new Action<Noticia>(this.attach_Noticias), new Action<Noticia>(this.detach_Noticias));
+			this._Queixas = new EntitySet<Queixa>(new Action<Queixa>(this.attach_Queixas), new Action<Queixa>(this.detach_Queixas));
+			this._Sessao = default(EntityRef<Sessao>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nome", DbType="VarChar(64) NOT NULL", CanBeNull=false)]
+		public string Nome
+		{
+			get
+			{
+				return this._Nome;
+			}
+			set
+			{
+				if ((this._Nome != value))
+				{
+					this.OnNomeChanging(value);
+					this.SendPropertyChanging();
+					this._Nome = value;
+					this.SendPropertyChanged("Nome");
+					this.OnNomeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="VarChar(160) NOT NULL", CanBeNull=false)]
 		public string Email
 		{
 			get
@@ -681,7 +1164,7 @@ namespace Newzic.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Password", DbType="NChar(128) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Password", DbType="VarChar(128) NOT NULL", CanBeNull=false)]
 		public string Password
 		{
 			get
@@ -721,19 +1204,6 @@ namespace Newzic.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Jornalista_Comentario", Storage="_Comentarios", ThisKey="JornalistaId", OtherKey="JornalistaId")]
-		public EntitySet<Comentario> Comentarios
-		{
-			get
-			{
-				return this._Comentarios;
-			}
-			set
-			{
-				this._Comentarios.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Jornalista_Administrador", Storage="_Administrador", ThisKey="JornalistaId", OtherKey="AdministradorId", IsUnique=true, IsForeignKey=false)]
 		public Administrador Administrador
 		{
@@ -760,6 +1230,45 @@ namespace Newzic.Core
 					}
 					this.SendPropertyChanged("Administrador");
 				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Jornalista_VotoNoticia", Storage="_VotoNoticias", ThisKey="JornalistaId", OtherKey="JornalistaId")]
+		public EntitySet<VotoNoticia> VotoNoticias
+		{
+			get
+			{
+				return this._VotoNoticias;
+			}
+			set
+			{
+				this._VotoNoticias.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Jornalista_Banido", Storage="_Banidos", ThisKey="JornalistaId", OtherKey="JornalistaId")]
+		public EntitySet<Banido> Banidos
+		{
+			get
+			{
+				return this._Banidos;
+			}
+			set
+			{
+				this._Banidos.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Jornalista_Comentario", Storage="_Comentarios", ThisKey="JornalistaId", OtherKey="JornalistaId")]
+		public EntitySet<Comentario> Comentarios
+		{
+			get
+			{
+				return this._Comentarios;
+			}
+			set
+			{
+				this._Comentarios.Assign(value);
 			}
 		}
 		
@@ -792,16 +1301,16 @@ namespace Newzic.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Jornalista_VotoNoticia", Storage="_VotoNoticias", ThisKey="JornalistaId", OtherKey="JornalistaId")]
-		public EntitySet<VotoNoticia> VotoNoticias
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Jornalista_Noticia", Storage="_Noticias", ThisKey="JornalistaId", OtherKey="JornalistaId")]
+		public EntitySet<Noticia> Noticias
 		{
 			get
 			{
-				return this._VotoNoticias;
+				return this._Noticias;
 			}
 			set
 			{
-				this._VotoNoticias.Assign(value);
+				this._Noticias.Assign(value);
 			}
 		}
 		
@@ -847,32 +1356,6 @@ namespace Newzic.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Jornalista_Noticia", Storage="_Noticias", ThisKey="JornalistaId", OtherKey="JornalistaId")]
-		public EntitySet<Noticia> Noticias
-		{
-			get
-			{
-				return this._Noticias;
-			}
-			set
-			{
-				this._Noticias.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Jornalista_Banido", Storage="_Banidos", ThisKey="JornalistaId", OtherKey="JornalistaId")]
-		public EntitySet<Banido> Banidos
-		{
-			get
-			{
-				return this._Banidos;
-			}
-			set
-			{
-				this._Banidos.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -893,18 +1376,6 @@ namespace Newzic.Core
 			}
 		}
 		
-		private void attach_Comentarios(Comentario entity)
-		{
-			this.SendPropertyChanging();
-			entity.Jornalista = this;
-		}
-		
-		private void detach_Comentarios(Comentario entity)
-		{
-			this.SendPropertyChanging();
-			entity.Jornalista = null;
-		}
-		
 		private void attach_VotoNoticias(VotoNoticia entity)
 		{
 			this.SendPropertyChanging();
@@ -917,13 +1388,25 @@ namespace Newzic.Core
 			entity.Jornalista = null;
 		}
 		
-		private void attach_Queixas(Queixa entity)
+		private void attach_Banidos(Banido entity)
 		{
 			this.SendPropertyChanging();
 			entity.Jornalista = this;
 		}
 		
-		private void detach_Queixas(Queixa entity)
+		private void detach_Banidos(Banido entity)
+		{
+			this.SendPropertyChanging();
+			entity.Jornalista = null;
+		}
+		
+		private void attach_Comentarios(Comentario entity)
+		{
+			this.SendPropertyChanging();
+			entity.Jornalista = this;
+		}
+		
+		private void detach_Comentarios(Comentario entity)
 		{
 			this.SendPropertyChanging();
 			entity.Jornalista = null;
@@ -941,67 +1424,75 @@ namespace Newzic.Core
 			entity.Jornalista = null;
 		}
 		
-		private void attach_Banidos(Banido entity)
+		private void attach_Queixas(Queixa entity)
 		{
 			this.SendPropertyChanging();
 			entity.Jornalista = this;
 		}
 		
-		private void detach_Banidos(Banido entity)
+		private void detach_Queixas(Queixa entity)
 		{
 			this.SendPropertyChanging();
 			entity.Jornalista = null;
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Video")]
-	public partial class Video : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Mapa")]
+	public partial class Mapa : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private System.Guid _VideoId;
+		private System.Guid _MapaId;
 		
 		private System.Guid _NoticiaId;
 		
-		private string _Url;
+		private string _Morada;
 		
-		private EntityRef<Noticia> _Noticia;
+		private double _Longitude;
+		
+		private double _Latitude;
+		
+		private EntitySet<Noticia> _Noticias;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnVideoIdChanging(System.Guid value);
-    partial void OnVideoIdChanged();
+    partial void OnMapaIdChanging(System.Guid value);
+    partial void OnMapaIdChanged();
     partial void OnNoticiaIdChanging(System.Guid value);
     partial void OnNoticiaIdChanged();
-    partial void OnUrlChanging(string value);
-    partial void OnUrlChanged();
+    partial void OnMoradaChanging(string value);
+    partial void OnMoradaChanged();
+    partial void OnLongitudeChanging(double value);
+    partial void OnLongitudeChanged();
+    partial void OnLatitudeChanging(double value);
+    partial void OnLatitudeChanged();
     #endregion
 		
-		public Video()
+		public Mapa()
 		{
-			this._Noticia = default(EntityRef<Noticia>);
+			this._Noticias = new EntitySet<Noticia>(new Action<Noticia>(this.attach_Noticias), new Action<Noticia>(this.detach_Noticias));
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VideoId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid VideoId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MapaId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid MapaId
 		{
 			get
 			{
-				return this._VideoId;
+				return this._MapaId;
 			}
 			set
 			{
-				if ((this._VideoId != value))
+				if ((this._MapaId != value))
 				{
-					this.OnVideoIdChanging(value);
+					this.OnMapaIdChanging(value);
 					this.SendPropertyChanging();
-					this._VideoId = value;
-					this.SendPropertyChanged("VideoId");
-					this.OnVideoIdChanged();
+					this._MapaId = value;
+					this.SendPropertyChanged("MapaId");
+					this.OnMapaIdChanged();
 				}
 			}
 		}
@@ -1017,10 +1508,6 @@ namespace Newzic.Core
 			{
 				if ((this._NoticiaId != value))
 				{
-					if (this._Noticia.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
 					this.OnNoticiaIdChanging(value);
 					this.SendPropertyChanging();
 					this._NoticiaId = value;
@@ -1030,57 +1517,76 @@ namespace Newzic.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Url", DbType="NChar(10) NOT NULL", CanBeNull=false)]
-		public string Url
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Morada", DbType="VarChar(256)")]
+		public string Morada
 		{
 			get
 			{
-				return this._Url;
+				return this._Morada;
 			}
 			set
 			{
-				if ((this._Url != value))
+				if ((this._Morada != value))
 				{
-					this.OnUrlChanging(value);
+					this.OnMoradaChanging(value);
 					this.SendPropertyChanging();
-					this._Url = value;
-					this.SendPropertyChanged("Url");
-					this.OnUrlChanged();
+					this._Morada = value;
+					this.SendPropertyChanged("Morada");
+					this.OnMoradaChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Noticia_Video", Storage="_Noticia", ThisKey="NoticiaId", OtherKey="NoticiaId", IsForeignKey=true)]
-		public Noticia Noticia
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Longitude", DbType="Float NOT NULL")]
+		public double Longitude
 		{
 			get
 			{
-				return this._Noticia.Entity;
+				return this._Longitude;
 			}
 			set
 			{
-				Noticia previousValue = this._Noticia.Entity;
-				if (((previousValue != value) 
-							|| (this._Noticia.HasLoadedOrAssignedValue == false)))
+				if ((this._Longitude != value))
 				{
+					this.OnLongitudeChanging(value);
 					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Noticia.Entity = null;
-						previousValue.Videos.Remove(this);
-					}
-					this._Noticia.Entity = value;
-					if ((value != null))
-					{
-						value.Videos.Add(this);
-						this._NoticiaId = value.NoticiaId;
-					}
-					else
-					{
-						this._NoticiaId = default(System.Guid);
-					}
-					this.SendPropertyChanged("Noticia");
+					this._Longitude = value;
+					this.SendPropertyChanged("Longitude");
+					this.OnLongitudeChanged();
 				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Latitude", DbType="Float NOT NULL")]
+		public double Latitude
+		{
+			get
+			{
+				return this._Latitude;
+			}
+			set
+			{
+				if ((this._Latitude != value))
+				{
+					this.OnLatitudeChanging(value);
+					this.SendPropertyChanging();
+					this._Latitude = value;
+					this.SendPropertyChanged("Latitude");
+					this.OnLatitudeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Mapa_Noticia", Storage="_Noticias", ThisKey="MapaId", OtherKey="MapaId")]
+		public EntitySet<Noticia> Noticias
+		{
+			get
+			{
+				return this._Noticias;
+			}
+			set
+			{
+				this._Noticias.Assign(value);
 			}
 		}
 		
@@ -1103,108 +1609,17 @@ namespace Newzic.Core
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Administrador")]
-	public partial class Administrador : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _AdministradorId;
-		
-		private EntityRef<Jornalista> _Jornalista;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnAdministradorIdChanging(System.Guid value);
-    partial void OnAdministradorIdChanged();
-    #endregion
-		
-		public Administrador()
+		private void attach_Noticias(Noticia entity)
 		{
-			this._Jornalista = default(EntityRef<Jornalista>);
-			OnCreated();
+			this.SendPropertyChanging();
+			entity.Mapa = this;
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AdministradorId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid AdministradorId
+		private void detach_Noticias(Noticia entity)
 		{
-			get
-			{
-				return this._AdministradorId;
-			}
-			set
-			{
-				if ((this._AdministradorId != value))
-				{
-					if (this._Jornalista.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnAdministradorIdChanging(value);
-					this.SendPropertyChanging();
-					this._AdministradorId = value;
-					this.SendPropertyChanged("AdministradorId");
-					this.OnAdministradorIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Jornalista_Administrador", Storage="_Jornalista", ThisKey="AdministradorId", OtherKey="JornalistaId", IsForeignKey=true)]
-		public Jornalista Jornalista
-		{
-			get
-			{
-				return this._Jornalista.Entity;
-			}
-			set
-			{
-				Jornalista previousValue = this._Jornalista.Entity;
-				if (((previousValue != value) 
-							|| (this._Jornalista.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Jornalista.Entity = null;
-						previousValue.Administrador = null;
-					}
-					this._Jornalista.Entity = value;
-					if ((value != null))
-					{
-						value.Administrador = this;
-						this._AdministradorId = value.JornalistaId;
-					}
-					else
-					{
-						this._AdministradorId = default(System.Guid);
-					}
-					this.SendPropertyChanged("Jornalista");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
+			this.SendPropertyChanging();
+			entity.Mapa = null;
 		}
 	}
 	
@@ -1311,19 +1726,47 @@ namespace Newzic.Core
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.VotoNoticia")]
-	public partial class VotoNoticia : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Noticia")]
+	public partial class Noticia : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private System.Guid _NoticiaId;
 		
+		private string _Titulo;
+		
+		private string _Corpo;
+		
+		private int _Pontuacao;
+		
+		private System.DateTime _Data;
+		
+		private int _FlagCount;
+		
+		private bool _Deleted;
+		
+		private bool _Marked;
+		
 		private System.Guid _JornalistaId;
+		
+		private string _Tags;
+		
+		private System.Nullable<System.Guid> _MapaId;
+		
+		private EntitySet<VotoNoticia> _VotoNoticias;
+		
+		private EntitySet<Comentario> _Comentarios;
+		
+		private EntitySet<Imagem> _Imagems;
+		
+		private EntitySet<NoticiaFlagged> _NoticiaFlaggeds;
+		
+		private EntitySet<Video> _Videos;
 		
 		private EntityRef<Jornalista> _Jornalista;
 		
-		private EntityRef<Noticia> _Noticia;
+		private EntityRef<Mapa> _Mapa;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1331,14 +1774,37 @@ namespace Newzic.Core
     partial void OnCreated();
     partial void OnNoticiaIdChanging(System.Guid value);
     partial void OnNoticiaIdChanged();
+    partial void OnTituloChanging(string value);
+    partial void OnTituloChanged();
+    partial void OnCorpoChanging(string value);
+    partial void OnCorpoChanged();
+    partial void OnPontuacaoChanging(int value);
+    partial void OnPontuacaoChanged();
+    partial void OnDataChanging(System.DateTime value);
+    partial void OnDataChanged();
+    partial void OnFlagCountChanging(int value);
+    partial void OnFlagCountChanged();
+    partial void OnDeletedChanging(bool value);
+    partial void OnDeletedChanged();
+    partial void OnMarkedChanging(bool value);
+    partial void OnMarkedChanged();
     partial void OnJornalistaIdChanging(System.Guid value);
     partial void OnJornalistaIdChanged();
+    partial void OnTagsChanging(string value);
+    partial void OnTagsChanged();
+    partial void OnMapaIdChanging(System.Nullable<System.Guid> value);
+    partial void OnMapaIdChanged();
     #endregion
 		
-		public VotoNoticia()
+		public Noticia()
 		{
+			this._VotoNoticias = new EntitySet<VotoNoticia>(new Action<VotoNoticia>(this.attach_VotoNoticias), new Action<VotoNoticia>(this.detach_VotoNoticias));
+			this._Comentarios = new EntitySet<Comentario>(new Action<Comentario>(this.attach_Comentarios), new Action<Comentario>(this.detach_Comentarios));
+			this._Imagems = new EntitySet<Imagem>(new Action<Imagem>(this.attach_Imagems), new Action<Imagem>(this.detach_Imagems));
+			this._NoticiaFlaggeds = new EntitySet<NoticiaFlagged>(new Action<NoticiaFlagged>(this.attach_NoticiaFlaggeds), new Action<NoticiaFlagged>(this.detach_NoticiaFlaggeds));
+			this._Videos = new EntitySet<Video>(new Action<Video>(this.attach_Videos), new Action<Video>(this.detach_Videos));
 			this._Jornalista = default(EntityRef<Jornalista>);
-			this._Noticia = default(EntityRef<Noticia>);
+			this._Mapa = default(EntityRef<Mapa>);
 			OnCreated();
 		}
 		
@@ -1353,10 +1819,6 @@ namespace Newzic.Core
 			{
 				if ((this._NoticiaId != value))
 				{
-					if (this._Noticia.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
 					this.OnNoticiaIdChanging(value);
 					this.SendPropertyChanging();
 					this._NoticiaId = value;
@@ -1366,7 +1828,147 @@ namespace Newzic.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JornalistaId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Titulo", DbType="VarChar(256) NOT NULL", CanBeNull=false)]
+		public string Titulo
+		{
+			get
+			{
+				return this._Titulo;
+			}
+			set
+			{
+				if ((this._Titulo != value))
+				{
+					this.OnTituloChanging(value);
+					this.SendPropertyChanging();
+					this._Titulo = value;
+					this.SendPropertyChanged("Titulo");
+					this.OnTituloChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Corpo", DbType="VarChar(2048) NOT NULL", CanBeNull=false)]
+		public string Corpo
+		{
+			get
+			{
+				return this._Corpo;
+			}
+			set
+			{
+				if ((this._Corpo != value))
+				{
+					this.OnCorpoChanging(value);
+					this.SendPropertyChanging();
+					this._Corpo = value;
+					this.SendPropertyChanged("Corpo");
+					this.OnCorpoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pontuacao", DbType="Int NOT NULL")]
+		public int Pontuacao
+		{
+			get
+			{
+				return this._Pontuacao;
+			}
+			set
+			{
+				if ((this._Pontuacao != value))
+				{
+					this.OnPontuacaoChanging(value);
+					this.SendPropertyChanging();
+					this._Pontuacao = value;
+					this.SendPropertyChanged("Pontuacao");
+					this.OnPontuacaoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Data", DbType="DateTime NOT NULL")]
+		public System.DateTime Data
+		{
+			get
+			{
+				return this._Data;
+			}
+			set
+			{
+				if ((this._Data != value))
+				{
+					this.OnDataChanging(value);
+					this.SendPropertyChanging();
+					this._Data = value;
+					this.SendPropertyChanged("Data");
+					this.OnDataChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FlagCount", DbType="Int NOT NULL")]
+		public int FlagCount
+		{
+			get
+			{
+				return this._FlagCount;
+			}
+			set
+			{
+				if ((this._FlagCount != value))
+				{
+					this.OnFlagCountChanging(value);
+					this.SendPropertyChanging();
+					this._FlagCount = value;
+					this.SendPropertyChanged("FlagCount");
+					this.OnFlagCountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Deleted", DbType="Bit NOT NULL")]
+		public bool Deleted
+		{
+			get
+			{
+				return this._Deleted;
+			}
+			set
+			{
+				if ((this._Deleted != value))
+				{
+					this.OnDeletedChanging(value);
+					this.SendPropertyChanging();
+					this._Deleted = value;
+					this.SendPropertyChanged("Deleted");
+					this.OnDeletedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Marked", DbType="Bit NOT NULL")]
+		public bool Marked
+		{
+			get
+			{
+				return this._Marked;
+			}
+			set
+			{
+				if ((this._Marked != value))
+				{
+					this.OnMarkedChanging(value);
+					this.SendPropertyChanging();
+					this._Marked = value;
+					this.SendPropertyChanged("Marked");
+					this.OnMarkedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JornalistaId", DbType="UniqueIdentifier NOT NULL")]
 		public System.Guid JornalistaId
 		{
 			get
@@ -1390,7 +1992,116 @@ namespace Newzic.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Jornalista_VotoNoticia", Storage="_Jornalista", ThisKey="JornalistaId", OtherKey="JornalistaId", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Tags", DbType="VarChar(512) NOT NULL", CanBeNull=false)]
+		public string Tags
+		{
+			get
+			{
+				return this._Tags;
+			}
+			set
+			{
+				if ((this._Tags != value))
+				{
+					this.OnTagsChanging(value);
+					this.SendPropertyChanging();
+					this._Tags = value;
+					this.SendPropertyChanged("Tags");
+					this.OnTagsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MapaId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> MapaId
+		{
+			get
+			{
+				return this._MapaId;
+			}
+			set
+			{
+				if ((this._MapaId != value))
+				{
+					if (this._Mapa.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnMapaIdChanging(value);
+					this.SendPropertyChanging();
+					this._MapaId = value;
+					this.SendPropertyChanged("MapaId");
+					this.OnMapaIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Noticia_VotoNoticia", Storage="_VotoNoticias", ThisKey="NoticiaId", OtherKey="NoticiaId")]
+		public EntitySet<VotoNoticia> VotoNoticias
+		{
+			get
+			{
+				return this._VotoNoticias;
+			}
+			set
+			{
+				this._VotoNoticias.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Noticia_Comentario", Storage="_Comentarios", ThisKey="NoticiaId", OtherKey="NoticiaId")]
+		public EntitySet<Comentario> Comentarios
+		{
+			get
+			{
+				return this._Comentarios;
+			}
+			set
+			{
+				this._Comentarios.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Noticia_Imagem", Storage="_Imagems", ThisKey="NoticiaId", OtherKey="NoticiaId")]
+		public EntitySet<Imagem> Imagems
+		{
+			get
+			{
+				return this._Imagems;
+			}
+			set
+			{
+				this._Imagems.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Noticia_NoticiaFlagged", Storage="_NoticiaFlaggeds", ThisKey="NoticiaId", OtherKey="NoticiaId")]
+		public EntitySet<NoticiaFlagged> NoticiaFlaggeds
+		{
+			get
+			{
+				return this._NoticiaFlaggeds;
+			}
+			set
+			{
+				this._NoticiaFlaggeds.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Noticia_Video", Storage="_Videos", ThisKey="NoticiaId", OtherKey="NoticiaId")]
+		public EntitySet<Video> Videos
+		{
+			get
+			{
+				return this._Videos;
+			}
+			set
+			{
+				this._Videos.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Jornalista_Noticia", Storage="_Jornalista", ThisKey="JornalistaId", OtherKey="JornalistaId", IsForeignKey=true)]
 		public Jornalista Jornalista
 		{
 			get
@@ -1407,12 +2118,12 @@ namespace Newzic.Core
 					if ((previousValue != null))
 					{
 						this._Jornalista.Entity = null;
-						previousValue.VotoNoticias.Remove(this);
+						previousValue.Noticias.Remove(this);
 					}
 					this._Jornalista.Entity = value;
 					if ((value != null))
 					{
-						value.VotoNoticias.Add(this);
+						value.Noticias.Add(this);
 						this._JornalistaId = value.JornalistaId;
 					}
 					else
@@ -1424,36 +2135,36 @@ namespace Newzic.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Noticia_VotoNoticia", Storage="_Noticia", ThisKey="NoticiaId", OtherKey="NoticiaId", IsForeignKey=true)]
-		public Noticia Noticia
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Mapa_Noticia", Storage="_Mapa", ThisKey="MapaId", OtherKey="MapaId", IsForeignKey=true)]
+		public Mapa Mapa
 		{
 			get
 			{
-				return this._Noticia.Entity;
+				return this._Mapa.Entity;
 			}
 			set
 			{
-				Noticia previousValue = this._Noticia.Entity;
+				Mapa previousValue = this._Mapa.Entity;
 				if (((previousValue != value) 
-							|| (this._Noticia.HasLoadedOrAssignedValue == false)))
+							|| (this._Mapa.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Noticia.Entity = null;
-						previousValue.VotoNoticias.Remove(this);
+						this._Mapa.Entity = null;
+						previousValue.Noticias.Remove(this);
 					}
-					this._Noticia.Entity = value;
+					this._Mapa.Entity = value;
 					if ((value != null))
 					{
-						value.VotoNoticias.Add(this);
-						this._NoticiaId = value.NoticiaId;
+						value.Noticias.Add(this);
+						this._MapaId = value.MapaId;
 					}
 					else
 					{
-						this._NoticiaId = default(System.Guid);
+						this._MapaId = default(Nullable<System.Guid>);
 					}
-					this.SendPropertyChanged("Noticia");
+					this.SendPropertyChanged("Mapa");
 				}
 			}
 		}
@@ -1476,6 +2187,66 @@ namespace Newzic.Core
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_VotoNoticias(VotoNoticia entity)
+		{
+			this.SendPropertyChanging();
+			entity.Noticia = this;
+		}
+		
+		private void detach_VotoNoticias(VotoNoticia entity)
+		{
+			this.SendPropertyChanging();
+			entity.Noticia = null;
+		}
+		
+		private void attach_Comentarios(Comentario entity)
+		{
+			this.SendPropertyChanging();
+			entity.Noticia = this;
+		}
+		
+		private void detach_Comentarios(Comentario entity)
+		{
+			this.SendPropertyChanging();
+			entity.Noticia = null;
+		}
+		
+		private void attach_Imagems(Imagem entity)
+		{
+			this.SendPropertyChanging();
+			entity.Noticia = this;
+		}
+		
+		private void detach_Imagems(Imagem entity)
+		{
+			this.SendPropertyChanging();
+			entity.Noticia = null;
+		}
+		
+		private void attach_NoticiaFlaggeds(NoticiaFlagged entity)
+		{
+			this.SendPropertyChanging();
+			entity.Noticia = this;
+		}
+		
+		private void detach_NoticiaFlaggeds(NoticiaFlagged entity)
+		{
+			this.SendPropertyChanging();
+			entity.Noticia = null;
+		}
+		
+		private void attach_Videos(Video entity)
+		{
+			this.SendPropertyChanging();
+			entity.Noticia = this;
+		}
+		
+		private void detach_Videos(Video entity)
+		{
+			this.SendPropertyChanging();
+			entity.Noticia = null;
 		}
 	}
 	
@@ -1980,792 +2751,54 @@ namespace Newzic.Core
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Tour")]
-	public partial class Tour : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Video")]
+	public partial class Video : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private System.Guid _TourId;
-		
-		private System.Guid _MapaId;
-		
-		private double _Longitude;
-		
-		private double _Latitude;
-		
-		private string _Morada;
-		
-		private EntityRef<Mapa> _Mapa;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnTourIdChanging(System.Guid value);
-    partial void OnTourIdChanged();
-    partial void OnMapaIdChanging(System.Guid value);
-    partial void OnMapaIdChanged();
-    partial void OnLongitudeChanging(double value);
-    partial void OnLongitudeChanged();
-    partial void OnLatitudeChanging(double value);
-    partial void OnLatitudeChanged();
-    partial void OnMoradaChanging(string value);
-    partial void OnMoradaChanged();
-    #endregion
-		
-		public Tour()
-		{
-			this._Mapa = default(EntityRef<Mapa>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TourId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid TourId
-		{
-			get
-			{
-				return this._TourId;
-			}
-			set
-			{
-				if ((this._TourId != value))
-				{
-					this.OnTourIdChanging(value);
-					this.SendPropertyChanging();
-					this._TourId = value;
-					this.SendPropertyChanged("TourId");
-					this.OnTourIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MapaId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid MapaId
-		{
-			get
-			{
-				return this._MapaId;
-			}
-			set
-			{
-				if ((this._MapaId != value))
-				{
-					if (this._Mapa.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnMapaIdChanging(value);
-					this.SendPropertyChanging();
-					this._MapaId = value;
-					this.SendPropertyChanged("MapaId");
-					this.OnMapaIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Longitude", DbType="Float NOT NULL")]
-		public double Longitude
-		{
-			get
-			{
-				return this._Longitude;
-			}
-			set
-			{
-				if ((this._Longitude != value))
-				{
-					this.OnLongitudeChanging(value);
-					this.SendPropertyChanging();
-					this._Longitude = value;
-					this.SendPropertyChanged("Longitude");
-					this.OnLongitudeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Latitude", DbType="Float NOT NULL")]
-		public double Latitude
-		{
-			get
-			{
-				return this._Latitude;
-			}
-			set
-			{
-				if ((this._Latitude != value))
-				{
-					this.OnLatitudeChanging(value);
-					this.SendPropertyChanging();
-					this._Latitude = value;
-					this.SendPropertyChanged("Latitude");
-					this.OnLatitudeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Morada", DbType="VarChar(256)")]
-		public string Morada
-		{
-			get
-			{
-				return this._Morada;
-			}
-			set
-			{
-				if ((this._Morada != value))
-				{
-					this.OnMoradaChanging(value);
-					this.SendPropertyChanging();
-					this._Morada = value;
-					this.SendPropertyChanged("Morada");
-					this.OnMoradaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Mapa_Tour", Storage="_Mapa", ThisKey="MapaId", OtherKey="MapaId", IsForeignKey=true)]
-		public Mapa Mapa
-		{
-			get
-			{
-				return this._Mapa.Entity;
-			}
-			set
-			{
-				Mapa previousValue = this._Mapa.Entity;
-				if (((previousValue != value) 
-							|| (this._Mapa.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Mapa.Entity = null;
-						previousValue.Tours.Remove(this);
-					}
-					this._Mapa.Entity = value;
-					if ((value != null))
-					{
-						value.Tours.Add(this);
-						this._MapaId = value.MapaId;
-					}
-					else
-					{
-						this._MapaId = default(System.Guid);
-					}
-					this.SendPropertyChanged("Mapa");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Noticia")]
-	public partial class Noticia : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		private System.Guid _VideoId;
 		
 		private System.Guid _NoticiaId;
 		
-		private string _Titulo;
+		private string _Url;
 		
-		private string _Corpo;
-		
-		private int _Pontuacao;
-		
-		private System.DateTime _Data;
-		
-		private int _FlagCount;
-		
-		private bool _Deleted;
-		
-		private bool _Marked;
-		
-		private System.Guid _JornalistaId;
-		
-		private string _Tags;
-		
-		private System.Nullable<System.Guid> _MapaId;
-		
-		private EntitySet<Imagem> _Imagems;
-		
-		private EntitySet<Comentario> _Comentarios;
-		
-		private EntitySet<Video> _Videos;
-		
-		private EntitySet<VotoNoticia> _VotoNoticias;
-		
-		private EntitySet<NoticiaFlagged> _NoticiaFlaggeds;
-		
-		private EntityRef<Jornalista> _Jornalista;
-		
-		private EntityRef<Mapa> _Mapa;
+		private EntityRef<Noticia> _Noticia;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
+    partial void OnVideoIdChanging(System.Guid value);
+    partial void OnVideoIdChanged();
     partial void OnNoticiaIdChanging(System.Guid value);
     partial void OnNoticiaIdChanged();
-    partial void OnTituloChanging(string value);
-    partial void OnTituloChanged();
-    partial void OnCorpoChanging(string value);
-    partial void OnCorpoChanged();
-    partial void OnPontuacaoChanging(int value);
-    partial void OnPontuacaoChanged();
-    partial void OnDataChanging(System.DateTime value);
-    partial void OnDataChanged();
-    partial void OnFlagCountChanging(int value);
-    partial void OnFlagCountChanged();
-    partial void OnDeletedChanging(bool value);
-    partial void OnDeletedChanged();
-    partial void OnMarkedChanging(bool value);
-    partial void OnMarkedChanged();
-    partial void OnJornalistaIdChanging(System.Guid value);
-    partial void OnJornalistaIdChanged();
-    partial void OnTagsChanging(string value);
-    partial void OnTagsChanged();
-    partial void OnMapaIdChanging(System.Nullable<System.Guid> value);
-    partial void OnMapaIdChanged();
+    partial void OnUrlChanging(string value);
+    partial void OnUrlChanged();
     #endregion
 		
-		public Noticia()
+		public Video()
 		{
-			this._Imagems = new EntitySet<Imagem>(new Action<Imagem>(this.attach_Imagems), new Action<Imagem>(this.detach_Imagems));
-			this._Comentarios = new EntitySet<Comentario>(new Action<Comentario>(this.attach_Comentarios), new Action<Comentario>(this.detach_Comentarios));
-			this._Videos = new EntitySet<Video>(new Action<Video>(this.attach_Videos), new Action<Video>(this.detach_Videos));
-			this._VotoNoticias = new EntitySet<VotoNoticia>(new Action<VotoNoticia>(this.attach_VotoNoticias), new Action<VotoNoticia>(this.detach_VotoNoticias));
-			this._NoticiaFlaggeds = new EntitySet<NoticiaFlagged>(new Action<NoticiaFlagged>(this.attach_NoticiaFlaggeds), new Action<NoticiaFlagged>(this.detach_NoticiaFlaggeds));
-			this._Jornalista = default(EntityRef<Jornalista>);
-			this._Mapa = default(EntityRef<Mapa>);
+			this._Noticia = default(EntityRef<Noticia>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NoticiaId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid NoticiaId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VideoId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid VideoId
 		{
 			get
 			{
-				return this._NoticiaId;
+				return this._VideoId;
 			}
 			set
 			{
-				if ((this._NoticiaId != value))
+				if ((this._VideoId != value))
 				{
-					this.OnNoticiaIdChanging(value);
+					this.OnVideoIdChanging(value);
 					this.SendPropertyChanging();
-					this._NoticiaId = value;
-					this.SendPropertyChanged("NoticiaId");
-					this.OnNoticiaIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Titulo", DbType="VarChar(256) NOT NULL", CanBeNull=false)]
-		public string Titulo
-		{
-			get
-			{
-				return this._Titulo;
-			}
-			set
-			{
-				if ((this._Titulo != value))
-				{
-					this.OnTituloChanging(value);
-					this.SendPropertyChanging();
-					this._Titulo = value;
-					this.SendPropertyChanged("Titulo");
-					this.OnTituloChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Corpo", DbType="Text NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
-		public string Corpo
-		{
-			get
-			{
-				return this._Corpo;
-			}
-			set
-			{
-				if ((this._Corpo != value))
-				{
-					this.OnCorpoChanging(value);
-					this.SendPropertyChanging();
-					this._Corpo = value;
-					this.SendPropertyChanged("Corpo");
-					this.OnCorpoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pontuacao", DbType="Int NOT NULL")]
-		public int Pontuacao
-		{
-			get
-			{
-				return this._Pontuacao;
-			}
-			set
-			{
-				if ((this._Pontuacao != value))
-				{
-					this.OnPontuacaoChanging(value);
-					this.SendPropertyChanging();
-					this._Pontuacao = value;
-					this.SendPropertyChanged("Pontuacao");
-					this.OnPontuacaoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Data", DbType="DateTime NOT NULL")]
-		public System.DateTime Data
-		{
-			get
-			{
-				return this._Data;
-			}
-			set
-			{
-				if ((this._Data != value))
-				{
-					this.OnDataChanging(value);
-					this.SendPropertyChanging();
-					this._Data = value;
-					this.SendPropertyChanged("Data");
-					this.OnDataChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FlagCount", DbType="Int NOT NULL")]
-		public int FlagCount
-		{
-			get
-			{
-				return this._FlagCount;
-			}
-			set
-			{
-				if ((this._FlagCount != value))
-				{
-					this.OnFlagCountChanging(value);
-					this.SendPropertyChanging();
-					this._FlagCount = value;
-					this.SendPropertyChanged("FlagCount");
-					this.OnFlagCountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Deleted", DbType="Bit NOT NULL")]
-		public bool Deleted
-		{
-			get
-			{
-				return this._Deleted;
-			}
-			set
-			{
-				if ((this._Deleted != value))
-				{
-					this.OnDeletedChanging(value);
-					this.SendPropertyChanging();
-					this._Deleted = value;
-					this.SendPropertyChanged("Deleted");
-					this.OnDeletedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Marked", DbType="Bit NOT NULL")]
-		public bool Marked
-		{
-			get
-			{
-				return this._Marked;
-			}
-			set
-			{
-				if ((this._Marked != value))
-				{
-					this.OnMarkedChanging(value);
-					this.SendPropertyChanging();
-					this._Marked = value;
-					this.SendPropertyChanged("Marked");
-					this.OnMarkedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JornalistaId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid JornalistaId
-		{
-			get
-			{
-				return this._JornalistaId;
-			}
-			set
-			{
-				if ((this._JornalistaId != value))
-				{
-					if (this._Jornalista.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnJornalistaIdChanging(value);
-					this.SendPropertyChanging();
-					this._JornalistaId = value;
-					this.SendPropertyChanged("JornalistaId");
-					this.OnJornalistaIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Tags", DbType="VarChar(512) NOT NULL", CanBeNull=false)]
-		public string Tags
-		{
-			get
-			{
-				return this._Tags;
-			}
-			set
-			{
-				if ((this._Tags != value))
-				{
-					this.OnTagsChanging(value);
-					this.SendPropertyChanging();
-					this._Tags = value;
-					this.SendPropertyChanged("Tags");
-					this.OnTagsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MapaId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> MapaId
-		{
-			get
-			{
-				return this._MapaId;
-			}
-			set
-			{
-				if ((this._MapaId != value))
-				{
-					if (this._Mapa.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnMapaIdChanging(value);
-					this.SendPropertyChanging();
-					this._MapaId = value;
-					this.SendPropertyChanged("MapaId");
-					this.OnMapaIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Noticia_Imagem", Storage="_Imagems", ThisKey="NoticiaId", OtherKey="NoticiaId")]
-		public EntitySet<Imagem> Imagems
-		{
-			get
-			{
-				return this._Imagems;
-			}
-			set
-			{
-				this._Imagems.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Noticia_Comentario", Storage="_Comentarios", ThisKey="NoticiaId", OtherKey="NoticiaId")]
-		public EntitySet<Comentario> Comentarios
-		{
-			get
-			{
-				return this._Comentarios;
-			}
-			set
-			{
-				this._Comentarios.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Noticia_Video", Storage="_Videos", ThisKey="NoticiaId", OtherKey="NoticiaId")]
-		public EntitySet<Video> Videos
-		{
-			get
-			{
-				return this._Videos;
-			}
-			set
-			{
-				this._Videos.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Noticia_VotoNoticia", Storage="_VotoNoticias", ThisKey="NoticiaId", OtherKey="NoticiaId")]
-		public EntitySet<VotoNoticia> VotoNoticias
-		{
-			get
-			{
-				return this._VotoNoticias;
-			}
-			set
-			{
-				this._VotoNoticias.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Noticia_NoticiaFlagged", Storage="_NoticiaFlaggeds", ThisKey="NoticiaId", OtherKey="NoticiaId")]
-		public EntitySet<NoticiaFlagged> NoticiaFlaggeds
-		{
-			get
-			{
-				return this._NoticiaFlaggeds;
-			}
-			set
-			{
-				this._NoticiaFlaggeds.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Jornalista_Noticia", Storage="_Jornalista", ThisKey="JornalistaId", OtherKey="JornalistaId", IsForeignKey=true)]
-		public Jornalista Jornalista
-		{
-			get
-			{
-				return this._Jornalista.Entity;
-			}
-			set
-			{
-				Jornalista previousValue = this._Jornalista.Entity;
-				if (((previousValue != value) 
-							|| (this._Jornalista.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Jornalista.Entity = null;
-						previousValue.Noticias.Remove(this);
-					}
-					this._Jornalista.Entity = value;
-					if ((value != null))
-					{
-						value.Noticias.Add(this);
-						this._JornalistaId = value.JornalistaId;
-					}
-					else
-					{
-						this._JornalistaId = default(System.Guid);
-					}
-					this.SendPropertyChanged("Jornalista");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Mapa_Noticia", Storage="_Mapa", ThisKey="MapaId", OtherKey="MapaId", IsForeignKey=true)]
-		public Mapa Mapa
-		{
-			get
-			{
-				return this._Mapa.Entity;
-			}
-			set
-			{
-				Mapa previousValue = this._Mapa.Entity;
-				if (((previousValue != value) 
-							|| (this._Mapa.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Mapa.Entity = null;
-						previousValue.Noticias.Remove(this);
-					}
-					this._Mapa.Entity = value;
-					if ((value != null))
-					{
-						value.Noticias.Add(this);
-						this._MapaId = value.MapaId;
-					}
-					else
-					{
-						this._MapaId = default(Nullable<System.Guid>);
-					}
-					this.SendPropertyChanged("Mapa");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Imagems(Imagem entity)
-		{
-			this.SendPropertyChanging();
-			entity.Noticia = this;
-		}
-		
-		private void detach_Imagems(Imagem entity)
-		{
-			this.SendPropertyChanging();
-			entity.Noticia = null;
-		}
-		
-		private void attach_Comentarios(Comentario entity)
-		{
-			this.SendPropertyChanging();
-			entity.Noticia = this;
-		}
-		
-		private void detach_Comentarios(Comentario entity)
-		{
-			this.SendPropertyChanging();
-			entity.Noticia = null;
-		}
-		
-		private void attach_Videos(Video entity)
-		{
-			this.SendPropertyChanging();
-			entity.Noticia = this;
-		}
-		
-		private void detach_Videos(Video entity)
-		{
-			this.SendPropertyChanging();
-			entity.Noticia = null;
-		}
-		
-		private void attach_VotoNoticias(VotoNoticia entity)
-		{
-			this.SendPropertyChanging();
-			entity.Noticia = this;
-		}
-		
-		private void detach_VotoNoticias(VotoNoticia entity)
-		{
-			this.SendPropertyChanging();
-			entity.Noticia = null;
-		}
-		
-		private void attach_NoticiaFlaggeds(NoticiaFlagged entity)
-		{
-			this.SendPropertyChanging();
-			entity.Noticia = this;
-		}
-		
-		private void detach_NoticiaFlaggeds(NoticiaFlagged entity)
-		{
-			this.SendPropertyChanging();
-			entity.Noticia = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Mapa")]
-	public partial class Mapa : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _MapaId;
-		
-		private System.Guid _NoticiaId;
-		
-		private string _Morada;
-		
-		private double _Longitude;
-		
-		private double _Latidude;
-		
-		private bool _isTour;
-		
-		private EntitySet<Tour> _Tours;
-		
-		private EntitySet<Noticia> _Noticias;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnMapaIdChanging(System.Guid value);
-    partial void OnMapaIdChanged();
-    partial void OnNoticiaIdChanging(System.Guid value);
-    partial void OnNoticiaIdChanged();
-    partial void OnMoradaChanging(string value);
-    partial void OnMoradaChanged();
-    partial void OnLongitudeChanging(double value);
-    partial void OnLongitudeChanged();
-    partial void OnLatidudeChanging(double value);
-    partial void OnLatidudeChanged();
-    partial void OnisTourChanging(bool value);
-    partial void OnisTourChanged();
-    #endregion
-		
-		public Mapa()
-		{
-			this._Tours = new EntitySet<Tour>(new Action<Tour>(this.attach_Tours), new Action<Tour>(this.detach_Tours));
-			this._Noticias = new EntitySet<Noticia>(new Action<Noticia>(this.attach_Noticias), new Action<Noticia>(this.detach_Noticias));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MapaId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid MapaId
-		{
-			get
-			{
-				return this._MapaId;
-			}
-			set
-			{
-				if ((this._MapaId != value))
-				{
-					this.OnMapaIdChanging(value);
-					this.SendPropertyChanging();
-					this._MapaId = value;
-					this.SendPropertyChanged("MapaId");
-					this.OnMapaIdChanged();
+					this._VideoId = value;
+					this.SendPropertyChanged("VideoId");
+					this.OnVideoIdChanged();
 				}
 			}
 		}
@@ -2781,6 +2814,10 @@ namespace Newzic.Core
 			{
 				if ((this._NoticiaId != value))
 				{
+					if (this._Noticia.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnNoticiaIdChanging(value);
 					this.SendPropertyChanging();
 					this._NoticiaId = value;
@@ -2790,307 +2827,56 @@ namespace Newzic.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Morada", DbType="VarChar(256)")]
-		public string Morada
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Url", DbType="NChar(100) NOT NULL", CanBeNull=false)]
+		public string Url
 		{
 			get
 			{
-				return this._Morada;
+				return this._Url;
 			}
 			set
 			{
-				if ((this._Morada != value))
+				if ((this._Url != value))
 				{
-					this.OnMoradaChanging(value);
+					this.OnUrlChanging(value);
 					this.SendPropertyChanging();
-					this._Morada = value;
-					this.SendPropertyChanged("Morada");
-					this.OnMoradaChanged();
+					this._Url = value;
+					this.SendPropertyChanged("Url");
+					this.OnUrlChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Longitude", DbType="Float NOT NULL")]
-		public double Longitude
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Noticia_Video", Storage="_Noticia", ThisKey="NoticiaId", OtherKey="NoticiaId", IsForeignKey=true)]
+		public Noticia Noticia
 		{
 			get
 			{
-				return this._Longitude;
+				return this._Noticia.Entity;
 			}
 			set
 			{
-				if ((this._Longitude != value))
-				{
-					this.OnLongitudeChanging(value);
-					this.SendPropertyChanging();
-					this._Longitude = value;
-					this.SendPropertyChanged("Longitude");
-					this.OnLongitudeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Latidude", DbType="Float NOT NULL")]
-		public double Latidude
-		{
-			get
-			{
-				return this._Latidude;
-			}
-			set
-			{
-				if ((this._Latidude != value))
-				{
-					this.OnLatidudeChanging(value);
-					this.SendPropertyChanging();
-					this._Latidude = value;
-					this.SendPropertyChanged("Latidude");
-					this.OnLatidudeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_isTour", DbType="Bit NOT NULL")]
-		public bool isTour
-		{
-			get
-			{
-				return this._isTour;
-			}
-			set
-			{
-				if ((this._isTour != value))
-				{
-					this.OnisTourChanging(value);
-					this.SendPropertyChanging();
-					this._isTour = value;
-					this.SendPropertyChanged("isTour");
-					this.OnisTourChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Mapa_Tour", Storage="_Tours", ThisKey="MapaId", OtherKey="MapaId")]
-		public EntitySet<Tour> Tours
-		{
-			get
-			{
-				return this._Tours;
-			}
-			set
-			{
-				this._Tours.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Mapa_Noticia", Storage="_Noticias", ThisKey="MapaId", OtherKey="MapaId")]
-		public EntitySet<Noticia> Noticias
-		{
-			get
-			{
-				return this._Noticias;
-			}
-			set
-			{
-				this._Noticias.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Tours(Tour entity)
-		{
-			this.SendPropertyChanging();
-			entity.Mapa = this;
-		}
-		
-		private void detach_Tours(Tour entity)
-		{
-			this.SendPropertyChanging();
-			entity.Mapa = null;
-		}
-		
-		private void attach_Noticias(Noticia entity)
-		{
-			this.SendPropertyChanging();
-			entity.Mapa = this;
-		}
-		
-		private void detach_Noticias(Noticia entity)
-		{
-			this.SendPropertyChanging();
-			entity.Mapa = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Banido")]
-	public partial class Banido : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _BanidoId;
-		
-		private System.Nullable<System.Guid> _JornalistaId;
-		
-		private System.Nullable<System.DateTime> _DataFim;
-		
-		private bool _Permanente;
-		
-		private EntityRef<Jornalista> _Jornalista;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnBanidoIdChanging(System.Guid value);
-    partial void OnBanidoIdChanged();
-    partial void OnJornalistaIdChanging(System.Nullable<System.Guid> value);
-    partial void OnJornalistaIdChanged();
-    partial void OnDataFimChanging(System.Nullable<System.DateTime> value);
-    partial void OnDataFimChanged();
-    partial void OnPermanenteChanging(bool value);
-    partial void OnPermanenteChanged();
-    #endregion
-		
-		public Banido()
-		{
-			this._Jornalista = default(EntityRef<Jornalista>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BanidoId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid BanidoId
-		{
-			get
-			{
-				return this._BanidoId;
-			}
-			set
-			{
-				if ((this._BanidoId != value))
-				{
-					this.OnBanidoIdChanging(value);
-					this.SendPropertyChanging();
-					this._BanidoId = value;
-					this.SendPropertyChanged("BanidoId");
-					this.OnBanidoIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JornalistaId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> JornalistaId
-		{
-			get
-			{
-				return this._JornalistaId;
-			}
-			set
-			{
-				if ((this._JornalistaId != value))
-				{
-					if (this._Jornalista.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnJornalistaIdChanging(value);
-					this.SendPropertyChanging();
-					this._JornalistaId = value;
-					this.SendPropertyChanged("JornalistaId");
-					this.OnJornalistaIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DataFim", DbType="DateTime")]
-		public System.Nullable<System.DateTime> DataFim
-		{
-			get
-			{
-				return this._DataFim;
-			}
-			set
-			{
-				if ((this._DataFim != value))
-				{
-					this.OnDataFimChanging(value);
-					this.SendPropertyChanging();
-					this._DataFim = value;
-					this.SendPropertyChanged("DataFim");
-					this.OnDataFimChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Permanente", DbType="Bit NOT NULL")]
-		public bool Permanente
-		{
-			get
-			{
-				return this._Permanente;
-			}
-			set
-			{
-				if ((this._Permanente != value))
-				{
-					this.OnPermanenteChanging(value);
-					this.SendPropertyChanging();
-					this._Permanente = value;
-					this.SendPropertyChanged("Permanente");
-					this.OnPermanenteChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Jornalista_Banido", Storage="_Jornalista", ThisKey="JornalistaId", OtherKey="JornalistaId", IsForeignKey=true)]
-		public Jornalista Jornalista
-		{
-			get
-			{
-				return this._Jornalista.Entity;
-			}
-			set
-			{
-				Jornalista previousValue = this._Jornalista.Entity;
+				Noticia previousValue = this._Noticia.Entity;
 				if (((previousValue != value) 
-							|| (this._Jornalista.HasLoadedOrAssignedValue == false)))
+							|| (this._Noticia.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Jornalista.Entity = null;
-						previousValue.Banidos.Remove(this);
+						this._Noticia.Entity = null;
+						previousValue.Videos.Remove(this);
 					}
-					this._Jornalista.Entity = value;
+					this._Noticia.Entity = value;
 					if ((value != null))
 					{
-						value.Banidos.Add(this);
-						this._JornalistaId = value.JornalistaId;
+						value.Videos.Add(this);
+						this._NoticiaId = value.NoticiaId;
 					}
 					else
 					{
-						this._JornalistaId = default(Nullable<System.Guid>);
+						this._NoticiaId = default(System.Guid);
 					}
-					this.SendPropertyChanged("Jornalista");
+					this.SendPropertyChanged("Noticia");
 				}
 			}
 		}

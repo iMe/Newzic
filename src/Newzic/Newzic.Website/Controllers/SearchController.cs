@@ -148,6 +148,12 @@ namespace Newzic.Website.Controllers
             foreach (Noticia noticia in result)
             {
                 noticia.calcRank();
+                if (noticia.Corpo.Length > 200)
+                {
+                    noticia.Corpo = noticia.Corpo.Substring(0, 200);
+                    noticia.Corpo = noticia.Corpo + "(...)";
+
+                }
             }
 
             return result;

@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Newzic.Website.Models.NewsDetailsModel>" %>
+<%@ Import Namespace="Newzic.Website.Controllers" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Show
@@ -19,9 +20,29 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2><%=Html.Encode(Model.noticia.Titulo) %></h2>  
+    <h2><%=Html.Encode(Model.noticia.Titulo) %></h2> 
+    <% //AdminController ad = new AdminController();
+    if (Request.IsAuthenticated){
+       if (AdminController.getRole(User.Identity.Name).Equals("Administrador") || (AdminController.getRole(User.Identity.Name).Equals("Moderador") && (AdminController.getRole(Model.noticia.JornalistaId).Equals("Jornalista")))) {
+    %>
+    <%:Html.ActionLink("Apagar Noticia", "ApagarNoticia", "News", new { id = Model.noticia.NoticiaId, user = Page.User.Identity.Name}, null)%> | 
+    <%:Html.ActionLink("Marcar Noticia", "MarcarNoticia", "Mod", new { id = Model.noticia.NoticiaId}, null)%>
+
+    <% }%>
+    <%else
+       {
+           if(Model.noticia.Jornalista.Email.Equals(User.Identity.Name)){ %>
+           <%:Html.ActionLink("Apagar Noticia", "ApagarNoticia", "News", new { id = Model.noticia.NoticiaId, user = Page.User.Identity.Name }, null)%>
+           <%:Html.ActionLink("Editar Noticia", "EditarNoticia", "News", new { email = Model.noticia.NoticiaId}, null)%>
+       <% }
+       }
+    }%>
     <fieldset>
-        <%=Html.Encode(Model.noticia.Corpo) %>
+            <% var s = Model.noticia.Corpo.Split('\n'); foreach(var ss in s) {%>
+                <%=Html.Encode(ss) %>
+                <br />
+            <% } %>
+        <%--<%=Html.Encode(Model.noticia.Corpo) %>--%>
         <p></p>
         <p align="right">
             <small>escrito por </small>
@@ -65,9 +86,13 @@
                 <tr>
                     <td>
                     <fieldset>
-                        <%=Html.Encode(c.Texto) %><br/>
+                        <% var s2 = c.Texto.Split('\n'); foreach(var ss in s2) {%>
+                            <%=Html.Encode(ss) %>
+                            <br />
+                            <% } %>
+                        <%--<%=Html.Encode(c.Texto) %><br>--%>
                         <p align="right">
-                            <small><%=Html.Encode(c.Jornalista.Nome) %></small>
+                            <small><%=Html.Encode(c.Jornalista.Nome) %> <%:Html.ActionLink("+", "VerPerfil", "Account", new { email = c.Jornalista.Email}, null)%></small>
                         </p>
                     </fieldset>
                     </td>

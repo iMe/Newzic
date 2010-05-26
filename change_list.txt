@@ -1,5 +1,6 @@
 Done! - Alterar tipos do webservice - Falar com Ricardo
 Done! - Corrigir Esquema Relacional da BD(Ver folha impressa com correções a caneta) - Falar com Christophe
 Done! - Especificar que quando uma noticia marked é editada fica unmarked após a edição - Falar com Christophe
+Remover a tabela "Tour" , remover o campo "isTour" da tabela Mapa e acrescentar o campo "Data" na tabela "Comentario" (isto tudo no Esquema Relacional da BD)
 Por os diagramas corrigidos no relatório
 
