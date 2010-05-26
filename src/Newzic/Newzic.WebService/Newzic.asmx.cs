@@ -179,7 +179,7 @@ namespace Newzic.WebService
             m.NoticiaId = idN;
             m.Morada = mapa.Morada;
             m.Longitude = mapa.Longitude;
-            m.Latidude = mapa.Latitude;
+            m.Latitude = mapa.Latitude;
             ntc.Mapa = m;
             
             data.Save();
@@ -236,7 +236,7 @@ namespace Newzic.WebService
             m.NoticiaId = ntc.NoticiaId;
             m.Morada = mapa.Morada;
             m.Longitude = mapa.Longitude;
-            m.Latidude = mapa.Latitude;
+            m.Latitude = mapa.Latitude;
             ntc.Mapa = m;
 
             data.Save();

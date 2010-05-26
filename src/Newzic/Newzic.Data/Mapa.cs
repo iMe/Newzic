@@ -4,20 +4,15 @@ namespace Newzic.Core
 {
     public partial class Mapa : IEntity
     {
-        public Mapa(float longitude, float latidude, string morada)
+        public Mapa(float longitude, float latitude, string morada)
         {
             this.Longitude = longitude;
-            this.Latidude = latidude;
+            this.Latitude = latitude;
             this.Morada = morada;
-            this.isTour = false;
+            
         }
 
-        public void InsertTour(float longitude, float latidude, string morada)
-        {
-            var tour = new Tour {Latitude = latidude, Longitude = longitude, Morada = morada};
-            this.Tours.Add(tour);
-        }
-
+        
         Guid IEntity.Id
         {
             get { return MapaId; }
