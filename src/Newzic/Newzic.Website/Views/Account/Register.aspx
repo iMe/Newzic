@@ -48,6 +48,16 @@
                     <%: Html.PasswordFor(m => m.ConfirmPassword) %>
                     <%: Html.ValidationMessageFor(m => m.ConfirmPassword) %>
                 </div>
+                <input type="image" id="image" src="<%=Url.Action("Image") %>" alt="clique para actualiar" />
+                <div class="editor-label">
+                <%: Html.LabelFor(m => m.Captcha) %>
+            
+                </div>
+                <div class="editor-field">
+                    <%: Html.PasswordFor(m => m.Captcha)%>
+                    <%: Html.ValidationMessageFor(m => m.Captcha)%>
+                </div>
+                
                 <p>
                     <input type="submit" value="Register" />
                 </p>

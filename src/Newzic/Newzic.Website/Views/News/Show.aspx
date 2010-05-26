@@ -22,6 +22,7 @@
 
     <h2><%=Html.Encode(Model.noticia.Titulo) %></h2> 
     <% //AdminController ad = new AdminController();
+    if (Request.IsAuthenticated){
        if (AdminController.getRole(User.Identity.Name).Equals("Administrador") || (AdminController.getRole(User.Identity.Name).Equals("Moderador") && (AdminController.getRole(Model.noticia.JornalistaId).Equals("Jornalista")))) {
     %>
     <%:Html.ActionLink("Apagar Noticia", "ApagarNoticia", "News", new { id = Model.noticia.NoticiaId, user = Page.User.Identity.Name}, null)%> | 
@@ -34,7 +35,8 @@
            <%:Html.ActionLink("Apagar Noticia", "ApagarNoticia", "News", new { id = Model.noticia.NoticiaId, user = Page.User.Identity.Name }, null)%>
            <%:Html.ActionLink("Editar Noticia", "EditarNoticia", "News", new { email = Model.noticia.Jornalista.Email}, null)%>
        <% }
-       } %>
+       }
+    }%>
     <fieldset>
         <%=Html.Encode(Model.noticia.Corpo) %>
         <p></p>
@@ -82,7 +84,7 @@
                     <fieldset>
                         <%=Html.Encode(c.Texto) %><br>
                         <p align="right">
-                            <small><%=Html.Encode(c.Jornalista.Nome) %></small>
+                            <small><%=Html.Encode(c.Jornalista.Nome) %> <%:Html.ActionLink("+", "VerPerfil", "Account", new { email = c.Jornalista.Email}, null)%></small>
                         </p>
                     </fieldset>
                     </td>

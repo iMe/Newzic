@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Newzic.Website.Models.RegisterModel>" %>
+<%@ Import Namespace="Newzic.Website.Controllers" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	VerPerfil
@@ -27,14 +28,15 @@
             <%= Html.Encode(Model.Email ) %>
         </p>
 
-         <%--<p>
-            Palavra chave:
-            <%= Html.Encode(Model.Password ) %>
-        </p>--%>
 
+        <% if(Request.IsAuthenticated) {
+               if (User.Identity.Name.Equals(Model.Email)){
+               %>       
         <p>
-        <%:Html.ActionLink("Editar", "VerProprioPerfil", "Account", new { email = User.Identity.Name}, null)%>
+            <%:Html.ActionLink("Editar", "VerProprioPerfil", "Account", new { email = User.Identity.Name}, null)%>
         </p>
+        <% }
+           }%>
         
     </fieldset>
 
@@ -42,8 +44,8 @@
     <legend>Noticias</legend>
         <%foreach (var n in Model.noticias) { %>
             <p>
-            <%= Html.ActionLink("Edit", "Edit", new { id=n.NoticiaId }) %> |
-                <%= Html.ActionLink("Details", "Details", "News",new { id=n.NoticiaId },null)%> |
+            <%= Html.ActionLink("Editar", "Edit", new { id=n.NoticiaId }) %> |
+                <%= Html.ActionLink("Detalhes", "Details", "News",new { id=n.NoticiaId },null)%> |
             <%=Html.Encode(n.Titulo) %>
             </p>
         <% } %>

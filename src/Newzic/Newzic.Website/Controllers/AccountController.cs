@@ -9,6 +9,7 @@ using System.Web.Routing;
 using System.Web.Security;
 using Newzic.Core;
 using Newzic.Website.Models;
+using XCaptcha;
 
 namespace Newzic.Website.Controllers
 {
@@ -54,7 +55,7 @@ namespace Newzic.Website.Controllers
         public ActionResult LogOff(LoginModel model)
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "");
+            return RedirectToAction("Index", "Home");
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -232,6 +233,17 @@ namespace Newzic.Website.Controllers
             return View("EditarPerfil", model);
         }
 
+
+        public ActionResult Image()
+        {
+            var builder = new XCaptcha.ImageBuilder();
+            var result = builder.Create();
+            Session.Clear();
+            Session.Add(result.Solution, result.Solution);
+            return new FileContentResult(result.Image, result.ContentType);
+        }
+
+
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Register(RegisterModel model)
         {
@@ -242,8 +254,19 @@ namespace Newzic.Website.Controllers
                 string email = Request.Form["Email"];
                 string password = Request.Form["Password"];
                 string confirmPassword = Request.Form["ConfirmPassword"];
+                string captcha = "";
+                if (Session.Keys.Count > 0)
+                    captcha = Session.Keys.Get(0);
+                
 
                 //checks if passwords match
+                if (captcha != model.Captcha)
+                {
+                    //model.ModelState.AddModelError("", "A password é diferente da sua confirmação");
+                    ModelState.AddModelError("", "O captcha está errado.");
+                    return View(model);
+                }
+
                 if (password != confirmPassword)
                 {
                     //model.ModelState.AddModelError("", "A password é diferente da sua confirmação");
@@ -281,7 +304,7 @@ namespace Newzic.Website.Controllers
             model.noticias = null;
             model.Password = "";
             model.ConfirmPassword = "";
-
+            model.Captcha = "";
             return View("Register", model);
 
         }
