@@ -89,5 +89,31 @@ namespace Newzic.Website.Controllers
             feed.Items = items;
             return new RssActionResult() { Feed = feed };
         }
+
+        public ActionResult FazerQueixas(string email)
+        {
+            IDataCRUD<Queixa> repQueixas = new DataCRUD<Queixa>();
+            var queixa = new QueixaModel();
+            queixa.email = email;
+            return View("FazerQueixas", queixa);
+            
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult ProcessarQueixa(QueixaModel model)
+        {
+            Queixa queixa = new Queixa();
+            IDataCRUD<Queixa> repQueixas = new DataCRUD<Queixa>();
+            IDataCRUD<Jornalista> repJornalistas = new DataCRUD<Jornalista>();
+            queixa.JornalistaId = repJornalistas.fetchAll().Single(n => n.Email.Equals(model.email)).JornalistaId;
+            queixa.Resolved = false;
+            queixa.Assunto = model.assunto;
+            queixa.Texto = model.texto;
+            queixa.QueixaId = repQueixas.create(queixa);
+            repQueixas.Save();
+            repQueixas.Dispose();
+            repJornalistas.Dispose();
+            return View("SuccessView");
+        }
     }
 }

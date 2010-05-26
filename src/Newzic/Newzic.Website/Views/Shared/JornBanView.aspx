@@ -1,18 +1,18 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Newzic.Website.Models.JornBanModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	JornModView
+	Moderar - 
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>JornModView</h2>
+    <h2>J</h2>
 
     <% using (Html.BeginForm("BanirJornalista2", "Mod")) {%>
         <%: Html.ValidationSummary(true,"Erro") %>
         
         <fieldset>
-            <legend>Fields</legend>
+            <legend>J</legend>
             
             
             <div class="editor-label">

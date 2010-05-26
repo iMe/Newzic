@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Transactions;
 
@@ -7,7 +8,10 @@ namespace Newzic.Core
 {
     public class DataCRUD<T> : IDataCRUD<T> where T : class, IEntity
     {
-        protected NewzicDataContext db = new NewzicDataContext();
+        //private static StringWriter writer = new StringWriter();
+        protected NewzicDataContext db = new NewzicDataContext();// { Log = writer};
+
+        //public string Sql { get { return writer.GetStringBuilder().ToString(); } }
 
         public void Dispose()
         {
