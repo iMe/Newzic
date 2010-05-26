@@ -227,25 +227,6 @@ namespace Newzic.Website.Controllers
             return View("GerirNoticiasFlagged",noticiasFlagged);
         }
 
-        public ActionResult ApagarNoticia(string id)
-        {
-            var gid = new Guid(id);
-            var noticia = repNoticias.fetchAll().Single(n => n.NoticiaId == gid);
-
-            return View("ConfirmaApagarNoticia", noticia);
-            throw new NotImplementedException();
-        }
-
-        public ActionResult ConfirmaApagarNoticia(string id)
-        {
-            var gid = new Guid(id);
-            var noticia = repNoticias.fetchAll().Single(n => n.NoticiaId == gid);
-            //noticia.NoticiaFlaggeds.Clear();
-            repNoticias.remove(noticia);
-            repNoticias.Save();
-
-            return View("SuccessView");
-
-        }
+        
     }
 }
