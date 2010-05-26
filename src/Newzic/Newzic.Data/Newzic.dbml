@@ -3,7 +3,7 @@
   <Table Name="dbo.Imagem" Member="Imagems">
     <Type Name="Imagem">
       <Column Name="ImagemId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Imagem" Member="ImageFile" Type="System.Data.Linq.Binary" DbType="Image NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="ImagemFile" Member="ImageFile" Type="System.Data.Linq.Binary" DbType="Image NOT NULL" CanBeNull="false" UpdateCheck="Never" />
       <Column Name="NoticiaId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Association Name="Noticia_Imagem" Member="Noticia" ThisKey="NoticiaId" OtherKey="NoticiaId" Type="Noticia" IsForeignKey="true" />
     </Type>

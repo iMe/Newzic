@@ -9,5 +9,6 @@ namespace Newzic.Core
             get { return VideoId; }
             set { VideoId = value; }
         }
-    }
+
+   }
 }

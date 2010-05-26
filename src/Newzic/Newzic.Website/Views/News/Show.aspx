@@ -65,7 +65,7 @@
                 <tr>
                     <td>
                     <fieldset>
-                        <%=Html.Encode(c.Texto) %><br>
+                        <%=Html.Encode(c.Texto) %><br/>
                         <p align="right">
                             <small><%=Html.Encode(c.Jornalista.Nome) %></small>
                         </p>

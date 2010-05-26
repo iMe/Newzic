@@ -72,6 +72,11 @@ namespace Newzic.Core
             this.rank = res;
         }
 
-
+        public void setObjecto (Noticia origem)
+        {
+            this.Titulo = origem.Titulo;
+            this.Corpo = origem.Corpo;
+            this.Tags = origem.Tags;
+        }
     }
 }
