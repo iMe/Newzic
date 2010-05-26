@@ -31,7 +31,7 @@ namespace Newzic.WebService
             this.NoticiaId = m.NoticiaId;
             this.Morada = m.Morada;
             this.Longitude = m.Longitude;
-            this.Latitude = m.Latidude;
+            this.Latitude = m.Latitude;
         }
 
     }
