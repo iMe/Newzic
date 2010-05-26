@@ -6,14 +6,14 @@
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="scripts" runat="server">
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAPDUET0Qt7p2VcSk6JNU1sBSM5jMcmVqUpI7aqV44cW1cEECiThQYkcZUPRJn9vy_TWxWvuLoOfSFBw"
+        type="text/javascript"></script>
+    <script type="text/javascript"><%= ViewData["MapPoints"] %></script>
+    <script src="../../Scripts/viewmap.js" type="text/javascript"></script>
     
-<%--    <script type="text/javascript" src="../../Scripts/pics.js"></script>
-     <%
-        var array = Model.noticia.Imagems.Select(i => "\"" +i.ImagemId.ToString()+"\"").ToArray();
-        var s = "var imageIds = {" + string.Join(",", array) + "};"; %>
-    <script type="text/javascript">
-    <%= s %>
-    </script>--%>
+
+    <script type="text/javascript"><%= ViewData["PicIds"] %></script>
+    <script type="text/javascript" src="../../Scripts/pics.js"></script>
 </asp:Content>
 
 
@@ -67,11 +67,20 @@
         </table>
         </center>
 
+        <%if (Model.noticia.Imagems.Count!=0) {%>
         <fieldset>
         <legend>Imagens</legend>
         <center>
+        <div id="pics">
+            <img class="newspic" id="current-pic" src="#" alt="pic" />
+            <br />
+            <a id="prev-pic" class="arrow" href="#">prev</a> 
+            <big class="arrow">∙</big>
+            <a id="next-pic" class="arrow" href="#">next</a>
+        </div>
         </center>
         </fieldset>
+        <%}%>
 
         <%if (Model.noticia.Videos.Count!=0) {%>
         <fieldset>
@@ -104,11 +113,18 @@
         </fieldset>
         <%}%>
 
+        <%--<%if (ViewData["MapPoints"]=="window.MapPoints")
+          {%>--%>
         <fieldset>
         <legend>Mapa</legend>
         <center>
+
+        <div id="map">
+        </div>
+
         </center>
         </fieldset>
+        <%--<%}%>--%>
 
     </fieldset>
     <center>

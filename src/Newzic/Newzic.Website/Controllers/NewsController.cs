@@ -80,12 +80,19 @@ namespace Newzic.Website.Controllers
         public ActionResult Details(string id)
         {
             NewsDetailsModel model = buildModel(id);
+            
+            var array = model.noticia.Imagems.Select(i => "\"" + i.ImagemId.ToString() + "\"").ToArray();
+            ViewData["PicIds"] = "window.picIds = [" + string.Join(",", array) + "];";
+
+            var arrayPontos = model.noticia.Mapas.Select(m => "{ point: new GLatLng(" + m.Latitude + "," + m.Longitude + "), text: '" + m.Morada +"' }").ToArray();
+            ViewData["MapPoints"] = "window.MapPoints = [" + string.Join(",", arrayPontos) + "];";
+
             //var s = model.noticia.Corpo.Split('.');
             //model.noticia.Corpo = "";
             //foreach (string ss in s)
             //{
             //    model.noticia.Corpo = model.noticia.Corpo + '.' + '\n' + ss;
-            //}
+            //})
             return View("Show",model);
         }
 

@@ -338,3 +338,21 @@ div#title
 {
     width: 6em;
 }
+
+.invisible
+{
+    visibility: hidden;
+}
+
+.arrow
+{
+    font-size: x-large;
+    text-decoration: none;
+}
+
+.newspic
+{
+     max-width: 300px;
+     max-height: 300px;
+}
+
