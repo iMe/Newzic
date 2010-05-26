@@ -64,8 +64,15 @@
     
         <tr>
             <td>
-                <%= Html.ActionLink("Edit", "Edit", new { id=item.NoticiaId }) %> |
-                <%= Html.ActionLink("Details", "Details", "News",new { id=item.NoticiaId },null)%>
+                <%if(Request.IsAuthenticated) {
+                    if(User.Identity.Name.Equals(item.Jornalista.Email)) {   
+                %>
+                    <%= Html.ActionLink("Editar", "Edit","News",new { id=item.NoticiaId },null) %> |
+                <% }%>
+                <%else {%>
+                    Editar
+                <% } } %>
+                <%= Html.ActionLink("Detalhes", "Details", "News",new { id=item.NoticiaId },null)%>
             </td>
             <td>
                 <b>

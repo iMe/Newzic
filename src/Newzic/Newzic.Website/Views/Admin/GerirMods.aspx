@@ -29,13 +29,13 @@
     <table>
         <tr>
             <th>
-                Nome Moderador
+               
+            </th>
+            <th>
+                Nome Moderador   
             </th>
             <th>
                 Email Moderador
-            </th>
-            <th>
-                Estado Moderador
             </th>
         </tr>
 
@@ -43,7 +43,7 @@
     
         <tr>
             <td>
-                <%: Html.ActionLink("Ver Moderador", "ModDetais", new { id = item.ModeradorId })%> |
+                <%: Html.ActionLink("Ver Moderador", "VerPerfil", "Account"  ,new { email = item.Jornalista.Email }, "")%> |
                 <%if (!item.isBanned()) {%>
                 <%:Html.ActionLink("Banir", "ModBanView", new {id = item.ModeradorId})%> |
                 <%}%>

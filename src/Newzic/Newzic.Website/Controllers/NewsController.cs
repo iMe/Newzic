@@ -11,6 +11,7 @@ namespace Newzic.Website.Controllers
 {
     public class NewsController : Controller
     {
+        private IDataCRUD<Noticia> repNoticias = new DataCRUD<Noticia>();
         //
         // GET: /Noticia/
 
@@ -20,6 +21,57 @@ namespace Newzic.Website.Controllers
             var noticias = obter.fetchAll();
             return View(noticias);
 
+        }
+
+        public ActionResult ApagarNoticia(string id)
+        {
+
+
+            var gid = new Guid(id);
+            var noticia = repNoticias.fetchAll().Single(n => n.NoticiaId == gid);
+
+            return View("ConfirmaApagarNoticia", noticia);
+
+        }
+
+        public ActionResult ConfirmaApagarNoticia(string id, string user)
+        {
+            if (!Request.IsAuthenticated) return View("AcessoNegado");
+
+            var gid = new Guid(id);
+            var noticia = repNoticias.fetchAll().Single(n => n.NoticiaId == gid);
+            
+            if(AdminController.getRole(user).Equals("Administrador"))
+            {
+                podeApagar(noticia);
+                return View("SuccessView");
+            }
+            
+            if(AdminController.getRole(user).Equals("Moderador"))
+            {
+                if (!AdminController.getRole(noticia.Jornalista.Email).Equals("Moderador"))
+                {
+                    podeApagar(noticia);
+                    return View("SuccessView");
+                }
+                return View("Error");
+            }
+                
+            if(noticia.Jornalista.Email.Equals(user))
+            {
+                podeApagar(noticia);
+                return View("SuccessView");
+            }
+            return View("Error");
+                
+        }
+
+        private void podeApagar(Noticia noticia)
+        {
+            
+            //noticia.NoticiaFlaggeds.Clear();
+            repNoticias.remove(noticia);
+            repNoticias.Save();
         }
 
         //
