@@ -38,7 +38,11 @@
        }
     }%>
     <fieldset>
-        <%=Html.Encode(Model.noticia.Corpo) %>
+            <% var s = Model.noticia.Corpo.Split('\n'); foreach(var ss in s) {%>
+                <%=Html.Encode(ss) %>
+                <br />
+            <% } %>
+        <%--<%=Html.Encode(Model.noticia.Corpo) %>--%>
         <p></p>
         <p align="right">
             <small>escrito por </small>
@@ -82,7 +86,11 @@
                 <tr>
                     <td>
                     <fieldset>
-                        <%=Html.Encode(c.Texto) %><br>
+                        <% var s2 = c.Texto.Split('\n'); foreach(var ss in s2) {%>
+                            <%=Html.Encode(ss) %>
+                            <br />
+                            <% } %>
+                        <%--<%=Html.Encode(c.Texto) %><br>--%>
                         <p align="right">
                             <small><%=Html.Encode(c.Jornalista.Nome) %> <%:Html.ActionLink("+", "VerPerfil", "Account", new { email = c.Jornalista.Email}, null)%></small>
                         </p>

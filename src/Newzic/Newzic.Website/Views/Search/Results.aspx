@@ -70,7 +70,7 @@
                     <%= Html.ActionLink("Editar", "Edit","News",new { id=item.NoticiaId },null) %> |
                 <% }%>
                 <%else {%>
-                    Editar
+                    Editar |
                 <% } } %>
                 <%= Html.ActionLink("Detalhes", "Details", "News",new { id=item.NoticiaId },null)%>
             </td>

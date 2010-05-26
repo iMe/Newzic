@@ -80,6 +80,12 @@ namespace Newzic.Website.Controllers
         public ActionResult Details(string id)
         {
             NewsDetailsModel model = buildModel(id);
+            //var s = model.noticia.Corpo.Split('.');
+            //model.noticia.Corpo = "";
+            //foreach (string ss in s)
+            //{
+            //    model.noticia.Corpo = model.noticia.Corpo + '.' + '\n' + ss;
+            //}
             return View("Show",model);
         }
 
@@ -92,9 +98,16 @@ namespace Newzic.Website.Controllers
             IDataCRUD<Comentario> dbc = new DataCRUD<Comentario>();
 
             Jornalista jorn = (from Jornalista j in dbj.fetchAll() where j.Email.Equals(email) select j).Single();
-            
+
+            var s = model.comentario.Split('\r');
+            String res = "";
+            foreach (String ss in s)
+            {
+                res = res + ss;
+            }
+
             Comentario c = new Comentario();
-            c.Texto = model.comentario;
+            c.Texto = res;
             c.JornalistaId = jorn.JornalistaId;
             //String s = ViewData["noticiaid"].ToString();
             c.NoticiaId = new Guid(model.guid);//model.noticia.NoticiaId;
@@ -104,7 +117,7 @@ namespace Newzic.Website.Controllers
             dbc.Dispose();
 
             model = buildModel(model.guid);
-            model.comentario = null;
+            model.comentario = "";
             //if (model.comments==null) model.comments=new List<Comentario>();
             //model.comments.Add(c);
             return View("Show", model);
