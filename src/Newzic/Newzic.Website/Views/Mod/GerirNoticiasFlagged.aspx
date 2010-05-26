@@ -24,7 +24,7 @@
         <tr>
             <td>
                 <%= Html.ActionLink("Consultar Noticia", "Details","News", new { id=item.NoticiaId },null) %> |
-                <%= Html.ActionLink("Apagar", "ApagarNoticia", new { id=item.NoticiaId })%>
+                <%= Html.ActionLink("Apagar", "ApagarNoticia","News", new { id=item.NoticiaId },null)%>
             </td>
             <td>
                 <%= Html.Encode(item.Titulo) %>

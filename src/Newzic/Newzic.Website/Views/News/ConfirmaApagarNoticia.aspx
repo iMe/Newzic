@@ -50,8 +50,8 @@
     </fieldset>
     <p>
 
-        <%=Html.ActionLink("Confirmar Apagar Notícia", "ConfirmaApagarNoticia", new { id=Model.NoticiaId }) %> |
-        <%=Html.ActionLink("Voltar", "GerirNoticiasFlagged", new {id = Model.NoticiaId}) %>
+        <%=Html.ActionLink("Confirmar Apagar Notícia", "ConfirmaApagarNoticia", new { id=Model.NoticiaId, user = Page.User.Identity.Name }) %> |
+        <%=Html.ActionLink("Voltar", "Index", new {id = Model.NoticiaId}) %>
     </p>
 
 </asp:Content>
