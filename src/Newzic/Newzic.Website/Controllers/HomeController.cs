@@ -17,6 +17,15 @@ namespace Newzic.Website.Controllers
             ViewData["Message"] = "Bem-vindo ao Newzic!";
             HomeModel model = new HomeModel();
             model.noticias = getNoticias();
+            foreach (Noticia c in model.noticias)
+            {
+                if (c.Corpo.Length > 200)
+                {
+                    c.Corpo = c.Corpo.Substring(0, 200);
+                    c.Corpo = c.Corpo + "\n (...)";
+
+                }
+            }
 
             return View("Index",model);
         }

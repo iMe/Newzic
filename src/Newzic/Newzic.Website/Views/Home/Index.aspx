@@ -16,7 +16,14 @@
             <td style="width:50%;">
                 <fieldset>
                     <h3><%:Html.ActionLink(c.Titulo, "Details", "News", new { id = c.NoticiaId.ToString() }, null) %></h3>
-                    <%=Html.Encode(c.Corpo) %>
+                    <%foreach (var ch in c.Corpo)
+                     { if (ch=='\n'){%>
+                        <br />
+                     <% } else {%>
+
+                    <%=ch%>
+                    <% }
+                     }%>
                     <p align="right"> <%=Html.Encode(c.Jornalista.Nome) %>
                         <%:Html.ActionLink("+", "VerPerfil", "Account", new { email = c.Jornalista.Email}, null)%>
                     </p>
