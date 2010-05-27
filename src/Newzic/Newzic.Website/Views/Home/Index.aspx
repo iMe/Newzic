@@ -6,6 +6,9 @@
 
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2><%= Html.Encode(ViewData["Message"]) %></h2>
+    <div>
+        <%: Html.ActionLink("Publicar Notícia", "Create", "News")%>
+    </div>
     <table border="0" width="100%">
     <%int i=1;%>
     <%foreach (var c in Model.noticias.ToList())
@@ -33,4 +36,7 @@
  
    <% } %>
       </table>
+      <div>
+        <%: Html.ActionLink("Publicar Notícia", "Create", "News")%>
+    </div>
 </asp:Content>

@@ -387,11 +387,12 @@ namespace Newzic.Website.Controllers
                 ModelState.AddModelError("", "A data introduzida é inválida. Por favor corrija e tente novamente.");
                 return View();
             }
-            if (ModelState.IsValid)
-            {
-                return View("ModBanConfirmView", Ban);
-            }
-            return View(Ban);
+            //if (ModelState.IsValid)
+            //{
+            //    return View("ModBanConfirmView", Ban);
+            //}
+            //return View(Ban);
+            return View("ModBanConfirmView", Ban);
 
         }
 
@@ -453,7 +454,7 @@ namespace Newzic.Website.Controllers
         {
             if (!UserIsInRole("Admin"))
                 return View("AcessoNegado");
-            var mods = modList.fetchAll().ToList();
+            var mods = modList.fetchAll().Where(n => n.Jornalista.Administrador == null && n.Jornalista.Banidos.Count == 0).ToList();
             GerirModsModel model = new GerirModsModel();
             model.Moderadores = mods;
             model.searchQuery = "";
@@ -466,7 +467,7 @@ namespace Newzic.Website.Controllers
             if (!UserIsInRole("Admin"))
                 return View("AcessoNegado");
             string query = model.searchQuery;
-            var mods = modList.fetchAll().ToList();
+            var mods = modList.fetchAll().Where(n => n.Jornalista.Administrador == null && n.Jornalista.Banidos.Count == 0).ToList();
             model.searchQuery = query;
             if (query!= null)
             {
@@ -504,7 +505,7 @@ namespace Newzic.Website.Controllers
         {
             if (!UserIsInRole("Admin"))
                 return View("AcessoNegado");
-            var jorns = jornList.fetchAll().ToList();
+            var jorns = jornList.fetchAll().Where(n => n.Moderador==null && n.Banidos.Count == 0).ToList();
             GerirJornsModel model = new GerirJornsModel();
             model.Jornalistas = jorns;
             model.searchQuery = "";
@@ -517,18 +518,18 @@ namespace Newzic.Website.Controllers
             if (!UserIsInRole("Admin"))
                 return View("AcessoNegado");
             string query = model.searchQuery;
-            var jorns = jornList.fetchAll().ToList();
+            var jorns = jornList.fetchAll().Where(n => n.Moderador == null && n.Banidos.Count == 0).ToList();
             model.searchQuery = query;
             if (query != null)
             {
                 var searchResult = (from j in jorns where (j.Email.Contains(query)) select j).ToList();
                 model.Jornalistas = searchResult;
                 model.searchQuery = query;
-                return View("GerirMods", model);
+                return View("GerirJorns", model);
             }
             model.Jornalistas = jorns;
             model.searchQuery = "";
-            return View("GerirMods", model);
+            return View("GerirJorns", model);
         }
 
         //promote section

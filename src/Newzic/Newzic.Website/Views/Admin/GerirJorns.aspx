@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Newzic.Website.Models.GerirJornsModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	GerirJorns
+	Administrar - Promover Jornalistas
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -32,10 +32,10 @@
                
             </th>
             <th>
-                Nome Moderador
+                Nome Jornalista
             </th>
             <th>
-                Email Moderador
+                Email Jornalista
             </th>
         </tr>
 
@@ -43,7 +43,7 @@
     
         <tr>
             <td>
-                <%: Html.ActionLink("Ver Jornalista", "VerPerfil", "Account", new { email = item.Email }, "")%> |
+                <%: Html.ActionLink("Ver Perfil", "VerPerfil", "Account", new { email = item.Email }, "")%> |
                 <%if (!item.isModerador())
                 {%>
                     <%:Html.ActionLink("Promover", "JornPromoteView", new {id = item.JornalistaId})%>

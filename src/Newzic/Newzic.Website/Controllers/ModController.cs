@@ -79,7 +79,7 @@ namespace Newzic.Website.Controllers
 
             //Jornalista user = getAutenticatedJornalista(email);
 
-            var listaJornalistas = repJornalistas.fetchAll().Where(n => n.Administrador == null).ToList();
+            var listaJornalistas = repJornalistas.fetchAll().Where(n => n.Moderador == null).ToList();
             return View("GerirJornalistas", listaJornalistas);
             
         }

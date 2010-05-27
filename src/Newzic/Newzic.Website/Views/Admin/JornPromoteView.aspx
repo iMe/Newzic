@@ -1,28 +1,21 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Newzic.Core.Jornalista>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	JornPromoteView
+	Administrar - Promover Jornalista
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>JornPromoteView</h2>
+    <h2>Tem a certeza que deseja promover este Jornalista a Moderador ?</h2>
 
     <fieldset>
-        <legend>Fields</legend>
+        <legend>Dados do Jornalista</legend>
         
-        <div class="display-label">Nome</div>
-        <div class="display-field"><%: Model.Nome %></div>
+        <div class="display-label">Nome: <%: Model.Nome %></div>
         
-        <div class="display-label">Email</div>
-        <div class="display-field"><%: Model.Email %></div>
+        <div class="display-label">Email: <%: Model.Email %></div>
         
-        <div class="display-label">Password</div>
-        <div class="display-field"><%: Model.Password %></div>
-        
-        <div class="display-label">JornalistaId</div>
-        <div class="display-field"><%: Model.JornalistaId %></div>
-        
+                
     </fieldset>
     <p>
 

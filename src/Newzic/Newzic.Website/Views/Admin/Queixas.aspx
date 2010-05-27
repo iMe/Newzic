@@ -1,18 +1,18 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<Newzic.Core.Queixa>>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Queixas
+	Administrar - Gerir Queixas
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Queixas</h2>
+    <h2>Gerir Queixas dos Utilizadores</h2>
 
     <table>
         <tr>
             <th></th>
             <th>
-                Id da Queixa
+                Queixoso
             </th>
             <%--<th>
                 JornalistaId
@@ -29,9 +29,9 @@
             <th>
                 Assunto
             </th>
-            <th>
+            <%--<th>
                 Id
-            </th>
+            </th>--%>
         </tr>
 
     <% foreach (var item in Model) { %>
@@ -43,7 +43,7 @@
                <%-- <%: Html.ActionLink("Delete", "Delete", new { id=item.QueixaId })%>--%>
             </td>
             <td>
-                <%: item.QueixaId %>
+                <%: item.Jornalista.Email %> <%:Html.ActionLink("+","VerPerfil","Account") %>
             </td>
             <%--<td>
                 <%: item.JornalistaId %>
@@ -60,9 +60,9 @@
             <td>
                 <%: item.Assunto %>
             </td>
-            <td>
+            <%--<td>
                 <%: item.QueixaId %>
-            </td>
+            </td>--%>
         </tr>
     
     <% } %>

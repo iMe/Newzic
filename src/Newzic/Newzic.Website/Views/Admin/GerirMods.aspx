@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Newzic.Website.Models.GerirModsModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	GerirMods
+	Administrar - Gerir Moderadores
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -43,12 +43,12 @@
     
         <tr>
             <td>
-                <%: Html.ActionLink("Ver Moderador", "VerPerfil", "Account"  ,new { email = item.Jornalista.Email }, "")%> |
+                <%: Html.ActionLink("Ver Perfil", "VerPerfil", "Account"  ,new { email = item.Jornalista.Email }, "")%> |
                 <%if (!item.isBanned()) {%>
                 <%:Html.ActionLink("Banir", "ModBanView", new {id = item.ModeradorId})%> |
                 <%}%>
                 <%if (item.isBanned()) {%>
-                <%: Html.ActionLink("Desbanir", "ModUnbanView", new { id = item.ModeradorId })%> |
+                <%: Html.ActionLink("Levantar Ban", "ModUnbanView", new { id = item.ModeradorId })%> |
                 <%}%>
                 <%: Html.ActionLink("Despromover", "JornUnPromoteView", new { id = item.Jornalista.JornalistaId })%>
                <%-- <%: Html.ActionLink("Promover", "ModPromoteView", new { id = item.ModeradorId})%> |

@@ -26,6 +26,11 @@
                 <ul id="menu">
                     <li>
                         <%: Html.ActionLink("Home", "Index", "Home")%></li>
+                    <%--<%if (Request.IsAuthenticated)
+                      { %>
+                    <li>
+                        <%: Html.ActionLink("Publicar Notícia", "Create", "News")%></li>
+                    <%} %>--%>
                     <%if (Request.IsAuthenticated)
                       { %>
                     <li>
@@ -37,7 +42,9 @@
                         <%: Html.ActionLink("Moderar", "Index", "Mod", new {email = Page.User.Identity.Name}, null)%></li>
                     <%} %>
                     <li>
-                        <%: Html.ActionLink("About", "About", "Home")%></li>
+                        <%: Html.ActionLink("F.A.Q.", "About", "Home")%></li>
+                    <li>
+                        <%: Html.ActionLink("Pesquisar", "Results", "Search")%></li>
                     <%if (!Request.IsAuthenticated)
                       { %>
                     <li>
