@@ -1,5 +1,6 @@
 ﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
-
+<%@ Import Namespace="Newzic.Core" %>
+<%@ Import Namespace="Newzic.Website.Controllers" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -40,12 +41,12 @@
                         <%: Html.ActionLink("Publicar Notícia", "Create", "News")%></li>
                     <%} %>--%>
                     <%if (Request.IsAuthenticated)
-                      { %>
+                          if ((AdminController.getRole(Page.User.Identity.Name)) == "Administrador") { %>
                     <li>
                         <%: Html.ActionLink("Administração", "Index", "Admin", new {email = Page.User.Identity}, null)%></li>
                     <%} %>
-                    <%if (Request.IsAuthenticated)
-                      { %>
+                     <%if (Request.IsAuthenticated)
+                          if (AdminController.getRole(Page.User.Identity.Name) == "Administrador"  || AdminController.getRole(Page.User.Identity.Name) == "Moderador") { %>
                     <li>
                         <%: Html.ActionLink("Moderar", "Index", "Mod", new {email = Page.User.Identity.Name}, null)%></li>
                     <%} %>

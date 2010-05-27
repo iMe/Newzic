@@ -1,20 +1,20 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Newzic.Website.Models.RegisterModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	EditarPerfil
+	Editar Perfil
 </asp:Content>
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>editarPerfil</h2>
+    <h2>Edite o seu perfil</h2>
 
     <% using (Html.BeginForm("EditarPerfil", "Account"))
        {%>
         <%: Html.ValidationSummary(true) %>
         <div>
         <fieldset>
-            <legend>Fields</legend>
+            <legend>Perfil</legend>
             
             <div class="editor-label">
                 <%: Html.LabelFor(model => model.Name) %>
@@ -61,7 +61,7 @@
     <% } %>
 
     <div>
-        <%: Html.ActionLink("Back to List", "Index") %>
+        <%: Html.ActionLink("Voltar", "Index", "Home") %>
     </div>
     </div>
 </asp:Content>

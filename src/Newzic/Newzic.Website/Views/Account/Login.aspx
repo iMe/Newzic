@@ -7,7 +7,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Login</h2>
+    <h2>Iniciar sessão</h2>
     <% using (Html.BeginForm("Login","Account")) {%>
         <%: Html.ValidationSummary(true, "") %>
     <div>
@@ -28,7 +28,7 @@
                 <%: Html.ValidationMessageFor(m => m.Password) %>
             </div>
      <p>
-            <input type="submit" value="Login" />
+            <input type="submit" value="Iniciar Sessão" />
      </p>
      </fieldset>
      </div>

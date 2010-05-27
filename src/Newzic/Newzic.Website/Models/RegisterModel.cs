@@ -13,22 +13,22 @@ namespace Newzic.Website.Models
     public class RegisterModel : Controller
     {
         [Required]
-        [DisplayName("Name")]
+        [DisplayName("Nome")]
         public string Name { get; set; }
 
         [Required]
         [DataType(DataType.EmailAddress)]
-        [DisplayName("Email address")]
+        [DisplayName("Endereço email")]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [DisplayName("Password")]
+        [DisplayName("Palavra chave")]
         public string Password { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [DisplayName("Confirm password")]
+        [DisplayName("Confirmação da palavra chave")]
         public string ConfirmPassword { get; set; }
 
         [Required]
@@ -37,6 +37,9 @@ namespace Newzic.Website.Models
         public string Captcha { get; set; }
 
         public string Status { get; set; }
+        public string profileRole { get; set; }
+        public string viewerRole { get; set; }
+        public string id { get; set; }
 
         public List<Noticia> noticias { get; set; }
 

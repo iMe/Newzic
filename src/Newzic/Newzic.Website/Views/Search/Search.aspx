@@ -1,12 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<Newzic.Core.Noticia>>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Search
+	Pesquisar noticias
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Search</h2>
+    <h2>Pesquisar</h2>
 
     <table>
         <tr>
@@ -50,8 +50,8 @@
     
         <tr>
             <td>
-                <%= Html.ActionLink("Edit", "Edit", new { id=item.NoticiaId }) %> |
-                <%= Html.ActionLink("Details", "Details", new { id=item.NoticiaId })%>
+                <%= Html.ActionLink("Editar", "Edit", new { id=item.NoticiaId }) %> |
+                <%= Html.ActionLink("Ver detalhes", "Details", new { id=item.NoticiaId })%>
             </td>
             <td>
                 <%= Html.Encode(item.NoticiaId) %>
@@ -92,9 +92,9 @@
 
     </table>
 
-    <p>
-        <%= Html.ActionLink("Create New", "Create") %>
-    </p>
+    <%--<p>
+        <%= Html.ActionLink("Criar nova", "Create") %>
+    </p>--%>
 
 </asp:Content>
 
