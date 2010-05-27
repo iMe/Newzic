@@ -226,7 +226,7 @@ namespace Newzic.Website.Controllers
         public ActionResult GerirNoticiasFlagged()
         {
             if (!Request.IsAuthenticated) return View("acessoNegado");
-            var noticiasFlagged = repNoticias.fetchAll().Where(n => n.NoticiaFlaggeds.Any() && n.Deleted == false);
+            var noticiasFlagged = repNoticias.fetchAll().Where(n => n.NoticiaFlaggeds.Any() && n.Deleted == false && n.Jornalista.Administrador == null);
 
             return View("GerirNoticiasFlagged",noticiasFlagged);
         }
@@ -238,8 +238,10 @@ namespace Newzic.Website.Controllers
             var gid = new Guid(id);
             var dc  = new NewzicDataContext();
             Noticia nf = dc.Noticias.Single(n => n.NoticiaId == gid);
+            nf.FlagCount = 0;
             dc.NoticiaFlaggeds.DeleteOnSubmit(nf.NoticiaFlaggeds[0]);
             dc.SubmitChanges();
+            dc.Dispose();
 
             
             var noticiasFlagged = repNoticias.fetchAll().Where(n => n.NoticiaFlaggeds.Any() && n.Deleted == false);

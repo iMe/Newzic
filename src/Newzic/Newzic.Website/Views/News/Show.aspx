@@ -65,7 +65,7 @@
         </p>
         <%if (Request.IsAuthenticated){ %>
         <p align="right">
-            <%:Html.ActionLink("Reportar Noticia", "VerPerfil", "Account", new { email = Model.noticia.Jornalista.Email}, null)%>
+            <%:Html.ActionLink("Reportar Noticia", "ReportNoticia", "News", new { id = Model.noticia.NoticiaId}, null)%>
         </p>
         <% }%>
         <center>
