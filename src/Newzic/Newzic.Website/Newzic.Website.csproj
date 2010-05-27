@@ -96,6 +96,7 @@
     <Compile Include="Rss\RssActionResult.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Mobile.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\viewmap.js" />
     <Content Include="Scripts\jLinq-2.2.1.js" />
