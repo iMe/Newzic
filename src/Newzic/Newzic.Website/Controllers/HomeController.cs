@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Newzic.Core;
 using Newzic.Website.Models;
 using Newzic.Website.Rss;
+using System.Text;
 
 namespace Newzic.Website.Controllers
 {
@@ -78,11 +79,19 @@ namespace Newzic.Website.Controllers
                                                            DateTime.Now);
             for (int i = 0; i < count; i++)
             {
+                StringBuilder  body = new StringBuilder();
+                if (noticias[i].Corpo.Length > 200)
+                    body.Append(noticias[i].Corpo.Substring(0, 199));
+                else
+                {
+                    body.Append(noticias[i].Corpo.Substring(0, noticias[i].Corpo.Length));
+                }
+                body.Append("...");
                 var item = new SyndicationItem(noticias[i].Titulo,
-                                                           noticias[i].Corpo,
+                                                          body.ToString(),
                                                            new Uri("http://localhost:49174/News/Details/" + noticias[i].NoticiaId),
                                                            "TestItemID",
-                                                           DateTime.Now);
+                                                           noticias[i].Data);
                 items.Add(item);
 
             }

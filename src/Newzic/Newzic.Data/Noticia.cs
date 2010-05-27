@@ -23,12 +23,12 @@ namespace Newzic.Core
         
         public Video getVideo(Guid videoId)
         {
-            throw new NotImplementedException();
+            return this.Videos.Single(n => n.VideoId == videoId);
         }
 
         public Imagem getImagem(Guid imagemId)
         {
-            throw new NotImplementedException();
+            return this.Imagems.Single(n => n.ImagemId == imagemId);
         }
 
         public void markNoticia()
@@ -44,7 +44,7 @@ namespace Newzic.Core
         public void votarNoticia(Jornalista jornalista)
         {
             var voto = new VotoNoticia();
-            voto.Noticia = this;
+            //voto.Noticia = this;
             voto.NoticiaId = this.NoticiaId;
             voto.Jornalista = jornalista;
             voto.JornalistaId = jornalista.JornalistaId;
