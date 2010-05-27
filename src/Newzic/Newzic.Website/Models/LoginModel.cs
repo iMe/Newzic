@@ -12,12 +12,12 @@ namespace Newzic.Website.Models
     {
         [Required]
         [DataType(DataType.EmailAddress)]
-        [DisplayName("Email address")]
+        [DisplayName("Endereço Email")]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [DisplayName("Password")]
+        [DisplayName("Palavra chave")]
         public string Password { get; set; }
 
     }

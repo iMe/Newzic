@@ -6,7 +6,7 @@ to use a different color start by replacing all instances of
 body
 {
 	background-color: #5c87b2;
-	font-size: xx-large;
+	font-size: 45px;
 	font-family: Verdana, Helvetica, Sans-Serif;
 	margin: 0;
 	padding: 0;
@@ -42,33 +42,33 @@ p, ul
 ----------------------------------------------------------*/
 h1, h2, h3, h4, h5, h6
 {
-	font-size: xx-large;
+	font-size: 45px;
 	color: #000;
 	font-family: Arial, Helvetica, sans-serif;
 }
 
 h1
 {
-    font-size: 2em;
+    font-size: 45px;
     padding-bottom: 0;
     margin-bottom: 0;
 }
 h2
 {
 	padding: 0 0 10px 0;
-	font-size: xx-large;
+	font-size: 45px;
 }
 h3
 {
-    font-size: xx-large;
+    font-size: 45px;
 }
 h4
 {
-    font-size: xx-large;
+    font-size: 45px;
 }
 h5, h6
 {
-    font-size: xx-large;
+    font-size: 45px;
 }
 
 /* this rule styles <h2> tags that are the 
@@ -107,7 +107,7 @@ page width. Or, you can specify an exact pixel width. */
     border: none;
     line-height: 2em;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 32px;
+    font-size: 45px;
 }
 
 #main
@@ -125,7 +125,7 @@ page width. Or, you can specify an exact pixel width. */
     text-align: center;
     line-height: normal;
     margin: 0;
-    font-size: .9em;
+    font-size: 45px;
 }
 
 /* TAB MENU   
@@ -199,7 +199,7 @@ fieldset p
 
 legend 
 {
-    font-size: 1.1em;
+    font-size: 45px;
     font-weight: 600;
     padding: 2px 4px 8px 4px;
 }
@@ -265,7 +265,7 @@ div#title
 
 #logindisplay
 {
-    font-size:1.1em;
+    font-size:45px;
     display:block;
     text-align:right;
     margin:10px;
@@ -347,7 +347,7 @@ div#title
 
 .arrow
 {
-    font-size: x-large;
+    font-size: 45px;
     text-decoration: none;
 }
 
@@ -357,3 +357,10 @@ div#title
      max-height: 300px;
 }
 
+input 
+{ 
+	background-color: #B0E0E6; 
+	font: 45px verdana, arial, helvetica, sans-serif;
+	color:#003399;
+	border:2px solid #000099;
+}
