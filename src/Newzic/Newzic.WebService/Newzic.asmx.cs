@@ -71,7 +71,8 @@ namespace Newzic.WebService
         public NoticiaWrap getNoticia(Guid idNoticia)
         {
             IDataCRUD<Noticia> data = new NoticiaData();
-            NoticiaWrap res = new NoticiaWrap(data.fetch(idNoticia));
+            Noticia n = (from Noticia nn in data.fetchAll() where nn.NoticiaId == idNoticia select nn).SingleOrDefault();
+            NoticiaWrap res = new NoticiaWrap(n);
             
             return res;
         }
@@ -82,7 +83,8 @@ namespace Newzic.WebService
         public List<ImagemWrap> getImagensOfNoticia(Guid idNoticia)
         {
             IDataCRUD<Noticia> data = new NoticiaData();
-            List<Imagem> aux = data.fetch(idNoticia).Imagems.ToList();
+
+            List<Imagem> aux = (from Imagem i in data.fetchAll() where i.NoticiaId == idNoticia select i).ToList();
             List<ImagemWrap> res = new List<ImagemWrap>();
             foreach (Imagem elem in aux)
             {
@@ -98,21 +100,24 @@ namespace Newzic.WebService
 
 
         [WebMethod]
-        public List<Mapa> getMapOfNoticia(Guid idNoticia)
+        public List<MapaWrap> getMapOfNoticia(Guid idNoticia)
         {
-            NoticiaData data = new NoticiaData();
-            //Mapa aux = data.fetch(idNoticia).Mapa;
-            //MapaWrap res = new MapaWrap(aux);
-            var listaNoticias = data.fetchAll();
+            IDataCRUD<Mapa> data = new DataCRUD<Mapa>();
+            List<MapaWrap> ret = new List<MapaWrap>();
+
             try
             {
-                var notica = (from n in listaNoticias where n.NoticiaId.ToString() == idNoticia.ToString() select n).Single();
-                return notica.Mapas.ToList();
+                var mapas = (from m in data.fetchAll() where m.NoticiaId == idNoticia select m).ToList();
+                foreach (Mapa mapa in mapas)
+                {
+                    ret.Add(new MapaWrap(mapa));
+                }
+
+                return ret;
             }
             catch (Exception)
             {
-                List<Mapa> mapas = new List<Mapa>();
-                return mapas;
+                throw new ApplicationException("Esta noticia nao tem Mapa");
                 
             }
         }
@@ -122,16 +127,13 @@ namespace Newzic.WebService
         [WebMethod]
         public List<VideoWrap> getVideosOfNoticia(Guid idNoticia)
         {
-            IDataCRUD<Noticia> data = new NoticiaData();
-            List<Video> aux = data.fetch(idNoticia).Videos.ToList();
+            IDataCRUD<Video> data = new DataCRUD<Video>();
+            List<Video> aux = (from Video v in data.fetchAll() where v.NoticiaId == idNoticia select v).ToList();
             List<VideoWrap> res = new List<VideoWrap>();
 
             foreach (Video video in aux)
             {
-                //if (video.NoticiaId == idNoticia)
-                //{
                     res.Add(new VideoWrap(video));
-                //}
             }
 
             return res;
@@ -144,10 +146,11 @@ namespace Newzic.WebService
         //
 
         [WebMethod]
-        public void publicar(NoticiaWrap noticia, List<ImagemWrap> imagens, List<VideoWrap> videos, MapaWrap mapa, String token)
+        public void publicar(NoticiaWrap noticia, List<ImagemWrap> imagens, List<VideoWrap> videos, List<MapaWrap> mapas, String token)
         {
-            IDataCRUD<Noticia> data = new NoticiaData();
+            IDataCRUD<Noticia> data = new DataCRUD<Noticia>();
             IWebServiceData web = new WebServiceData();
+
             if(!web.isLoged(token)) throw new ApplicationException("Utilizador desconhecido");
             
             Jornalista jorn = web.getUser(token);
@@ -169,104 +172,128 @@ namespace Newzic.WebService
             foreach (ImagemWrap imag in imagens)
             {
                 Imagem i = new Imagem();
-                i.ImagemId = imag.ImagemId;
                 i.ImageFile = imag.ImageFile;
                 i.NoticiaId = idN;
+                i.Nome = imag.Nome;
+                i.Tipo = imag.Tipo;
                 ntc.Imagems.Add(i);
             }
 
             foreach (VideoWrap vid in videos)
             {
                 Video v = new Video();
-                v.VideoId = vid.VideoId;
                 v.NoticiaId = idN;
                 v.Url = vid.Url;
                 ntc.Videos.Add(v);
             }
 
-            Mapa m = new Mapa();
-            m.MapaId = mapa.MapaId;
-            m.NoticiaId = idN;
-            m.Morada = mapa.Morada;
-            m.Longitude = mapa.Longitude;
-            m.Latitude = mapa.Latitude;
-            ntc.Mapas.Add(m);
+            foreach (MapaWrap mapa in mapas)
+            {
+                Mapa m = new Mapa();
+                m.NoticiaId = idN;
+                m.Morada = mapa.Morada;
+                m.Longitude = mapa.Longitude;
+                m.Latitude = mapa.Latitude;
+                ntc.Mapas.Add(m);
+            }
             
+            data.update(ntc);
             data.Save();
+            data.Dispose();
             //throw new NotImplementedException();
         }
 
         [WebMethod]
-        public void editar(NoticiaWrap noticia, List<ImagemWrap> imagens, List<VideoWrap> videos, MapaWrap mapa, String token)
+        public void editar(NoticiaWrap noticia, List<ImagemWrap> imagens, List<VideoWrap> videos, List<MapaWrap> mapas, String token)
         {
             IDataCRUD<Noticia> data = new NoticiaData();
             IWebServiceData web = new WebServiceData();
             if (!web.isLoged(token)) throw new ApplicationException("Utilizador desconhecido");
 
+            bool teste = (from Noticia nt in data.fetchAll()
+                          where nt.NoticiaId == noticia.NoticiaId && nt.JornalistaId == web.getUser(token).JornalistaId && !nt.Deleted
+                          select nt).Any();
+            if (!teste) throw new ApplicationException("Noticia nao existe ou nao pertence ao utilizador registado");
+
             Jornalista jorn = web.getUser(token);
 
-            Noticia ntc = new Noticia();
-            ntc.NoticiaId = noticia.NoticiaId;
+            Noticia ntc = (from Noticia notc in data.fetchAll() where notc.NoticiaId == noticia.NoticiaId select notc).Single();
+            //ntc.NoticiaId = noticia.NoticiaId;
             ntc.Titulo = noticia.Titulo;
             ntc.Corpo = noticia.Corpo;
-            ntc.Pontuacao = 0;
+            //ntc.Pontuacao = 0;
             ntc.Data = DateTime.Now;
-            ntc.FlagCount = 0;
+            //ntc.FlagCount = 0;
             ntc.Deleted = false;
             ntc.Marked = false;
-            ntc.JornalistaId = jorn.JornalistaId;
+            //ntc.JornalistaId = jorn.JornalistaId;
             ntc.Tags = noticia.Tags;
 
             ntc.Imagems.Clear();
             ntc.Videos.Clear();
-            //ntc.Mapa = null;
+            ntc.Mapas.Clear();
 
-            data.update(ntc);
+            //data.update(ntc);
 
             foreach (ImagemWrap imag in imagens)
             {
                 Imagem i = new Imagem();
-                i.ImagemId = imag.ImagemId;
+                //i.ImagemId = imag.ImagemId;
                 i.ImageFile = imag.ImageFile;
                 i.NoticiaId = ntc.NoticiaId;
+                i.Nome = imag.Nome;
+                i.Tipo = imag.Tipo;
                 ntc.Imagems.Add(i);
             }
 
             foreach (VideoWrap vid in videos)
             {
                 Video v = new Video();
-                v.VideoId = vid.VideoId;
+                //v.VideoId = vid.VideoId;
                 v.NoticiaId = ntc.NoticiaId;
                 v.Url = vid.Url;
                 ntc.Videos.Add(v);
             }
 
-            Mapa m = new Mapa();
-            m.MapaId = mapa.MapaId;
-            m.NoticiaId = ntc.NoticiaId;
-            m.Morada = mapa.Morada;
-            m.Longitude = mapa.Longitude;
-            m.Latitude = mapa.Latitude;
-            ntc.Mapas.Add(m);
-           // ntc.Mapa = m;
+            foreach (MapaWrap mapa in mapas)
+            {
+                Mapa m = new Mapa();
+                m.NoticiaId = ntc.NoticiaId;
+                m.Morada = mapa.Morada;
+                m.Longitude = mapa.Longitude;
+                m.Latitude = mapa.Latitude;
+                ntc.Mapas.Add(m);
+            }
 
+            data.update(ntc);
             data.Save();
+            data.Dispose();
         }
 
         [WebMethod]
         public void votar(Guid idNoticia, String token)
         {
-            IDataCRUD<Noticia> data = new NoticiaData();
+            IDataCRUD<Noticia> data = new DataCRUD<Noticia>();
             IWebServiceData serv = new WebServiceData();
+
+            if (!serv.isLoged(token)) throw new ApplicationException("Utilizador desconhecido");
             Jornalista j = serv.getUser(token);
 
-            Noticia noticia = data.fetch(idNoticia);
-            noticia.votarNoticia(j);
+
+            Noticia noticia = (from Noticia n in data.fetchAll() where n.NoticiaId == idNoticia select n).SingleOrDefault();
+            bool teste = (from v in noticia.VotoNoticias where v.JornalistaId == j.JornalistaId select v).Any();
+
+            if (teste) throw new ApplicationException("Este utilizador já votou nesta noticia");
+            if(noticia==null) throw new ApplicationException("A noticia nao existe");
+
+            VotoNoticia voto = new VotoNoticia();
+            voto.JornalistaId = j.JornalistaId;
+            voto.NoticiaId = noticia.NoticiaId;
+
+            noticia.VotoNoticias.Add(voto);
+            data.update(noticia);
             data.Save();
 
-            //if(!serv.isLoged(token)) throw new ApplicationException("Utilizador desconhecido");
-            //Guid idJornalista = serv.getUser(token);
-            //data.votarNoticia(idJornalista,idNoticia);
         }
 
 
@@ -279,17 +306,34 @@ namespace Newzic.WebService
         public String login(String email, String password)
         {
             IWebServiceData data = new WebServiceData();
-            String token = data.login(email, password);
-            data.Save();
-            return token;
+            try
+            {
+                String token = data.login(email, password);
+                data.Save();
+                return token;
+            }
+            catch (Exception e)
+            {
+
+                throw new ApplicationException(e.ToString());
+            }
         }
 
         [WebMethod]
         public void logout(String token)
         {
-            IWebServiceData data = new WebServiceData();
-            data.logout(token);
-            data.Save();
+            try
+            {
+                IWebServiceData data = new WebServiceData();
+                data.logout(token);
+                data.Save();
+            }
+            catch (Exception e)
+            {
+                
+                throw new ApplicationException(e.ToString());
+            }
+
         }
     }
 }
