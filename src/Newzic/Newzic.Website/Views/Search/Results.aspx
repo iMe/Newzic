@@ -82,9 +82,11 @@
             <td>
                 <b>
                 <%= Html.Encode(item.Titulo) %> </b><br>
+                <%if (!Request.Browser.IsMobileDevice) {%>
                 <small>
                 <%= Html.Encode(item.Corpo)%>
                 </small>
+                <% }%>
             </td>
             <td>
                 <b>
