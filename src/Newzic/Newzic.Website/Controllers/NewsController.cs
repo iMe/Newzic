@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Linq;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -87,6 +90,7 @@ namespace Newzic.Website.Controllers
             //var arrayPontos = model.noticia.Mapas.Select(m => "{ point: new GLatLng(" + m.Latitude + "," + m.Longitude + "), text: '" + m.Morada +"' }").ToArray();
 
             //ViewData["MapPoints"] = "window.MapPoints = [" + string.Join(",", arrayPontos) + "];";
+
 
             return View("Show",model);
         }
@@ -195,6 +199,13 @@ namespace Newzic.Website.Controllers
             return new FileContentResult(res, "image/"+tipo);
         }
 
+        public ActionResult getImagePreview(String id)
+        {
+            byte[] res = System.IO.File.ReadAllBytes(@"C:\Temp\" + id);
+            String[] s = id.Split('.');
+            return new FileContentResult(res, "image/" + s[1]);
+        }
+
         public NewsDetailsModel buildModel(string id)
         {
             NewsDetailsModel model = new NewsDetailsModel();
@@ -217,6 +228,35 @@ namespace Newzic.Website.Controllers
             }
 
             return model;
+        }
+
+        public ActionResult Preview(Noticia noticia)
+        {
+            IDataCRUD<Noticia> data = new DataCRUD<Noticia>();
+            Noticia n = (from nn in data.fetchAll() where nn.NoticiaId.ToString() == "f8cdb59d-ef33-4dbe-b6ec-1ca052463673" select nn).Single();
+
+            noticia = n;
+
+            //if (noticia == null) { return RedirectToAction("Index", "Home"); }
+            
+            foreach (Imagem imagem in noticia.Imagems)
+            {
+                TypeConverter tc = TypeDescriptor.GetConverter(typeof(Bitmap));
+                Bitmap img = (Bitmap)tc.ConvertFrom(imagem.ImageFile.ToArray());
+
+                img.Save(@"C:\Temp\" + imagem.Nome+"."+imagem.Tipo);
+            }
+
+
+            var array = noticia.Imagems.Select(i => "\"" + i.Nome + "." +i.Tipo +"\"").ToArray();
+            ViewData["PicIds"] = "window.picIds = [" + string.Join(",", array) + "];";
+
+            if(noticia.Mapas.Count>0){
+                var arrayPontos = noticia.Mapas.Select(m => "{ point: new GLatLng(" + m.Latitude + "," + m.Longitude + "), text: '" + m.Morada + "' }").ToArray();
+                ViewData["MapPoints"] = "window.MapPoints = [" + string.Join(",", arrayPontos) + "];";
+            }
+
+            return View("Preview", noticia);
         }
 
 
