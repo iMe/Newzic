@@ -44,7 +44,15 @@
     <legend>Noticias</legend>
         <%foreach (var n in Model.noticias) { %>
             <p>
+            <% if(Request.IsAuthenticated) {
+               if (User.Identity.Name.Equals(Model.Email)){
+               %>   
             <%= Html.ActionLink("Editar", "Edit","News", new { id=n.NoticiaId },null) %> |
+            <% } %>
+            <%else {%>
+            Editar |
+            <% }
+               } %>
                 <%= Html.ActionLink("Detalhes", "Details", "News",new { id=n.NoticiaId },null)%> |
             <%=Html.Encode(n.Titulo) %>
             </p>
