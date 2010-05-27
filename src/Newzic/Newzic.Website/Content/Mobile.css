@@ -369,4 +369,19 @@ div
 {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: xx-large;
+	color: #696969;
+}
+
+div.editor-field
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: xx-large;
+	color: #696969;
+}
+
+select
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: xx-large;
+	color: #696969;
 }
