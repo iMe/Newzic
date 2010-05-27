@@ -93,6 +93,8 @@ namespace Newzic.Website.Controllers
 
         public ActionResult Comentario(NewsDetailsModel model)
         {
+            if (model.comentario == null) { return RedirectToAction("Index", "Home"); }
+
             if (!Request.IsAuthenticated) return View("AcessoNegado");
             string email = User.Identity.Name;
             
@@ -201,7 +203,6 @@ namespace Newzic.Website.Controllers
 
             model.comments = (from Comentario c in dbc.fetchAll() where c.NoticiaId.ToString().Equals(id) select c).ToList();
             model.noticia = (from Noticia n in db.fetchAll() where n.NoticiaId.ToString().Equals(id) select n).Single();
-            //model.comments = null;
             model.comentario = null;
             model.guid = model.noticia.NoticiaId.ToString();
 
