@@ -14,5 +14,6 @@ namespace Newzic.Website.Models
         public List<Comentario> comments { get; set; }
         public string comentario { get; set; }
         public string guid { get; set; }
+        public bool hasMap { get; set; }
     }
 }

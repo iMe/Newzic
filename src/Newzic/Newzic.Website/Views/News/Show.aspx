@@ -6,11 +6,14 @@
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="scripts" runat="server">
+    
+    <%if (Model.hasMap)
+          {%>
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAPDUET0Qt7p2VcSk6JNU1sBSM5jMcmVqUpI7aqV44cW1cEECiThQYkcZUPRJn9vy_TWxWvuLoOfSFBw"
         type="text/javascript"></script>
     <script type="text/javascript"><%= ViewData["MapPoints"] %></script>
     <script src="../../Scripts/viewmap.js" type="text/javascript"></script>
-    
+    <% }%>
 
     <script type="text/javascript"><%= ViewData["PicIds"] %></script>
     <script type="text/javascript" src="../../Scripts/pics.js"></script>
@@ -20,23 +23,27 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2><%=Html.Encode(Model.noticia.Titulo) %></h2> 
-    <% //AdminController ad = new AdminController();
+    <h2><%=Html.Encode(Model.noticia.Titulo) %></h2>
+    <%
     if (Request.IsAuthenticated){
        if (AdminController.getRole(User.Identity.Name).Equals("Administrador") || (AdminController.getRole(User.Identity.Name).Equals("Moderador") && (AdminController.getRole(Model.noticia.JornalistaId).Equals("Jornalista")))) {
-    %>
-    <%:Html.ActionLink("Apagar Noticia", "ApagarNoticia", "News", new { id = Model.noticia.NoticiaId, user = Page.User.Identity.Name}, null)%> | 
-    <%:Html.ActionLink("Marcar Noticia", "MarcarNoticia", "Mod", new { id = Model.noticia.NoticiaId}, null)%> 
-        <% if (Model.noticia.Jornalista.Email.Equals(User.Identity.Name)) {%>
-        | <%:Html.ActionLink("Editar Noticia", "Edit", "News", new { id = Model.noticia.NoticiaId}, null)%>
-    <% }}%>
-    <%else
-       {
-           if(Model.noticia.Jornalista.Email.Equals(User.Identity.Name)){ %>
-           <%:Html.ActionLink("Apagar Noticia", "ApagarNoticia", "News", new { id = Model.noticia.NoticiaId, user = Page.User.Identity.Name }, null)%>
-           <%:Html.ActionLink("Editar Noticia", "Edit", "News", new { id = Model.noticia.NoticiaId}, null)%>
-       <% }
-       }
+        %>
+    
+            <%:Html.ActionLink("Apagar Noticia", "ApagarNoticia", "News", new { id = Model.noticia.NoticiaId, user = Page.User.Identity.Name}, null)%>  
+            <%if(!Model.noticia.Marked) {%>
+                | <%:Html.ActionLink("Marcar Noticia", "MarcarNoticia", "Mod", new { id = Model.noticia.NoticiaId}, null)%> 
+            <% }%>
+            <% if (Model.noticia.Jornalista.Email.Equals(User.Identity.Name)) {%>
+                | <%:Html.ActionLink("Editar Noticia", "Edit", "News", new { id = Model.noticia.NoticiaId}, null)%>
+            <% }%>
+        <% }%>
+        <%else
+            {
+                if(Model.noticia.Jornalista.Email.Equals(User.Identity.Name)){ %>
+                <%:Html.ActionLink("Apagar Noticia", "ApagarNoticia", "News", new { id = Model.noticia.NoticiaId, user = Page.User.Identity.Name }, null)%> 
+                | <%:Html.ActionLink("Editar Noticia", "Edit", "News", new { id = Model.noticia.NoticiaId}, null)%>
+                <% }
+            }
     }%>
 
     <%if (Model.noticia.Marked) {%>
@@ -113,8 +120,8 @@
         </fieldset>
         <%}%>
 
-        <%--<%if (ViewData["MapPoints"]=="window.MapPoints")
-          {%>--%>
+        <%if (Model.hasMap)
+          {%>
         <fieldset>
         <legend>Mapa</legend>
         <center>
@@ -124,7 +131,7 @@
 
         </center>
         </fieldset>
-        <%--<%}%>--%>
+        <%}%>
 
     </fieldset>
     <center>
@@ -163,10 +170,10 @@
 
     <% if (Request.IsAuthenticated) {%>
     <fieldset>
-    <%using (Html.BeginForm("Comentario", "News"))
+    <%--<%using (Html.BeginForm("Comentario", "News"))
     {
     
-    }%>
+    }%>--%>
     <%using (Html.BeginForm("Comentario", "News")) { %>
         <legend>Comentar</legend>
         <div class="editor-field">

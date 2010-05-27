@@ -34,8 +34,6 @@
                %>       
         <p>
             <%:Html.ActionLink("Editar", "VerProprioPerfil", "Account", new { email = User.Identity.Name}, null)%>
-        <%--<%:Html.ActionLink("Editar", "VerProprioPerfil", "Account", new { email = User.Identity.Name}, null)%>--%>
-        <%:Html.ActionLink("Editar", "VerProprioPerfil", "Account", new { email = Model.Email}, null)%>
         </p>
         <% }
            }%>
