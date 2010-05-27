@@ -117,6 +117,7 @@ namespace Newzic.Website.Controllers
             Comentario c = new Comentario();
             c.Texto = res;
             c.JornalistaId = jorn.JornalistaId;
+            c.Data = DateTime.Now;
             //String s = ViewData["noticiaid"].ToString();
             c.NoticiaId = new Guid(model.guid);//model.noticia.NoticiaId;
 
@@ -212,7 +213,8 @@ namespace Newzic.Website.Controllers
             IDataCRUD<Noticia> db = new DataCRUD<Noticia>();
             IDataCRUD<Comentario> dbc =new DataCRUD<Comentario>();
 
-            model.comments = (from Comentario c in dbc.fetchAll() where c.NoticiaId.ToString().Equals(id) select c).ToList();
+            model.comments = (from Comentario c in dbc.fetchAll() where c.NoticiaId.ToString().Equals(id) orderby c.Data select c).ToList();
+            //model.comments=model.comments.OrderBy(c => c.Data);
             model.noticia = (from Noticia n in db.fetchAll() where n.NoticiaId.ToString().Equals(id) select n).Single();
             model.comentario = null;
             model.guid = model.noticia.NoticiaId.ToString();
