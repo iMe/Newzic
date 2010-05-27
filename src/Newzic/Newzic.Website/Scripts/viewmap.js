@@ -12,7 +12,6 @@ function createMarker(point, text) {
     GEvent.addListener(marker, 'click', function () {
         marker.openInfoWindow(markerHtml(markers.length, m.text))
     });
-    GEvent.addListener(marker, 'drag', updateLine);
     return m;
 }
 

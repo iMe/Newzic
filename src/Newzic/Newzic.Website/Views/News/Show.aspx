@@ -170,10 +170,10 @@
 
     <% if (Request.IsAuthenticated) {%>
     <fieldset>
-    <%using (Html.BeginForm("Comentario", "News"))
+    <%--<%using (Html.BeginForm("Comentario", "News"))
     {
     
-    }%>
+    }%>--%>
     <%using (Html.BeginForm("Comentario", "News")) { %>
         <legend>Comentar</legend>
         <div class="editor-field">
