@@ -96,9 +96,12 @@
         </fieldset>
         <%}%>
 
+
         <%if (Model.noticia.Videos.Count!=0) {%>
         <fieldset>
             <legend>Videos</legend>
+            <%if (!Request.Browser.IsMobileDevice) {%>
+
             <table border="0" width="100%">
             <%int i=1;%>
             <%foreach (var c in Model.noticia.Videos) {%>
@@ -124,6 +127,15 @@
 
             <%if(i!=3) {%> </tr> <%}%>
             </table>
+            <%}%>
+
+          <%else{ int j=1;%>
+            <%foreach (var c in Model.noticia.Videos) {%>
+                <a href="<%=Html.Encode(c.Url)%>">Video <%=Html.Encode(j)%></a>
+            <%} %>
+            <%} %>
+
+
         </fieldset>
         <%}%>
 

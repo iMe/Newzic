@@ -86,7 +86,7 @@ namespace Newzic.Website.Controllers
                 {
                     body.Append(noticias[i].Corpo.Substring(0, noticias[i].Corpo.Length));
                 }
-                body.Append("...");
+                body.Append("(...)");
                 var item = new SyndicationItem(noticias[i].Titulo,
                                                           body.ToString(),
                                                            new Uri("http://localhost:49174/News/Details/" + noticias[i].NoticiaId),
