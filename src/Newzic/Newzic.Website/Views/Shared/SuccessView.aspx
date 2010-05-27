@@ -6,6 +6,6 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Operação efectuada com sucesso</h2>
+    <h2>Operação efectuada com sucesso.</h2>
 
 </asp:Content>

@@ -99,6 +99,7 @@
   <ItemGroup>
     <Content Include="Content\Mobile.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\picsprev.js" />
     <Content Include="Scripts\viewmap.js" />
     <Content Include="Scripts\jLinq-2.2.1.js" />
     <Content Include="Scripts\jLinq-2.2.1.min.js" />
@@ -145,6 +146,7 @@
     <Content Include="Views\News\Create.aspx" />
     <Content Include="Views\News\Edit.aspx" />
     <Content Include="Views\News\Index.aspx" />
+    <Content Include="Views\News\Preview.aspx" />
     <Content Include="Views\News\Show.aspx" />
     <Content Include="Views\Perfil\Index.aspx" />
     <Content Include="Views\Search\Search.aspx" />
