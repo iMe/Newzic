@@ -23,7 +23,7 @@ namespace Newzic.Website.Controllers
             {
                 if (c.Corpo.Length > 200)
                 {
-                    c.Corpo = c.Corpo.Substring(0, 200);
+                    c.Corpo = c.Corpo.Substring(0, 199);
                     c.Corpo = c.Corpo + "(...)";
 
                 }
