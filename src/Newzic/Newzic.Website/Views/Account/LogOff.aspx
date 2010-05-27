@@ -6,6 +6,6 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>LogOff</h2>
+    <h2>Obrigado pela sua visita.</h2>
 
 </asp:Content>

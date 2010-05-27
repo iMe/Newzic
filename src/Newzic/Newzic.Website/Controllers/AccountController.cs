@@ -20,6 +20,8 @@ namespace Newzic.Website.Controllers
     {
         
         private IDataCRUD<Jornalista> jornList= new DataCRUD<Jornalista>();
+        private readonly IDataCRUD<Moderador> modList = new DataCRUD<Moderador>();
+        private readonly IDataCRUD<Administrador> adminList = new DataCRUD<Administrador>();
         //private AccountsRepo acRepo = new AccountsRepo();
 
         private bool autenticado = false;
@@ -28,6 +30,52 @@ namespace Newzic.Website.Controllers
         {
             return autenticado;
         }
+
+
+
+        public bool UserIsInRole(string role)
+        {
+            string email = User.Identity.Name;
+            if (role == "Admin")
+            {
+                try
+                {
+                    var admins = adminList.fetchAll();
+                    var admin = (from a in admins where a.Jornalista.Email.Equals(email) select a).Single();
+                    if (admin.Jornalista.Email == email)
+                    {
+                        return true;
+                    }
+                }
+                catch (Exception e)
+                {
+
+                    return false;
+                }
+            }
+
+            if (role == "Mod")
+            {
+                try
+                {
+                    var mods = modList.fetchAll();
+                    var mod = (from m in mods where m.Jornalista.Email == email select m).Single();
+                    if (mod.Jornalista.Email == email)
+                    {
+                        return true;
+                    }
+                }
+                catch (Exception e)
+                {
+
+                    return false;
+                }
+            }
+
+            return false;
+
+        }
+
 
         public string iniciarSessao(string email, string password)
         {
@@ -125,6 +173,24 @@ namespace Newzic.Website.Controllers
             Jornalista j =(from Jornalista jr in dbj.fetchAll() where jr.Email.Equals(email) select jr).SingleOrDefault();
             //var j = getJornalistaByEmail(email);
             var perfil = new RegisterModel();
+            perfil.id = j.JornalistaId.ToString();
+            if (UserIsInRole("Admin"))
+            {
+                perfil.viewerRole = "Admin";
+            }
+            else
+            {
+                if (UserIsInRole("Mod"))
+                {
+                    perfil.viewerRole = "Mod";
+                }
+                else
+                {
+                    perfil.viewerRole = "Jorn";
+                }
+            }
+        
+            perfil.profileRole = getRole(j.JornalistaId);
 
             if (j != null)
             {

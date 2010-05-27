@@ -1,21 +1,21 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Newzic.Website.Models.SearchQueryModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Pesquisa
+	Pesquisar noticias
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <form id="form1" runat="server">
 
-    <h2>Pesquisa</h2>
+    <h2>Pesquisar</h2>
          <%using (Html.BeginForm("Results","Search"))
         {%>
         <% } %>
         <fieldset>
                     <%using (Html.BeginForm("Results","Search"))
         {%>
-            <legend>Fassa a sua pesquisa</legend>
+            <legend>Faça a sua pesquisa</legend>
             <div class="editor-label">
                 <%= Html.Label("Pesquisa") %>
             </div>
@@ -30,7 +30,7 @@
                 <%=Html.DropDownList("typeSelected", Model.type)%>
             </div>
             <p>
-                <input type="submit" value="Search" />
+                <input type="submit" value="Procurar" />
             </p>
     <% } %>
 
@@ -110,12 +110,12 @@
 
     </table>
 
-    <p>
-        <%= Html.ActionLink("Create New", "Create") %>
-    </p>
+    <<%--p>
+        <%= Html.ActionLink("Criar nova", "Create") %>
+    </p>--%>
 
     <div>
-        <%=Html.ActionLink("Back to List", "Index") %>
+        <%=Html.ActionLink("Voltar", "Index", "Home")%>
     </div>
 
     </form>
