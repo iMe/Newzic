@@ -53,9 +53,6 @@
             Editar |
             <% }
                } %>
-<%--            <%else {%>
-            Editar |
-            <% } %>--%>
                 <%= Html.ActionLink("Detalhes", "Details", "News",new { id=n.NoticiaId },null)%> |
             <%=Html.Encode(n.Titulo) %>
             </p>

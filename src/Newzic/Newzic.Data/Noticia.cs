@@ -53,13 +53,12 @@ namespace Newzic.Core
 
         public void addTag(String tag)
         {
-            if (Tags.Equals("")) Tags = ": ";
-            Enumerable.Concat(this.Tags, tag + " ");
+            Tags = this.Tags+ tag + " ";
         }
 
         public void removeTag(String tag)
         {
-            this.Tags.Replace(tag, "").Replace("  ", " ");
+            Tags =this.Tags.Replace(tag, "").Replace("  ", " ").Trim();
         }
 
         public void calcRank()
