@@ -5,7 +5,7 @@
 	Show
 </asp:Content>
 
-<asp:Content ID="Content4" ContentPlaceHolderID="scripts" runat="server">
+<%--<asp:Content ID="Content4" ContentPlaceHolderID="scripts" runat="server">
     
     <%if (Model.hasMap)
           {%>
@@ -15,9 +15,11 @@
     <script src="../../Scripts/viewmap.js" type="text/javascript"></script>
     <% }%>
 
+    <%if (Model.noticia.Imagems.Count!=0) {%>
     <script type="text/javascript"><%= ViewData["PicIds"] %></script>
     <script type="text/javascript" src="../../Scripts/pics.js"></script>
-</asp:Content>
+    <% }%>
+</asp:Content>--%>
 
 
 
@@ -61,8 +63,13 @@
             <%=Html.Encode(Model.noticia.Jornalista.Nome) %>
             <%:Html.ActionLink("+", "VerPerfil", "Account", new { email = Model.noticia.Jornalista.Email}, null)%>
         </p>
-
+        <%if (Request.IsAuthenticated){ %>
+        <p align="right">
+            <%:Html.ActionLink("Reportar Noticia", "VerPerfil", "Account", new { email = Model.noticia.Jornalista.Email}, null)%>
+        </p>
+        <% }%>
         <center>
+        
         <table style="width:30%;">
         <tr></tr>
         <tr><td>
@@ -190,4 +197,20 @@
 
     </fieldset>
 
+</asp:Content>
+
+<asp:Content ID="Content4" ContentPlaceHolderID="scripts" runat="server">
+    
+    <%if (Model.hasMap)
+          {%>
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAPDUET0Qt7p2VcSk6JNU1sBSM5jMcmVqUpI7aqV44cW1cEECiThQYkcZUPRJn9vy_TWxWvuLoOfSFBw"
+        type="text/javascript"></script>
+    <script type="text/javascript"><%= ViewData["MapPoints"] %></script>
+    <script src="../../Scripts/viewmap.js" type="text/javascript"></script>
+    <% }%>
+
+    <%if (Model.noticia.Imagems.Count!=0) {%>
+    <script type="text/javascript"><%= ViewData["PicIds"] %></script>
+    <script type="text/javascript" src="../../Scripts/pics.js"></script>
+    <% }%>
 </asp:Content>

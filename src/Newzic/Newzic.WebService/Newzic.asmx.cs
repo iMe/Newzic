@@ -71,7 +71,8 @@ namespace Newzic.WebService
         public NoticiaWrap getNoticia(Guid idNoticia)
         {
             IDataCRUD<Noticia> data = new NoticiaData();
-            NoticiaWrap res = new NoticiaWrap(data.fetch(idNoticia));
+            Noticia n = (from Noticia nn in data.fetchAll() where nn.NoticiaId == idNoticia select nn).SingleOrDefault();
+            NoticiaWrap res = new NoticiaWrap(n);
             
             return res;
         }
@@ -82,7 +83,8 @@ namespace Newzic.WebService
         public List<ImagemWrap> getImagensOfNoticia(Guid idNoticia)
         {
             IDataCRUD<Noticia> data = new NoticiaData();
-            List<Imagem> aux = data.fetch(idNoticia).Imagems.ToList();
+
+            List<Imagem> aux = (from Imagem i in data.fetchAll() where i.NoticiaId == idNoticia select i).ToList();
             List<ImagemWrap> res = new List<ImagemWrap>();
             foreach (Imagem elem in aux)
             {
@@ -98,21 +100,24 @@ namespace Newzic.WebService
 
 
         [WebMethod]
-        public List<Mapa> getMapOfNoticia(Guid idNoticia)
+        public List<MapaWrap> getMapOfNoticia(Guid idNoticia)
         {
-            NoticiaData data = new NoticiaData();
-            //Mapa aux = data.fetch(idNoticia).Mapa;
-            //MapaWrap res = new MapaWrap(aux);
-            var listaNoticias = data.fetchAll();
+            IDataCRUD<Mapa> data = new DataCRUD<Mapa>();
+            List<MapaWrap> ret = new List<MapaWrap>();
+
             try
             {
-                var notica = (from n in listaNoticias where n.NoticiaId.ToString() == idNoticia.ToString() select n).Single();
-                return notica.Mapas.ToList();
+                var mapas = (from m in data.fetchAll() where m.NoticiaId == idNoticia select m).ToList();
+                foreach (Mapa mapa in mapas)
+                {
+                    ret.Add(new MapaWrap(mapa));
+                }
+
+                return ret;
             }
             catch (Exception)
             {
-                List<Mapa> mapas = new List<Mapa>();
-                return mapas;
+                throw new ApplicationException("Esta noticia nao tem Mapa");
                 
             }
         }
@@ -122,16 +127,13 @@ namespace Newzic.WebService
         [WebMethod]
         public List<VideoWrap> getVideosOfNoticia(Guid idNoticia)
         {
-            IDataCRUD<Noticia> data = new NoticiaData();
-            List<Video> aux = data.fetch(idNoticia).Videos.ToList();
+            IDataCRUD<Video> data = new DataCRUD<Video>();
+            List<Video> aux = (from Video v in data.fetchAll() where v.NoticiaId == idNoticia select v).ToList();
             List<VideoWrap> res = new List<VideoWrap>();
 
             foreach (Video video in aux)
             {
-                //if (video.NoticiaId == idNoticia)
-                //{
                     res.Add(new VideoWrap(video));
-                //}
             }
 
             return res;
