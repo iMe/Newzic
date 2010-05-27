@@ -422,6 +422,18 @@ namespace Newzic.Website.Controllers
             }
         }
 
-        
+
+        public ActionResult ReportNoticia(string id)
+        {
+            Guid gid = new Guid(id);
+            var noticia = repNoticias.fetchAll().Single(n => n.NoticiaId == gid);
+
+            noticia.flagNoticia();
+            repNoticias.update(noticia);
+            repNoticias.Save();
+            var model = buildModel(id);
+            return View("Show", model);
+            
+        }
     }
 }
