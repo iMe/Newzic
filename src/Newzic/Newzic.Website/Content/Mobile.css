@@ -5,12 +5,12 @@ to use a different color start by replacing all instances of
 ----------------------------------------------------------*/
 body
 {
-    background-color: #5c87b2;
-    font-size: .75em;
-    font-family: Verdana, Helvetica, Sans-Serif;
-    margin: 0;
-    padding: 0;
-    color: #696969;
+	background-color: #5c87b2;
+	font-size: xx-large;
+	font-family: Verdana, Helvetica, Sans-Serif;
+	margin: 0;
+	padding: 0;
+	color: #696969;
 }
 
 a:link
@@ -42,9 +42,9 @@ p, ul
 ----------------------------------------------------------*/
 h1, h2, h3, h4, h5, h6
 {
-    font-size: 1.5em;
-    color: #000;
-    font-family: Arial, Helvetica, sans-serif;
+	font-size: xx-large;
+	color: #000;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 h1
@@ -55,19 +55,20 @@ h1
 }
 h2
 {
-    padding: 0 0 10px 0;
+	padding: 0 0 10px 0;
+	font-size: xx-large;
 }
 h3
 {
-    font-size: 1.2em;
+    font-size: xx-large;
 }
 h4
 {
-    font-size: 1.1em;
+    font-size: xx-large;
 }
 h5, h6
 {
-    font-size: 1em;
+    font-size: xx-large;
 }
 
 /* this rule styles <h2> tags that are the 
@@ -106,7 +107,7 @@ page width. Or, you can specify an exact pixel width. */
     border: none;
     line-height: 2em;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 32px !important;
+    font-size: 32px;
 }
 
 #main

@@ -96,7 +96,9 @@
     <Compile Include="Rss\RssActionResult.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Mobile.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\viewmap.js" />
     <Content Include="Scripts\jLinq-2.2.1.js" />
     <Content Include="Scripts\jLinq-2.2.1.min.js" />
     <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />

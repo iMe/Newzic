@@ -7,36 +7,43 @@
 
 <asp:Content ID="Content4" ContentPlaceHolderID="scripts" runat="server">
     
-<%--    <script type="text/javascript" src="../../Scripts/pics.js"></script>
-     <%
-        var array = Model.noticia.Imagems.Select(i => "\"" +i.ImagemId.ToString()+"\"").ToArray();
-        var s = "var imageIds = {" + string.Join(",", array) + "};"; %>
-    <script type="text/javascript">
-    <%= s %>
-    </script>--%>
+    <%if (Model.hasMap)
+          {%>
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAPDUET0Qt7p2VcSk6JNU1sBSM5jMcmVqUpI7aqV44cW1cEECiThQYkcZUPRJn9vy_TWxWvuLoOfSFBw"
+        type="text/javascript"></script>
+    <script type="text/javascript"><%= ViewData["MapPoints"] %></script>
+    <script src="../../Scripts/viewmap.js" type="text/javascript"></script>
+    <% }%>
+
+    <script type="text/javascript"><%= ViewData["PicIds"] %></script>
+    <script type="text/javascript" src="../../Scripts/pics.js"></script>
 </asp:Content>
 
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2><%=Html.Encode(Model.noticia.Titulo) %></h2> 
-    <% //AdminController ad = new AdminController();
+    <h2><%=Html.Encode(Model.noticia.Titulo) %></h2>
+    <%
     if (Request.IsAuthenticated){
        if (AdminController.getRole(User.Identity.Name).Equals("Administrador") || (AdminController.getRole(User.Identity.Name).Equals("Moderador") && (AdminController.getRole(Model.noticia.JornalistaId).Equals("Jornalista")))) {
-    %>
-    <%:Html.ActionLink("Apagar Noticia", "ApagarNoticia", "News", new { id = Model.noticia.NoticiaId, user = Page.User.Identity.Name}, null)%> | 
-    <%:Html.ActionLink("Marcar Noticia", "MarcarNoticia", "Mod", new { id = Model.noticia.NoticiaId}, null)%> 
-        <% if (Model.noticia.Jornalista.Email.Equals(User.Identity.Name)) {%>
-        | <%:Html.ActionLink("Editar Noticia", "Edit", "News", new { id = Model.noticia.NoticiaId}, null)%>
-    <% }}%>
-    <%else
-       {
-           if(Model.noticia.Jornalista.Email.Equals(User.Identity.Name)){ %>
-           <%:Html.ActionLink("Apagar Noticia", "ApagarNoticia", "News", new { id = Model.noticia.NoticiaId, user = Page.User.Identity.Name }, null)%>
-           <%:Html.ActionLink("Editar Noticia", "Edit", "News", new { id = Model.noticia.NoticiaId}, null)%>
-       <% }
-       }
+        %>
+    
+            <%:Html.ActionLink("Apagar Noticia", "ApagarNoticia", "News", new { id = Model.noticia.NoticiaId, user = Page.User.Identity.Name}, null)%>  
+            <%if(!Model.noticia.Marked) {%>
+                | <%:Html.ActionLink("Marcar Noticia", "MarcarNoticia", "Mod", new { id = Model.noticia.NoticiaId}, null)%> 
+            <% }%>
+            <% if (Model.noticia.Jornalista.Email.Equals(User.Identity.Name)) {%>
+                | <%:Html.ActionLink("Editar Noticia", "Edit", "News", new { id = Model.noticia.NoticiaId}, null)%>
+            <% }%>
+        <% }%>
+        <%else
+            {
+                if(Model.noticia.Jornalista.Email.Equals(User.Identity.Name)){ %>
+                <%:Html.ActionLink("Apagar Noticia", "ApagarNoticia", "News", new { id = Model.noticia.NoticiaId, user = Page.User.Identity.Name }, null)%> 
+                | <%:Html.ActionLink("Editar Noticia", "Edit", "News", new { id = Model.noticia.NoticiaId}, null)%>
+                <% }
+            }
     }%>
 
     <%if (Model.noticia.Marked) {%>
@@ -67,11 +74,20 @@
         </table>
         </center>
 
+        <%if (Model.noticia.Imagems.Count!=0) {%>
         <fieldset>
         <legend>Imagens</legend>
         <center>
+        <div id="pics">
+            <img class="newspic" id="current-pic" src="#" alt="pic" />
+            <br />
+            <a id="prev-pic" class="arrow" href="#">prev</a> 
+            <big class="arrow">∙</big>
+            <a id="next-pic" class="arrow" href="#">next</a>
+        </div>
         </center>
         </fieldset>
+        <%}%>
 
         <%if (Model.noticia.Videos.Count!=0) {%>
         <fieldset>
@@ -104,11 +120,18 @@
         </fieldset>
         <%}%>
 
+        <%if (Model.hasMap)
+          {%>
         <fieldset>
         <legend>Mapa</legend>
         <center>
+
+        <div id="map">
+        </div>
+
         </center>
         </fieldset>
+        <%}%>
 
     </fieldset>
     <center>
@@ -147,10 +170,10 @@
 
     <% if (Request.IsAuthenticated) {%>
     <fieldset>
-    <%using (Html.BeginForm("Comentario", "News"))
+    <%--<%using (Html.BeginForm("Comentario", "News"))
     {
     
-    }%>
+    }%>--%>
     <%using (Html.BeginForm("Comentario", "News")) { %>
         <legend>Comentar</legend>
         <div class="editor-field">

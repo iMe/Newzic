@@ -6,13 +6,11 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Edit</h2>
+    <h2>Editar uma notícia</h2>
 
     <% using (Html.BeginForm()) {%>
 
-        <fieldset>
-            <legend>Fields</legend>
-            
+        <fieldset> 
             <div class="editor-label">
                 <%= Html.LabelFor(model => model.Titulo) %>
             </div>
@@ -25,7 +23,7 @@
                 <%= Html.LabelFor(model => model.Corpo) %>
             </div>
             <div class="editor-field">
-                <%= Html.TextBoxFor(model => model.Corpo) %>
+                <%= Html.TextAreaFor (model => model.Corpo, 10, 30, null) %>
                 <%= Html.ValidationMessageFor(model => model.Corpo) %>
             </div>
             <div class="editor-label">
