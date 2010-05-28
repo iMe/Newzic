@@ -373,19 +373,34 @@ namespace Newzic.Website.Controllers
             if (Ban.selectedMes > 12 || Ban.selectedMes < 1)
             {
                 ModelState.AddModelError("", "A data introduzida é inválida. Por favor corrija e tente novamente.");
-                return View();
+                ModBanModel banModel = new ModBanModel(Ban.Email);
+                banModel.reason = Ban.reason;
+                return View(banModel);
             }
 
             if ((Ban.selectedMes ==  2) && (Ban.selectedDia>29))
             {
                 ModelState.AddModelError("", "A data introduzida é inválida. Por favor corrija e tente novamente.");
-                return View();
+                ModBanModel banModel = new ModBanModel(Ban.Email);
+                banModel.reason = Ban.reason;
+                return View(banModel);
+            }
+
+            DateTime data = new DateTime(Ban.selectedAno, Ban.selectedMes, Ban.selectedDia);
+            if (data < DateTime.Now && Ban.banType ==2)
+            {
+                ModelState.AddModelError("", "A data introduzida é inválida. Por favor corrija e tente novamente.");
+                ModBanModel banModel = new ModBanModel(Ban.Email);
+                banModel.reason = Ban.reason;
+                return View(banModel);
             }
 
             if (Ban.selectedDia > 31 || (Ban.selectedDia < 1))
             {
                 ModelState.AddModelError("", "A data introduzida é inválida. Por favor corrija e tente novamente.");
-                return View();
+                ModBanModel banModel = new ModBanModel(Ban.Email);
+                banModel.reason = Ban.reason;
+                return View(banModel);
             }
             //if (ModelState.IsValid)
             //{
@@ -454,7 +469,7 @@ namespace Newzic.Website.Controllers
         {
             if (!UserIsInRole("Admin"))
                 return View("AcessoNegado");
-            var mods = modList.fetchAll().Where(n => n.Jornalista.Administrador == null && n.Jornalista.Banidos.Count == 0).ToList();
+            var mods = modList.fetchAll().Where(n => n.Jornalista.Administrador == null).ToList();
             GerirModsModel model = new GerirModsModel();
             model.Moderadores = mods;
             model.searchQuery = "";
@@ -641,7 +656,17 @@ namespace Newzic.Website.Controllers
             if ((Ban.selectedMes == 2) && (Ban.selectedDia > 29))
             {
                 ModelState.AddModelError("", "A data introduzida é inválida. Por favor corrija e tente novamente.");
-                return View();
+                ModBanModel banModel = new ModBanModel(Ban.Email);
+                banModel.reason = Ban.reason;
+                return View(banModel);
+            }
+            DateTime data = new DateTime(Ban.selectedAno, Ban.selectedMes, Ban.selectedDia);
+            if (data < DateTime.Now && Ban.banType ==2)
+            {
+                ModelState.AddModelError("", "A data introduzida é inválida. Por favor corrija e tente novamente.");
+                ModBanModel banModel = new ModBanModel(Ban.Email);
+                banModel.reason = Ban.reason;
+                return View(banModel);
             }
 
             

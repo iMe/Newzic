@@ -73,6 +73,10 @@ namespace Newzic.Core
             try
             {
                 var a = this.Banidos.Single(n => n.JornalistaId == this.JornalistaId);
+                if (a.Permanente == false && a.DataFim < DateTime.Now)
+                {
+                    return false;
+                }
                 return true;
             }
             catch (InvalidOperationException)
