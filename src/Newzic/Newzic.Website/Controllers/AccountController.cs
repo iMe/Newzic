@@ -90,6 +90,10 @@ namespace Newzic.Website.Controllers
                 }
                 else
                 {
+                    IDataCRUD<Banido> repBanidos = new DataCRUD<Banido>();
+                    Banido ban = repBanidos.fetchAll().SingleOrDefault(n => n.JornalistaId == jornalista.JornalistaId);
+                    if (ban != null)
+                        repBanidos.remove(ban);
                     return "Autenticado";
                 }
 

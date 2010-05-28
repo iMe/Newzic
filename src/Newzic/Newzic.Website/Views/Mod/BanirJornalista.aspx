@@ -22,6 +22,7 @@
                     <div class="editor-label">
                         <%= Html.Label("Tipo") %>
                         <%=Html.DropDownList("banType", Model.banTypeList)%>
+                        <%= Html.HiddenFor(model => model.banTypeList) %>
                         <%--<%: Html.ValidationMessageFor(model => model.banTypeList) %>--%>
                     </div>
                 </td>
@@ -33,6 +34,7 @@
                     <div class="editor-label">
                         <%: Html.Encode(Model.Email) %>
                         <%: Html.HiddenFor(model => model.Email) %>
+
                     </div>
                 </td>
            </tr>
@@ -46,6 +48,7 @@
                         </div>
                         <div class="editor-field">
                             <%=Html.DropDownList("selectedDia", Model.diaList)%>
+                            <%: Html.HiddenFor(model => model.diaList) %>
                         </div>
 
                         <div class="editor-label">
@@ -53,12 +56,14 @@
                         </div>
                         <div class="editor-field">
                             <%=Html.DropDownList("selectedMes", Model.mesList)%>
+                            <%: Html.HiddenFor(model => model.mesList) %>
                         </div>
                         <div class="editor-label">
                             <%= Html.Label("Ano") %>
                         </div>
                         <div class="editor-field">
                             <%=Html.DropDownList("selectedAno", Model.anoList)%>
+                            <%: Html.HiddenFor(model => model.anoList) %>
                         </div>
                     </fieldset>
                 </td>
@@ -68,6 +73,7 @@
                     </div>
                     <div class="editor-field" style="width:100%; height:100%;">
                         <%: Html.TextAreaFor(model => model.reason,12,100,new {style="width:100%; height:100%;"})%>
+                        <%: Html.HiddenFor(model => model.reason) %>
                         <%: Html.ValidationMessageFor(model => model.reason) %>
                     </div>
                 </td>

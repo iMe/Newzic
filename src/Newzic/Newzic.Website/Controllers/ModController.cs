@@ -112,7 +112,8 @@ namespace Newzic.Website.Controllers
             jornalista.Jornalista.Unban();
             repBanidos.Save();
 
-            var listaJornalitas = repJornalistas.fetchAll().ToList();
+            var listaJornalitas =
+                repJornalistas.fetchAll().Where(n => n.Administrador == null && n.Moderador == null).ToList();
             return View("GerirJornalistas", listaJornalitas);
             
         }
@@ -139,19 +140,28 @@ namespace Newzic.Website.Controllers
         public ActionResult BanirJornalista2(JornBanModel Ban)
         {
             if (!Request.IsAuthenticated) return View("acessoNegado");
-
+            
             if ((Ban.selectedMes == 2) && (Ban.selectedDia > 29))
             {
                 ModelState.AddModelError("", "A data introduzida é inválida. Por favor corrija e tente novamente.");
-                return View("JornBanView",Ban);
+                JornBanModel banModel = new JornBanModel(Ban.Email);
+                banModel.reason = Ban.reason;
+                return View("BanirJornalista",banModel);
             }
-
-
-            if (ModelState.IsValid)
+            DateTime data = new DateTime(Ban.selectedAno, Ban.selectedMes, Ban.selectedDia);
+            if (data < DateTime.Now && Ban.banType == 2)
             {
-                return View("JornBanConfirmView", Ban);
+                ModelState.AddModelError("", "A data introduzida é inválida. Por favor corrija e tente novamente.");
+                JornBanModel banModel = new JornBanModel(Ban.Email);
+                banModel.reason = Ban.reason;
+                return View("BanirJornalista", banModel);
             }
-            return View("Error");
+
+            //if (ModelState.IsValid)
+            //{
+                return View("JornBanConfirmView", Ban);
+            //}
+            //return View("Error");
             
         }
 
