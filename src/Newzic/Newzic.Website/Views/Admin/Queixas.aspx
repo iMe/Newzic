@@ -43,7 +43,7 @@
                <%-- <%: Html.ActionLink("Delete", "Delete", new { id=item.QueixaId })%>--%>
             </td>
             <td>
-                <%: item.Jornalista.Email %> <%:Html.ActionLink("+","VerPerfil","Account") %>
+                <%: item.Jornalista.Email %> <%:Html.ActionLink("+", "VerPerfil", "Account", new { email = item.Jornalista.Email }, null)%>
             </td>
             <%--<td>
                 <%: item.JornalistaId %>

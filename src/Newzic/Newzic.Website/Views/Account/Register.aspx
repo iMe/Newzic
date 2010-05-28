@@ -54,7 +54,7 @@
             
                 </div>
                 <div class="editor-field">
-                    <%: Html.PasswordFor(m => m.Captcha)%>
+                    <%: Html.TextAreaFor(m => m.Captcha)%>
                     <%: Html.ValidationMessageFor(m => m.Captcha)%>
                 </div>
                 

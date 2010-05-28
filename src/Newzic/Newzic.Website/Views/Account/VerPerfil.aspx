@@ -77,7 +77,7 @@
     <p>
         <%:Html.ActionLink("Voltar", "Index", "Home")%>
         <%if ((Model.viewerRole == "Admin" && Model.profileRole != "Administrador") ||
-                (Model.viewerRole == "Mod" && Model.profileRole == "Jornalista"))
+                (Model.viewerRole == "Mod" && Model.profileRole == "Jornalista") && Model.banned == false)
             {%>
                 <%if (Model.viewerRole == "Admin" && Model.profileRole == "Moderador")
                 {%>
