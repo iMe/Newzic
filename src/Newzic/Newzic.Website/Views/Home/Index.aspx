@@ -19,12 +19,12 @@
             <td style="width:50%;">
                 <fieldset>
                     <h3><%:Html.ActionLink(c.Titulo, "Details", "News", new { id = c.NoticiaId.ToString() }, null) %></h3>
-                    <% var s = c.Corpo.Split('\n');
+                    <%--<% var s = c.Corpo.Split('\n');
                        foreach(var ss in s)
-                            {%>
-                    <%=Html.Encode(ss) %>
+                            {%>--%>
+                    <%=Html.Encode(c.Corpo) %>
                     <br />
-                    <% } %>
+                    <%--<% } %>--%>
                     <p align="right"> <%=Html.Encode(c.Jornalista.Nome) %>
                         <%:Html.ActionLink("+", "VerPerfil", "Account", new { email = c.Jornalista.Email}, null)%>
                     </p>

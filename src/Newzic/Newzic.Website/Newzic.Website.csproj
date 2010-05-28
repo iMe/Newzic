@@ -98,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Mobile.css" />
+    <Content Include="Content\zengarden-sample.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\picsprev.js" />
     <Content Include="Scripts\viewmap.js" />

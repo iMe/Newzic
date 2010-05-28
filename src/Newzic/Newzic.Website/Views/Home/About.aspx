@@ -18,9 +18,5 @@
          <p align="left"> Sim. Para alterar a sua senha de acesso e outra informação pessoal vá ao seu perfil, clicando no seu nome de utilizador, e clique em editar.</p>
          <b>Numa notica por mim publicada aparece a seguinte mensagem <em>"Esta Noticia está a violar as regras e pode ser apagada a qualquer momento"</em>. O que devo fazer? </b>
          <p>Para corrigir esta situação verique que a noticia publicada obedece aos padrões de publicação do Newzic.</p>
-         
-         <b>O Newzic divulga as minhas informações de utilizador?</b>
-         <p align="left">Não. O Newzic não divulga em situação alguma a sua informação de utilizador </p>
-
 
 </asp:Content>
