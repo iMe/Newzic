@@ -356,3 +356,9 @@ div#title
      max-height: 300px;
 }
 
+.newziclogo
+{
+     max-width: 200px;
+     max-height: 200px;
+     top:auto;
+}
