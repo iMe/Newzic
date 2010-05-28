@@ -40,6 +40,7 @@ namespace Newzic.Website.Models
         public string profileRole { get; set; }
         public string viewerRole { get; set; }
         public string id { get; set; }
+        public bool banned { get; set; }
 
         public List<Noticia> noticias { get; set; }
 

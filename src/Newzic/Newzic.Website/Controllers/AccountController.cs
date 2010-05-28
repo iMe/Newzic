@@ -178,6 +178,7 @@ namespace Newzic.Website.Controllers
             //var j = getJornalistaByEmail(email);
             var perfil = new RegisterModel();
             perfil.id = j.JornalistaId.ToString();
+            perfil.banned = j.isBanned();
             if (UserIsInRole("Admin"))
             {
                 perfil.viewerRole = "Admin";
