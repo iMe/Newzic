@@ -110,7 +110,7 @@
 
     </table>
 
-    <<%--p>
+    <%--p>
         <%= Html.ActionLink("Criar nova", "Create") %>
     </p>--%>
 
