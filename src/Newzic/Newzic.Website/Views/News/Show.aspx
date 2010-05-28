@@ -154,9 +154,9 @@
 
     </fieldset>
     <center>
-        <big><b><%:Html.ActionLink("⇧","UpVote","News",new { id = Model.noticia.NoticiaId.ToString()}, null)%></b></big>
+        <big class="arrow"><b><%:Html.ActionLink("⇧","UpVote","News",new { id = Model.noticia.NoticiaId.ToString()}, null)%></b></big>
         <h3><%=Html.Encode(Model.noticia.Pontuacao)%></h3>
-        <big><b><%:Html.ActionLink("⇩", "DownVote", "News",new { id = Model.noticia.NoticiaId.ToString()}, null)%></b></big>
+        <big class="arrow"><b><%:Html.ActionLink("⇩", "DownVote", "News",new { id = Model.noticia.NoticiaId.ToString()}, null)%></b></big>
     </center>
 
     <%--<fieldset>--%>
