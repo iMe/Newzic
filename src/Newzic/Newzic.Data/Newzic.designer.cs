@@ -2652,6 +2652,8 @@ namespace Newzic.Core
 		
 		private System.Guid _JornalistaId;
 		
+		private System.Nullable<System.DateTime> _Data;
+		
 		private EntityRef<Jornalista> _Jornalista;
 		
 		private EntityRef<Noticia> _Noticia;
@@ -2668,6 +2670,8 @@ namespace Newzic.Core
     partial void OnNoticiaIdChanged();
     partial void OnJornalistaIdChanging(System.Guid value);
     partial void OnJornalistaIdChanged();
+    partial void OnDataChanging(System.Nullable<System.DateTime> value);
+    partial void OnDataChanged();
     #endregion
 		
 		public Comentario()
@@ -2761,6 +2765,26 @@ namespace Newzic.Core
 					this._JornalistaId = value;
 					this.SendPropertyChanged("JornalistaId");
 					this.OnJornalistaIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Data", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Data
+		{
+			get
+			{
+				return this._Data;
+			}
+			set
+			{
+				if ((this._Data != value))
+				{
+					this.OnDataChanging(value);
+					this.SendPropertyChanging();
+					this._Data = value;
+					this.SendPropertyChanged("Data");
+					this.OnDataChanged();
 				}
 			}
 		}
