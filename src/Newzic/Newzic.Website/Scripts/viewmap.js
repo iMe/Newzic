@@ -6,7 +6,7 @@ function markerHtml(n, text) {
 }
 
 function createMarker(point, text) {
-    var marker = new GMarker(point, { draggable: true, bouncy: true });
+    var marker = new GMarker(point, { draggable: false, bouncy: false });
     var m = { marker: marker, text: text }
     markers.push(m)
     GEvent.addListener(marker, 'click', function () {

@@ -100,6 +100,7 @@
     <Content Include="Content\Mobile.css" />
     <Content Include="Content\zengarden-sample.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\fixIE.js" />
     <Content Include="Scripts\picsprev.js" />
     <Content Include="Scripts\viewmap.js" />
     <Content Include="Scripts\jLinq-2.2.1.js" />

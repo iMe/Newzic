@@ -180,7 +180,7 @@
                             <small><%=Html.Encode(c.Jornalista.Nome) %> <%:Html.ActionLink("+", "VerPerfil", "Account", new { email = c.Jornalista.Email}, null)%></small>
                         </p>
                         <p align="right">
-                            <%=Html.Encode(c.Data) %>
+                            <small><%=Html.Encode(c.Data) %></small>
                         </p>
                     </fieldset>
                     </td>
