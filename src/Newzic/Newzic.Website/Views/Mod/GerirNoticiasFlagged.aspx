@@ -24,7 +24,13 @@
         <tr>
             <td>
                 <%= Html.ActionLink("Consultar Noticia", "Details","News", new { id=item.NoticiaId },null) %> |
-                <%= Html.ActionLink("Apagar", "ApagarNoticia","News", new { id=item.NoticiaId },null)%> |
+                <% if(!item.Jornalista.isModerador()) {%>
+                    <%= Html.ActionLink("Apagar", "ApagarNoticia","News", new { id=item.NoticiaId },null)%> |
+                <%}else
+{%>
+                    <%=Html.Encode("Apagar")%> |
+                    <%
+}%>
                 <%= Html.ActionLink("Resolvido", "ReportResolvido", "Mod", new {id = item.NoticiaId },null)%> |
             </td>
             <td>

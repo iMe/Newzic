@@ -50,9 +50,9 @@
         <div>
             <%= Html.TextAreaFor(model=>model.listaVideos)%>
         </div>
-        <div class="editor-label">
+        <%--<div class="editor-label">
             <%= Html.LabelFor(model => model.Mapa) %>
-        </div>
+        </div>--%>
         <div id="map">
         </div>
         <input type="submit" value="Create" />

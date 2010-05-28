@@ -2,7 +2,7 @@
 <%@ Import Namespace="Newzic.Website.Controllers" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Show
+	Newzic - <%=Html.Encode(Model.noticia.Titulo) %>
 </asp:Content>
 
 <%--<asp:Content ID="Content4" ContentPlaceHolderID="scripts" runat="server">
@@ -63,6 +63,9 @@
             <%=Html.Encode(Model.noticia.Jornalista.Nome) %>
             <%:Html.ActionLink("+", "VerPerfil", "Account", new { email = Model.noticia.Jornalista.Email}, null)%>
         </p>
+        <p align="right">
+            <small><%=Html.Encode(Model.noticia.Data) %></small>
+        </p>
         <%if (Request.IsAuthenticated){ %>
         <p align="right">
             <%:Html.ActionLink("Reportar Noticia", "ReportNoticia", "News", new { id = Model.noticia.NoticiaId}, null)%>
@@ -88,9 +91,9 @@
         <div id="pics">
             <img class="newspic" id="current-pic" src="#" alt="pic" />
             <br />
-            <a id="prev-pic" class="arrow" href="#">prev</a> 
+            <a id="prev-pic" class="arrow" href="#">anterior</a> 
             <big class="arrow">∙</big>
-            <a id="next-pic" class="arrow" href="#">next</a>
+            <a id="next-pic" class="arrow" href="#">proxima</a>
         </div>
         </center>
         </fieldset>

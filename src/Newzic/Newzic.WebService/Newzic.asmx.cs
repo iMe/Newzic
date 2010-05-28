@@ -309,6 +309,11 @@ namespace Newzic.WebService
             try
             {
                 String token = data.login(email, password);
+                IDataCRUD<Jornalista> repJornalistas = new DataCRUD<Jornalista>();
+                Jornalista user = repJornalistas.fetchAll().SingleOrDefault(n => n.Email.Equals(email));
+                if (user != null)
+                    if(user.isBanned())
+                        throw new ApplicationException("Este utilizador encontra-se banido!");
                 data.Save();
                 return token;
             }
