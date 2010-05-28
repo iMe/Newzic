@@ -63,10 +63,9 @@ namespace Newzic.Core
 
         public void calcRank()
         {
-            double data = (this.Data - DateTime.Now).TotalDays;
+            double data = (DateTime.Now-this.Data).TotalDays+1;
             double res = 0;
-            if (data == double.MinValue) { res = this.Pontuacao; }
-            else { res = this.Pontuacao / data; }
+            res = this.Pontuacao / data;
 
             this.rank = res;
         }
