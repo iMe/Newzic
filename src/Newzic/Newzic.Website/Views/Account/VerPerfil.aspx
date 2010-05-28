@@ -42,6 +42,22 @@
         <%
                 }
             }%>
+
+     <%if ((Model.viewerRole == "Admin" && Model.profileRole == "Moderador") && Model.banned == false)
+            {%>
+                    <%:Html.ActionLink("Banir Utilizador", "ModBanView", "Admin",new {id = Model.id}, null)%>
+                <%}%>
+                
+
+           <%if ((Model.viewerRole == "Admin" && Model.profileRole == "Jornalista") && Model.banned == false)
+            {%>
+                    <%:Html.ActionLink("Banir Utilizador", "BanirJornalista", "Mod", new { id = Model.id }, null)%>
+                <%}%>
+           
+              <%if (Model.viewerRole == "Mod" && Model.profileRole == "Jornalista" && Model.banned == false) {%>
+                    <%:Html.ActionLink("Banir Utilizador", "BanirJornalista", "Mod", new { id = Model.id }, null)%>
+                <%}%>
+
         
     </fieldset>
 
@@ -76,27 +92,7 @@
     
     <p>
         <%:Html.ActionLink("Voltar", "Index", "Home")%>
-        <%if ((Model.viewerRole == "Admin" && Model.profileRole != "Administrador") ||
-                (Model.viewerRole == "Mod" && Model.profileRole == "Jornalista") && Model.banned == false)
-            {%>
-                <%if (Model.viewerRole == "Admin" && Model.profileRole == "Moderador")
-                {%>
-                    <%:Html.ActionLink("Banir Utilizador", "ModBanView", "Admin",new {id = Model.id}, null)%>
-                <%}%>
-                
-                <%--<%if (Model.viewerRole == "Admin" && Model.profileRole == "Jornalista")
-                    {%>
-                    <%:Html.ActionLink("Banir Utilizador", "JornBanView", "Admin",new {id = Model.id}, null)%>
-                <%}%>--%>
-
-                 <%
-              if (Model.viewerRole == "Mod" && Model.profileRole == "Jornalista")
-                {%>
-                    <%:Html.ActionLink("Banir Utilizador", "BanirJornalista", "Mod", new { id = Model.id }, null)%>
-                <%}%>
-        <%
-            }
-        %>
+       
     </p>
 </asp:Content>
 
