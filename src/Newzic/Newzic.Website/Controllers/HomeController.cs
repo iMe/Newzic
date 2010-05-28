@@ -26,10 +26,11 @@ namespace Newzic.Website.Controllers
                 {
                     c.Corpo = c.Corpo.Substring(0, 199);
                     c.Corpo = c.Corpo + "(...)";
+                    c.calcRank();
 
                 }
             }
-
+            model.noticias = model.noticias.OrderByDescending(n => n.rank).Take(8).ToList();
             return View("Index",model);
         }
 
