@@ -34,9 +34,9 @@ namespace Newzic.Website.Controllers
             return View("Index",model);
         }
 
-        public ActionResult About()
+        public ActionResult Faq()
         {
-            return View();
+            return View("Faq");
         }
 
 
