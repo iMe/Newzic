@@ -115,10 +115,10 @@ namespace Newzic.Website.Controllers
         {
             String email = login.Email;
             String pass = login.Password;
-            //if (pass != null)
-            //{
-            //    pass = Hash.generate(pass);
-            //}
+            if (pass != null)
+            {
+                pass = Hash.generate(pass);
+            }
             string res = null;
             if ((email != null ) && (pass != null))
                 res = iniciarSessao(email, pass);
