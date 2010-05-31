@@ -202,7 +202,7 @@
     <%using (Html.BeginForm("Comentario", "News")) { %>
         <legend>Comentar</legend>
         <div class="editor-field">
-            <%= Html.TextAreaFor(model => model.comentario, 5,50,null) %>
+            <%= Html.TextAreaFor(model => model.comentario, 5, 50, null)%>
         </div>
         <div>
             <%=Html.HiddenFor(model => model.guid, new { @readonly = "readonly" })%>
