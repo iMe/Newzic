@@ -6,13 +6,7 @@
 <head runat="server">
 
     <title>
-    <%if (Request.Browser.IsMobileDevice){%>
         <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
-        <%}%>
-
-    <%else{ %>
-        <img class="newspic" id="current-pic" src="../../Content/Newzic.png" alt="Newzic" />
-    <%}%>
     </title>
 
 
