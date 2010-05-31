@@ -65,7 +65,8 @@ namespace Newzic.Website.Controllers
         // GET: /Mod/
         public ActionResult Index()
         {
-            //if (!Request.IsAuthenticated) return View("acessoNegado");
+            if (!Request.IsAuthenticated) return View("acessoNegado");
+            if (!UserIsInRole("Mod")) return View("AcessoNegado");
 
             //Jornalista user = getAutenticatedJornalista(email);
             return View("Index");
@@ -75,9 +76,7 @@ namespace Newzic.Website.Controllers
         {
 
             if (!Request.IsAuthenticated) return View("acessoNegado");
-            //if (!Request.IsAuthenticated) return View("acessoNegado");
-
-            //Jornalista user = getAutenticatedJornalista(email);
+            if (!UserIsInRole("Mod")) return View("AcessoNegado");
 
             var listaJornalistas = repJornalistas.fetchAll().Where(n => n.Moderador == null).ToList();
             return View("GerirJornalistas", listaJornalistas);
@@ -87,11 +86,8 @@ namespace Newzic.Website.Controllers
         public ActionResult Unban(string id)
         {
             if (!Request.IsAuthenticated) return View("acessoNegado");
+            if (!UserIsInRole("Mod")) return View("AcessoNegado");
 
-            //Jornalista user = getAutenticatedJornalista(V);
-
-            //if (user == null || !user.isModerador()) return View("acessoNegado");
-            
             var gid = new Guid(id);
 
             var listaBanidos = repBanidos.fetchAll().ToList();
@@ -102,10 +98,7 @@ namespace Newzic.Website.Controllers
         public ActionResult ConfirmaUnban(string id)
         {
             if (!Request.IsAuthenticated) return View("acessoNegado");
-            
-            //Jornalista user = getAutenticatedJornalista(email);
-
-            //if (user == null || !user.isModerador()) return View("acessoNegado");
+            if (!UserIsInRole("Mod")) return View("AcessoNegado");
 
             Guid gid = new Guid(id);
             Banido jornalista = repBanidos.fetchAll().Single(n => n.JornalistaId == gid);
@@ -121,8 +114,9 @@ namespace Newzic.Website.Controllers
         public ActionResult BanirJornalista(string id)
         {
             
-            //if (user == null || !user.isModerador()) return View("acessoNegado");
             if (!Request.IsAuthenticated) return View("acessoNegado");
+            if (!UserIsInRole("Mod")) return View("AcessoNegado");
+
             Guid gid = new Guid(id);
 
             
@@ -140,6 +134,7 @@ namespace Newzic.Website.Controllers
         public ActionResult BanirJornalista2(JornBanModel Ban)
         {
             if (!Request.IsAuthenticated) return View("acessoNegado");
+            if (!UserIsInRole("Mod")) return View("AcessoNegado");
             
             if ((Ban.selectedMes == 2) && (Ban.selectedDia > 29))
             {
@@ -204,10 +199,10 @@ namespace Newzic.Website.Controllers
 
         public ActionResult ConfirmaBanir(string id)
         {
-            //Jornalista user = getAutenticatedJornalista(email);
-
-            //if (user == null || !user.isModerador()) return View("acessoNegado");
+            
             if (!Request.IsAuthenticated) return View("acessoNegado");
+            if (!UserIsInRole("Mod")) return View("AcessoNegado");
+
             Guid gid = new Guid(id);
             Jornalista jornalista = repJornalistas.fetchAll().Single(n => n.JornalistaId == gid);
             jornalista.Ban();
@@ -236,6 +231,8 @@ namespace Newzic.Website.Controllers
         public ActionResult GerirNoticiasFlagged()
         {
             if (!Request.IsAuthenticated) return View("acessoNegado");
+            if (!UserIsInRole("Mod")) return View("AcessoNegado");
+
             var noticiasFlagged = repNoticias.fetchAll().Where(n => n.NoticiaFlaggeds.Any() && n.Deleted == false && n.Jornalista.Administrador == null);
 
             return View("GerirNoticiasFlagged",noticiasFlagged);
@@ -244,6 +241,7 @@ namespace Newzic.Website.Controllers
         public ActionResult ReportResolvido(string id)
         {
             if (!Request.IsAuthenticated) return View("acessoNegado");
+            if (!UserIsInRole("Mod")) return View("AcessoNegado");
             
             var gid = new Guid(id);
             var dc  = new NewzicDataContext();
