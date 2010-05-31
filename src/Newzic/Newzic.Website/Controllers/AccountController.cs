@@ -145,6 +145,7 @@ namespace Newzic.Website.Controllers
 
         public ActionResult LoginForm()
         {
+            if (User.Identity.IsAuthenticated) return RedirectToAction("Index", "Home");
             LoginModel model = new LoginModel();
             model.Email = "";
             model.Password = "";
