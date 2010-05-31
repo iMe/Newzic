@@ -102,9 +102,11 @@ namespace Newzic.Website.Controllers
 
         public ActionResult FazerQueixas(string email)
         {
+            if (!Request.IsAuthenticated) return View("acessoNegado");
+            
             IDataCRUD<Queixa> repQueixas = new DataCRUD<Queixa>();
             var queixa = new QueixaModel();
-            queixa.email = email;
+            queixa.email = User.Identity.Name;
             return View("FazerQueixas", queixa);
             
         }
@@ -112,6 +114,7 @@ namespace Newzic.Website.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult ProcessarQueixa(QueixaModel model)
         {
+            
             Queixa queixa = new Queixa();
             IDataCRUD<Queixa> repQueixas = new DataCRUD<Queixa>();
             IDataCRUD<Jornalista> repJornalistas = new DataCRUD<Jornalista>();

@@ -295,7 +295,7 @@ namespace Newzic.Website.Controllers
                 jornList.Save();
                 jornList.Dispose();
                 //ModelState.AddModelError("", "Perfil alterado com sucesso.");
-
+                return View("SuccessView");
             }
             
             model.Name = j.Nome;
