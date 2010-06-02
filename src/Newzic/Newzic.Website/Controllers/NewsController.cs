@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Data.Linq;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -307,6 +309,16 @@ namespace Newzic.Website.Controllers
             }
             return erroPrenchimento;
         }
+
+        private bool linkVideoValido(string url)
+        {
+            if (url.Equals(""))
+                return false;
+            else
+            {
+                return true;
+            }
+        }
         
         //
         // POST: /Noticia/Create
@@ -314,39 +326,20 @@ namespace Newzic.Website.Controllers
         [HttpPost]
         public ActionResult Create(Noticia noticia)
         {
+
             var isAuthenticated = Request.IsAuthenticated;
             if (isAuthenticated == true)
             {
                 if (ModelState.IsValid)
                 {
-                   
+
                     if (camposNoticiaInvalidos(noticia) == true)
                         return View(noticia);
                     try
                     {
-                        
-                        foreach (string file in Request.Files)
-                        {
-                            HttpPostedFileBase hpf = Request.Files[file] as HttpPostedFileBase;
-                            var fileSize = hpf.ContentLength;
-                            if (fileSize == 0)
-                                continue;
 
-                            Imagem img = new Imagem();
-                            byte[] buffer = new byte[fileSize];
-                            hpf.InputStream.Read(buffer, 0, fileSize);
-                            img.ImageFile = buffer;
-                            noticia.Imagems.Add(img);
 
-                        }
-                        
-                        string listaVideos = noticia.listaVideos;
-                        string[] arrayVideos = listaVideos.Split('\n');
-                        
-                         //Adição dos links youtube.
-                        
-                        
-                        
+
                         var email = User.Identity.Name;
                         IDataCRUD<Jornalista> jornalistaConsulta = new DataCRUD<Jornalista>();
                         IQueryable<Jornalista> jornalistas = jornalistaConsulta.fetchAll();
@@ -356,18 +349,78 @@ namespace Newzic.Website.Controllers
                         noticia.Data = DateTime.Now;
                         noticia.JornalistaId = jornalistaId;
                         IDataCRUD<Noticia> noticiaAdd = new DataCRUD<Noticia>();
-                        Guid id = noticiaAdd.create(noticia);
+                        Guid idNoticia = noticiaAdd.create(noticia);
                         noticiaAdd.Save();
                         IDataCRUD<Video> videoAdd = new DataCRUD<Video>();
+
+                        var stringVideos = Request.Form["stringListaVideos"];
+                        string[] arrayVideos = stringVideos.Split(';');
+
+
                         for (int i = 0; i < arrayVideos.Length; i++)
                         {
                             var novoVideo = new Video();
                             string url = arrayVideos[i];
-                            novoVideo.Url = url;
-                            novoVideo.NoticiaId = id;
-                            Guid idVideo = videoAdd.create(novoVideo);
-                            videoAdd.Save();
+                            if (linkVideoValido(url) == true)
+                            {
+                                novoVideo.Url = url;
+                                novoVideo.NoticiaId = idNoticia;
+                                Guid idVideo = videoAdd.create(novoVideo);
+                                videoAdd.Save();
+                            }
                         }
+
+                        var stringMarcos = Request.Form["stringComMarcos"];
+                        string[] arrayMarcos = stringMarcos.Split('§');
+                        IDataCRUD<Mapa> mapaAdd = new DataCRUD<Mapa>();
+                        for (int i = 0; (i + 4) < arrayMarcos.Length; i += 4)
+                        {
+                            // Falta resolver o problema do parse, ele nao ta a parsar bem o decimal!
+                            arrayMarcos[i] = arrayMarcos[i].Replace('.', ',');
+                            arrayMarcos[i + 1] = arrayMarcos[i + 1].Replace('.', ',');
+                            double latitude = double.Parse(arrayMarcos[i], NumberStyles.Any);
+                            double longitude = double.Parse(arrayMarcos[i + 1], NumberStyles.Any);
+                            string titulo = arrayMarcos[i + 2];
+                            string corpo = arrayMarcos[i + 3];
+                            Mapa novoMapa = new Mapa();
+                            novoMapa.Latitude = latitude;
+                            novoMapa.Longitude = longitude;
+                            novoMapa.Morada = titulo + "§" + corpo;
+                            novoMapa.NoticiaId = idNoticia;
+                            mapaAdd.create(novoMapa);
+                            mapaAdd.Save();
+                        }
+
+                        IDataCRUD<Imagem> imagemAdd = new DataCRUD<Imagem>();
+
+
+                        var teste = Request.Files;
+
+                        foreach (string file in Request.Files)
+                        {
+
+                            HttpPostedFileBase hpf = Request.Files[file] as HttpPostedFileBase;
+                            var fileSize = hpf.ContentLength;
+                            if (fileSize == 0)
+                                continue;
+
+                            Imagem novaImagem = new Imagem();
+                            if (Path.GetExtension(hpf.FileName).Length == 0)
+                            {
+                                throw new Exception(string.Format("File '{0}' has no extension (e.g. .doc .pdf)", hpf.FileName));
+                            }
+                            byte[] buffer = new byte[fileSize];
+                            hpf.InputStream.Read(buffer, 0, fileSize);
+                            novaImagem.Tipo = Path.GetExtension(hpf.FileName);
+                            novaImagem.ImageFile = buffer;
+                            novaImagem.NoticiaId = idNoticia;
+                            novaImagem.Nome = hpf.FileName;
+                            Guid idImagem = imagemAdd.create(novaImagem);
+                            imagemAdd.Save();
+                        }
+
+
+
                         return RedirectToAction("Index");
                     }
                     catch

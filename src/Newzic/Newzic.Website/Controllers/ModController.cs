@@ -31,7 +31,7 @@ namespace Newzic.Website.Controllers
                         return true;
                     }
                 }
-                catch (Exception e)
+                catch
                 {
 
                     return false;
@@ -49,7 +49,7 @@ namespace Newzic.Website.Controllers
                         return true;
                     }
                 }
-                catch (Exception e)
+                catch
                 {
 
                     return false;

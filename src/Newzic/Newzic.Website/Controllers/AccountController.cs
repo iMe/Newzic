@@ -47,7 +47,7 @@ namespace Newzic.Website.Controllers
                         return true;
                     }
                 }
-                catch (Exception e)
+                catch 
                 {
 
                     return false;
@@ -65,7 +65,7 @@ namespace Newzic.Website.Controllers
                         return true;
                     }
                 }
-                catch (Exception e)
+                catch 
                 {
 
                     return false;
@@ -242,7 +242,7 @@ namespace Newzic.Website.Controllers
             IDataCRUD<Administrador> dba = new DataCRUD<Administrador>();
             IDataCRUD<Moderador> dbm = new DataCRUD<Moderador>();
             IDataCRUD<Jornalista> dbj = new DataCRUD<Jornalista>();
-            string res;
+            //string res;
 
             bool r = (from Administrador a in dba.fetchAll() where a.AdministradorId.Equals(id) select a).Any();
             if (r) return "Administrador";

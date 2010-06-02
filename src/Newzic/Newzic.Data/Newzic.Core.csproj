@@ -130,8 +130,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
     <None Include="Newzic.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>Newzic.designer.cs</LastGenOutput>
