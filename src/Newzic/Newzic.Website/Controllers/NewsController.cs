@@ -376,15 +376,15 @@ namespace Newzic.Website.Controllers
                         for (int i = 0; (i + 4) < arrayMarcos.Length; i += 4)
                         {
                             // Falta resolver o problema do parse, ele nao ta a parsar bem o decimal!
-                            arrayMarcos[i] = arrayMarcos[i].Replace('.', ',');
-                            arrayMarcos[i + 1] = arrayMarcos[i + 1].Replace('.', ',');
+                            //arrayMarcos[i] = arrayMarcos[i].Replace('.', ',');
+                            //arrayMarcos[i + 1] = arrayMarcos[i + 1].Replace('.', ',');
                             double latitude = double.Parse(arrayMarcos[i], NumberStyles.Any);
                             double longitude = double.Parse(arrayMarcos[i + 1], NumberStyles.Any);
                             string titulo = arrayMarcos[i + 2];
                             string corpo = arrayMarcos[i + 3];
                             Mapa novoMapa = new Mapa();
-                            novoMapa.Latitude = latitude;
-                            novoMapa.Longitude = longitude;
+                            novoMapa.Latitude = (float)latitude;
+                            novoMapa.Longitude = (float)longitude;
                             novoMapa.Morada = titulo + "§" + corpo;
                             novoMapa.NoticiaId = idNoticia;
                             mapaAdd.create(novoMapa);
@@ -407,7 +407,7 @@ namespace Newzic.Website.Controllers
                             Imagem novaImagem = new Imagem();
                             if (Path.GetExtension(hpf.FileName).Length == 0)
                             {
-                                throw new Exception(string.Format("File '{0}' has no extension (e.g. .doc .pdf)", hpf.FileName));
+                                throw new Exception(string.Format("File '{0}' has no extension (e.g. .jpeg .png)", hpf.FileName));
                             }
                             byte[] buffer = new byte[fileSize];
                             hpf.InputStream.Read(buffer, 0, fileSize);
