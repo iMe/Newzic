@@ -8,14 +8,12 @@
         type="text/javascript"></script>
     <script src="../../Scripts/googleMapsV2.js" type="text/javascript"></script>
     <script src="../../Scripts/listVideos.js" type="text/javascript"></script>
-    <script src="../../Scripts/upload.js" type="text/javascript" ></script>
+    <script src="../../Scripts/upload.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <h2>
         Criar Noticia</h2>
-    <% using (Html.BeginForm("Create", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
-       {%>
-    
+    <form id="formulario" action="/News/Create" enctype="multipart/form-data" method="post">
     <%= Html.ValidationSummary(true, "Creation was unsuccessful. Please correct the errors and try again.") %>
     <fieldset>
         <div class="editor-label">
@@ -56,9 +54,10 @@
             <input id="removerVideo" type="button" value="-" />
             <br />
             <br />
-            <select id="selectListVideos" name="selectListVideo" size="0" style="width: 30%;display: none;">
+            <select id="selectListVideos" name="selectListVideo" size="0" style="width: 30%;
+                display: none;">
             </select>
-            <input id="stringListaVideos" name="stringListaVideos" type="text" style="display:none"/>
+            <input id="stringListaVideos" name="stringListaVideos" type="text" style="display: none" />
         </div>
         <br />
         <br />
@@ -93,9 +92,23 @@
         <br />
         <br />
         <input type="submit" value="Criar Noticia" />
+        <input id="botaoPreview" type="submit" value="Preview" />
+        <script type="text/javascript">
+            function handler_preview() {
+                //var antigo = document.getElementById("formulario").action;
+                document.getElementById("formulario").action = "Preview";
+                //var novo = document.getElementById("formulario").action;
+                //alert(antigo);
+                //alert(novo);
+            }
+            function fazPreview() {
+                $('#botaoPreview').click(handler_preview);
+            }
+
+            $(document).ready(fazPreview);
+        </script>
     </fieldset>
-    
-    <% } %>
+    </form>
     <div>
         <%=Html.ActionLink("Back to List", "Index") %>
     </div>

@@ -234,6 +234,7 @@ namespace Newzic.Website.Controllers
             return model;
         }
 
+        [HttpPost]
         public ActionResult Preview(Noticia noticia)
         {
             if (!Request.IsAuthenticated) return View("AcessoNegado");
@@ -525,6 +526,7 @@ namespace Newzic.Website.Controllers
             IDataCRUD<Noticia> editaNew = new DataCRUD<Noticia>();
             var dados = editaNew.fetchAll();
             Noticia bla = (dados.SingleOrDefault(n => n.NoticiaId.Equals(id)));
+            
             return View(bla);
         }
 

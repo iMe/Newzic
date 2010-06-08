@@ -33,6 +33,14 @@
                 <%= Html.TextBoxFor(model => model.Tags) %>
                 <%= Html.ValidationMessageFor(model => model.Tags) %>
             </div>
+             <div class="editor-label">
+                <%= Html.LabelFor(model => model.Imagems) %>
+            </div>
+            <div>
+               
+            </div>
+
+
             <p>
                 <input type="submit" value="Save" />
             </p>
