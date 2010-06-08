@@ -224,7 +224,7 @@ namespace Newzic.Website.Controllers
             var array = model.noticia.Imagems.Select(i => "\"" + i.ImagemId.ToString() + "\"").ToArray();
             ViewData["PicIds"] = "window.picIds = [" + string.Join(",", array) + "];";
 
-            var arrayPontos = model.noticia.Mapas.Select(m => "{ point: new GLatLng(" + m.Latitude + "," + m.Longitude + "), text: '" + m.Morada + "' }").ToArray();
+            var arrayPontos = model.noticia.Mapas.Select(m => "{ point: new GLatLng(" + m.Latitude + "," + m.Longitude + "), text: '" + buildMapMarkText(m.Morada) + "' }").ToArray();
             if (arrayPontos.Length == 0) model.hasMap = false;
             else{
                 ViewData["MapPoints"] = "window.MapPoints = [" + string.Join(",", arrayPontos) + "];";
@@ -299,6 +299,9 @@ namespace Newzic.Website.Controllers
                 hpf.InputStream.Read(buffer, 0, fileSize);
                 novaImagem.Tipo = Path.GetExtension(hpf.FileName);
                 novaImagem.Nome = hpf.FileName;
+                var aux = hpf.FileName.Split('.');
+                novaImagem.Tipo = aux[1];
+                novaImagem.Nome = aux[0];
 
                 TypeConverter tc = TypeDescriptor.GetConverter(typeof(Bitmap));
                 Bitmap img = (Bitmap)tc.ConvertFrom(buffer);
@@ -313,7 +316,7 @@ namespace Newzic.Website.Controllers
 
             if (noticia.Mapas.Count > 0)
             {
-                var arrayPontos = noticia.Mapas.Select(m => "{ point: new GLatLng(" + m.Latitude + "," + m.Longitude + "), text: '" + m.Morada + "' }").ToArray();
+                var arrayPontos = noticia.Mapas.Select(m => "{ point: new GLatLng(" + m.Latitude + "," + m.Longitude + "), text: '" + buildMapMarkText(m.Morada) + "' }").ToArray();
                 ViewData["MapPoints"] = "window.MapPoints = [" + string.Join(",", arrayPontos) + "];";
             }
             
@@ -343,6 +346,14 @@ namespace Newzic.Website.Controllers
 
 
 
+        private string buildMapMarkText(String s)
+        {
+            //string res;
+            var aux = s.Split('§');
+            string res = @"<b>" + aux[0] + @"</b><br />" + aux[1];
+
+            return res;
+        }
 
         //
         // GET: /Noticia/Create
@@ -489,10 +500,14 @@ namespace Newzic.Website.Controllers
                             }
                             byte[] buffer = new byte[fileSize];
                             hpf.InputStream.Read(buffer, 0, fileSize);
-                            novaImagem.Tipo = Path.GetExtension(hpf.FileName);
+                            //novaImagem.Tipo = Path.GetExtension(hpf.FileName);
                             novaImagem.ImageFile = buffer;
                             novaImagem.NoticiaId = idNoticia;
-                            novaImagem.Nome = hpf.FileName;
+                            //novaImagem.Nome = hpf.FileName;
+                            var aux = hpf.FileName.Split('.');
+                            novaImagem.Nome = aux[0];
+                            novaImagem.Tipo = aux[1];
+
                             Guid idImagem = imagemAdd.create(novaImagem);
                             imagemAdd.Save();
                         }
