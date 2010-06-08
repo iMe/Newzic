@@ -236,29 +236,106 @@ namespace Newzic.Website.Controllers
 
         public ActionResult Preview(Noticia noticia)
         {
-            IDataCRUD<Noticia> data = new DataCRUD<Noticia>();
-            Noticia n = (from nn in data.fetchAll() where nn.NoticiaId.ToString() == "f8cdb59d-ef33-4dbe-b6ec-1ca052463673" select nn).Single();
+            if (!Request.IsAuthenticated) return View("AcessoNegado");
+            if (noticia == null) return View("AcessoNegado");
 
-            noticia = n;
+            IDataCRUD<Jornalista> jornalistas = new DataCRUD<Jornalista>();
+            Jornalista jorn =(from Jornalista j in jornalistas.fetchAll() where j.Email.Equals(User.Identity.Name) select j).Single();
 
-            //if (noticia == null) { return RedirectToAction("Index", "Home"); }
-            
-            foreach (Imagem imagem in noticia.Imagems)
+            noticia.Data = DateTime.Now;
+            noticia.JornalistaId = jorn.JornalistaId;
+
+            var stringVideos = Request.Form["stringListaVideos"];
+            string[] arrayVideos = stringVideos.Split(';');
+
+            for (int i = 0; i < arrayVideos.Length; i++)
             {
-                TypeConverter tc = TypeDescriptor.GetConverter(typeof(Bitmap));
-                Bitmap img = (Bitmap)tc.ConvertFrom(imagem.ImageFile.ToArray());
+                var novoVideo = new Video();
+                string url = arrayVideos[i];
+                if (linkVideoValido(url) == true)
+                {
+                    novoVideo.Url = url;
+                    noticia.Videos.Add(novoVideo);
+                }
+            }
 
-                img.Save(@"C:\Temp\" + imagem.Nome+"."+imagem.Tipo);
+            var stringMarcos = Request.Form["stringComMarcos"];
+            string[] arrayMarcos = stringMarcos.Split('§');
+            
+            for (int i = 0; (i + 4) < arrayMarcos.Length; i += 4)
+            {
+                // Falta resolver o problema do parse, ele nao ta a parsar bem o decimal!
+                //arrayMarcos[i] = arrayMarcos[i].Replace('.', ',');
+                //arrayMarcos[i + 1] = arrayMarcos[i + 1].Replace('.', ',');
+                double latitude = double.Parse(arrayMarcos[i], NumberStyles.Any);
+                double longitude = double.Parse(arrayMarcos[i + 1], NumberStyles.Any);
+                string titulo = arrayMarcos[i + 2];
+                string corpo = arrayMarcos[i + 3];
+                Mapa novoMapa = new Mapa();
+                novoMapa.Latitude = (float)latitude;
+                novoMapa.Longitude = (float)longitude;
+                novoMapa.Morada = titulo + "§" + corpo;
+                noticia.Mapas.Add(novoMapa);
             }
 
 
-            var array = noticia.Imagems.Select(i => "\"" + i.Nome + "." +i.Tipo +"\"").ToArray();
+            //var teste = Request.Files;
+
+            foreach (string file in Request.Files)
+            {
+
+                HttpPostedFileBase hpf = Request.Files[file] as HttpPostedFileBase;
+                var fileSize = hpf.ContentLength;
+                if (fileSize == 0)
+                    continue;
+
+                Imagem novaImagem = new Imagem();
+                if (Path.GetExtension(hpf.FileName).Length == 0)
+                {
+                    throw new Exception(string.Format("File '{0}' has no extension (e.g. .jpeg .png)", hpf.FileName));
+                }
+                byte[] buffer = new byte[fileSize];
+                hpf.InputStream.Read(buffer, 0, fileSize);
+                novaImagem.Tipo = Path.GetExtension(hpf.FileName);
+                novaImagem.Nome = hpf.FileName;
+
+                TypeConverter tc = TypeDescriptor.GetConverter(typeof(Bitmap));
+                Bitmap img = (Bitmap)tc.ConvertFrom(buffer);
+                img.Save(@"C:\Temp\" + novaImagem.Nome + "." + novaImagem.Tipo);
+
+                noticia.Imagems.Add(novaImagem);
+            }
+
+
+            var array = noticia.Imagems.Select(i => "\"" + i.Nome + "." + i.Tipo + "\"").ToArray();
             ViewData["PicIds"] = "window.picIds = [" + string.Join(",", array) + "];";
 
-            if(noticia.Mapas.Count>0){
+            if (noticia.Mapas.Count > 0)
+            {
                 var arrayPontos = noticia.Mapas.Select(m => "{ point: new GLatLng(" + m.Latitude + "," + m.Longitude + "), text: '" + m.Morada + "' }").ToArray();
                 ViewData["MapPoints"] = "window.MapPoints = [" + string.Join(",", arrayPontos) + "];";
             }
+            
+            //noticia = n;
+
+            //if (noticia == null) { return RedirectToAction("Index", "Home"); }
+            
+            //foreach (Imagem imagem in noticia.Imagems)
+            //{
+            //    TypeConverter tc = TypeDescriptor.GetConverter(typeof(Bitmap));
+            //    Bitmap img = (Bitmap)tc.ConvertFrom(imagem.ImageFile.ToArray());
+
+            //    img.Save(@"C:\Temp\" + imagem.Nome+"."+imagem.Tipo);
+            //}
+
+
+            //var array = noticia.Imagems.Select(i => "\"" + i.Nome + "." +i.Tipo +"\"").ToArray();
+            //ViewData["PicIds"] = "window.picIds = [" + string.Join(",", array) + "];";
+
+            //if(noticia.Mapas.Count>0){
+            //    var arrayPontos = noticia.Mapas.Select(m => "{ point: new GLatLng(" + m.Latitude + "," + m.Longitude + "), text: '" + m.Morada + "' }").ToArray();
+            //    ViewData["MapPoints"] = "window.MapPoints = [" + string.Join(",", arrayPontos) + "];";
+            //}
 
             return View("Preview", noticia);
         }
