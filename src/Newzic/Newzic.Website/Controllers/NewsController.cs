@@ -678,7 +678,7 @@ namespace Newzic.Website.Controllers
             string linhaRemove = Request.Form["removeListaVideos"];
             string[] arrayRemoveVideos = linhaRemove.Split(';');
 
-            for (int i = 1; i <= contadorVideos; i++)
+            for (int i = 1; i <= contadorVideos +1; i++)
             {
                 string name = "link" + i;
                 string url = Request.Form[name];
