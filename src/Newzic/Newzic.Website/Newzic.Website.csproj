@@ -100,8 +100,10 @@
     <Content Include="Content\Mobile.css" />
     <Content Include="Content\zengarden-sample.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\addRemoveVideos.js" />
     <Content Include="Scripts\fixIE.js" />
     <Content Include="Scripts\googleMapsV2.js" />
+    <Content Include="Scripts\listaVideos.js" />
     <Content Include="Scripts\listVideos.js" />
     <Content Include="Scripts\picsprev.js" />
     <Content Include="Scripts\viewmap.js" />

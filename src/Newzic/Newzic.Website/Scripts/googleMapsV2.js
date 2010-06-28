@@ -5,10 +5,32 @@ var arrayPontos = [];
 var stringHTML;
 var stringComTodosOsPontos;
 
+function criaNovoMarco(latitude, longitude, titulo, corpo) {
+
+    var novoPonto = new GLatLng(latitude, longitude);
+    var novoMarcador = new GMarker(novoPonto, { draggable: true, bouncy: true });
+    mapa.addOverlay(novoMarcador);
+    var aux = $("<div><h3><U>" + titulo + "</U></h3>" + "<p>" + corpo + "</p><a href=''>Remover</a></div>");
+    stringHTML = (titulo + "§" + corpo);
+    novoMarcador.bindInfoWindow(aux[0]);
+    novoMarcador.textoHTML = stringHTML;
+    arrayPontos.push(novoMarcador);
+    aux.find('a').click(function (evento) {
+        mapa.removeOverlay(novoMarcador);
+        evento.preventDefault();
+        var i = 0;
+        for (i = 0; i < arrayPontos.length; i++)
+            if (arrayPontos[i] === novoMarcador) {
+                arrayPontos.splice(i, 1);
+                var str = ("Foi removido o balao " + (i + 1));
+
+            }
+    });
+}
+
 function preencheInputComAString() {
     transformaArrayPontoEmString();
     $('#stringComMarcos')[0].value = stringComTodosOsPontos;
-    alert(stringComTodosOsPontos);
 }
 
 function transformaArrayPontoEmString() {
@@ -37,7 +59,7 @@ function handlerMouseDownMarcador(marcador) {
 function handlerMap(unused, ponto, unused2) {
     GEvent.removeListener(listenerMap);
     var novoMarcador = new GMarker(ponto, { draggable: true, bouncy: true });
-    
+
     mapa.addOverlay(novoMarcador);
     novoMarcador.bindInfoWindow(htmlText[0]);
     novoMarcador.textoHTML = stringHTML;
@@ -50,7 +72,7 @@ function handlerMap(unused, ponto, unused2) {
             if (arrayPontos[i] === novoMarcador) {
                 arrayPontos.splice(i, 1);
                 var str = ("Foi removido o balao " + (i + 1));
-                alert(str);
+
             }
     });
     GEvent.addListener(novoMarcador, 'mousedown', function () { handlerMouseDownMarcador(novoMarcador) });
@@ -82,6 +104,22 @@ function handler_dadosMarco_fadeOut() {
     $('#dadosBalao').slideUp();
 }
 
+function carregaPontosCaixas() {
+    var objecto = $('#countMarcos')[0];
+    if (objecto != null) {
+        var countMarcos = objecto.value;
+
+        for (var i = 0; i < countMarcos; i++) {
+
+            var latitude = parseFloat($('#latitude' + i)[0].value);
+            var longitude = parseFloat($('#longitude' + i)[0].value);
+            var titulo = $('#titulo' + i)[0].value;
+            var corpo = $('#corpo' + i)[0].value;
+            criaNovoMarco(latitude, longitude, titulo, corpo);
+        }
+    }
+}
+
 function main() {
     var latitude = 41.55;
     var longitude = -8.3333;
@@ -93,7 +131,7 @@ function main() {
     mapa.addControl(new GLargeMapControl());
     mapa.addControl(new GMapTypeControl());
     mapa.enableGoogleBar();
-
+    carregaPontosCaixas();
     $('#dadosMarcoFadeOut').click(handler_dadosMarco_fadeOut);
     $('#dadosMarcoFadeIn').click(handler_dadosMarco_fadeIn);
     $('#botaoSubmeter').click(handlerInsereDados);

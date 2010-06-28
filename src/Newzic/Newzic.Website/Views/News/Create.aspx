@@ -7,8 +7,10 @@
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAPDUET0Qt7p2VcSk6JNU1sBSM5jMcmVqUpI7aqV44cW1cEECiThQYkcZUPRJn9vy_TWxWvuLoOfSFBw"
         type="text/javascript"></script>
     <script src="../../Scripts/googleMapsV2.js" type="text/javascript"></script>
-    <script src="../../Scripts/listVideos.js" type="text/javascript"></script>
     <script src="../../Scripts/upload.js" type="text/javascript"></script>
+    <script src="../../Scripts/addRemoveVideos.js" type="text/javascript"></script>
+
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <h2>
@@ -44,21 +46,36 @@
             <input type="file" name="file1" id="file1" style="width: 30%; height: 30%;" />
         </div>
         <br />
-        <div id="divDadosVideos">
-            <div>
-                <label>
-                    Links Videos</label>
-            </div>
-            <input id="textBoxVideos" name="textBoxVideos" type="text" style="width: 30%; height: 30%" />
-            <input id="inserirVideo" type="button" value="+" />
-            <input id="removerVideo" type="button" value="-" />
-            <br />
-            <br />
-            <select id="selectListVideos" name="selectListVideo" size="0" style="width: 30%;
-                display: none;">
-            </select>
-            <input id="stringListaVideos" name="stringListaVideos" type="text" style="display: none" />
+
+
+
+         <div>
+        <label>
+            Links Videos</label>
+    </div>
+        <input id="textBoxVideos" name="textBoxVideos" type="text" style="width: 30%; height: 30%" />
+        <input id="inserirVideo" type="button" value="+" />
+        <input id="removeListaVideos" name="removeListaVideos" type="text" style="display: none"/>
+
+       
+
+        <div id="linksVideos">
+
+        <input id="link0" name="link0" type="text" value="0" style="display: none"/>
+
         </div>
+
+
+
+        
+        <div id="videos">
+        </div>
+
+         <script type="text/javascript">
+             $(document).ready(initVideos2);
+        </script>
+
+        <input id="countMarcos" type="text" value="0" style="display:none"/>
         <br />
         <br />
         <div id="mapaGoogle">
@@ -66,7 +83,6 @@
         <br />
         <input id="dadosMarcoFadeIn" type="button" value="+" />
         <input id="dadosMarcoFadeOut" type="button" value="-" />
-        <input id="botaoAdicionaStringComMarcos" type="button" value="Guardar Marcos" />
         <div id="dadosBalao" style="display: none">
             <fieldset>
                 <label>
@@ -91,7 +107,7 @@
         <input id="stringComMarcos" name="stringComMarcos" type="text" style="display: none" />
         <br />
         <br />
-        <input type="submit" value="Criar Noticia" />
+        <input id = "botaoAdicionaStringComMarcos" type="submit" value="Criar Noticia" />
         <input id="botaoPreview" type="submit" value="Preview" />
         <script type="text/javascript">
             function handler_preview() {
@@ -106,6 +122,7 @@
             }
 
             $(document).ready(fazPreview);
+            
         </script>
     </fieldset>
     </form>
