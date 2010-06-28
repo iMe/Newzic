@@ -177,6 +177,9 @@
               
     %>
 
+    <script type="text/javascript">
+        $(document).ready(mainShow);
+    </script>
 
         <%if (Model.hasMap)
           {%>
@@ -262,7 +265,8 @@
       {%>
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAPDUET0Qt7p2VcSk6JNU1sBSM5jMcmVqUpI7aqV44cW1cEECiThQYkcZUPRJn9vy_TWxWvuLoOfSFBw"
         type="text/javascript"></script>
-    <script src="../../Scripts/googleMapsV2.js" type="text/javascript"></script>
+    <script src="../../Scripts/googleMapsV2.js" type="text/javascript">
+    </script>
     <% }%>
     <%if (Model.noticia.Imagems.Count != 0)
       {%>

@@ -4,13 +4,18 @@ var mapa;
 var arrayPontos = [];
 var stringHTML;
 var stringComTodosOsPontos;
+var flagRemove;
 
 function criaNovoMarco(latitude, longitude, titulo, corpo) {
 
     var novoPonto = new GLatLng(latitude, longitude);
     var novoMarcador = new GMarker(novoPonto, { draggable: true, bouncy: true });
     mapa.addOverlay(novoMarcador);
-    var aux = $("<div><h3><U>" + titulo + "</U></h3>" + "<p>" + corpo + "</p><a href=''>Remover</a></div>");
+    var aux;
+    if (flagRemove == 1)
+       aux = $("<div><h3><U>" + titulo + "</U></h3>" + "<p>" + corpo + "</p><a href=''>Remover</a></div>");
+    else
+       aux = $("<div><h3><U>" + titulo + "</U></h3>" + "<p>" + corpo + "</p></div>");
     stringHTML = (titulo + "§" + corpo);
     novoMarcador.bindInfoWindow(aux[0]);
     novoMarcador.textoHTML = stringHTML;
@@ -121,6 +126,7 @@ function carregaPontosCaixas() {
 }
 
 function main() {
+    flagRemove = 1;
     var latitude = 41.55;
     var longitude = -8.3333;
     var zoom = 8;
@@ -138,4 +144,18 @@ function main() {
     $('#botaoAdicionaStringComMarcos').click(preencheInputComAString);
 }
 
-$(document).ready(main);
+function mainShow() {
+    flagRemove = 0;
+    var latitude = 41.55;
+    var longitude = -8.3333;
+    var zoom = 8;
+    $('#mapaGoogle').width(600).height(500);
+    mapa = new GMap2($('#mapaGoogle')[0]);
+    var pontoInicial = new GLatLng(latitude, longitude);
+    mapa.setCenter(pontoInicial, zoom);
+    mapa.addControl(new GLargeMapControl());
+    mapa.addControl(new GMapTypeControl());
+    mapa.enableGoogleBar();
+    carregaPontosCaixas();
+}
+
