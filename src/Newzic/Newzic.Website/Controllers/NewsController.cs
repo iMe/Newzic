@@ -54,7 +54,7 @@ namespace Newzic.Website.Controllers
 
             if (AdminController.getRole(user).Equals("Moderador"))
             {
-                if (!AdminController.getRole(noticia.Jornalista.Email).Equals("Moderador"))
+                if (!AdminController.getRole(noticia.Jornalista.Email).Equals("Moderador") || user.Equals(noticia.Jornalista.Email))
                 {
                     podeApagar(noticia);
                     return View("SuccessView");
