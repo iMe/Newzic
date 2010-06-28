@@ -150,6 +150,13 @@
         </fieldset>
         <%}%>
 
+        <% if (Model.hasMap)
+           {%>
+         <script type="text/javascript">
+             $(document).ready(mainShow);
+        </script>
+        <%
+           }%>
         <%
             
         var mapas = Model.noticia.Mapas;
@@ -177,9 +184,7 @@
               
     %>
 
-    <script type="text/javascript">
-        $(document).ready(mainShow);
-    </script>
+   
 
         <%if (Model.hasMap)
           {%>

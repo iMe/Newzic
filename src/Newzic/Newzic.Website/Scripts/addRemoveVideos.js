@@ -4,9 +4,14 @@ var listaRemoveVideos = [];
 
 function handler_insereVideo() {
     var link = $('#textBoxVideos')[0].value;
-    $('#textBoxVideos')[0].value = "";
-    adicionaVideo(link);
-    $('#link0')[0].value++;
+    if (link != null && link != "") {
+        $('#textBoxVideos')[0].value = "";
+        adicionaVideo(link);
+        $('#link0')[0].value++;
+    }
+    else {
+        alert("Insira o url do video!");
+    }
 }
 
 function adicionaVideo(linkHTML) {

@@ -9,7 +9,11 @@ var flagRemove;
 function criaNovoMarco(latitude, longitude, titulo, corpo) {
 
     var novoPonto = new GLatLng(latitude, longitude);
-    var novoMarcador = new GMarker(novoPonto, { draggable: true, bouncy: true });
+    var novoMarcador;
+    if (flagRemove == 1)
+        novoMarcador = new GMarker(novoPonto, { draggable: true, bouncy: true });
+    else
+        novoMarcador = new GMarker(novoPonto, { draggable: false, bouncy: true });
     mapa.addOverlay(novoMarcador);
     var aux;
     if (flagRemove == 1)

@@ -2,11 +2,11 @@
 
 <%@ Import Namespace="Newzic.Core" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-    Edit
+    Editar
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <h2>
-        Edit</h2>
+        Editar</h2>
     <% using (Html.BeginForm())
        {%>
     <fieldset>

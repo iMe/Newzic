@@ -519,8 +519,8 @@ namespace Newzic.Website.Controllers
                         }
 
 
-
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index","Home");
+                        //return RedirectToAction("Index");
                     }
                     catch
                     {
@@ -534,9 +534,10 @@ namespace Newzic.Website.Controllers
             }
             else
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
         }
+
 
         //
         // GET: /Noticia/Edit/5
