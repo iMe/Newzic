@@ -221,6 +221,18 @@ namespace Newzic.Website.Controllers
             model.comentario = null;
             model.guid = model.noticia.NoticiaId.ToString();
 
+            IDataCRUD<Mapa> bdMapas = new DataCRUD<Mapa>();
+            EntitySet<Mapa> mapas = new EntitySet<Mapa>();
+            var todosMarcos = bdMapas.fetchAll();
+            foreach (Mapa marco in todosMarcos)
+            {
+                if (marco.NoticiaId == model.noticia.NoticiaId)
+                    mapas.Add(marco);
+            }
+
+            model.noticia.Mapas = mapas;
+
+
             var array = model.noticia.Imagems.Select(i => "\"" + i.ImagemId.ToString() + "\"").ToArray();
             ViewData["PicIds"] = "window.picIds = [" + string.Join(",", array) + "];";
 
