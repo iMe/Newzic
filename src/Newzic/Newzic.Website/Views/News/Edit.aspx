@@ -7,65 +7,66 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <h2>
         Editar</h2>
-    <% using (Html.BeginForm())
-       {%>
+        <%using (Html.BeginForm())
+          {%>
+    
     <fieldset>
         <div class="editor-label">
-            <%= Html.LabelFor(model => model.Titulo) %>
+            <%=Html.LabelFor(model => model.Titulo)%>
         </div>
         <div class="editor-field">
-            <%= Html.TextBoxFor(model => model.Titulo, new { style = "width:30%; height:30%;" })%>
-            <%= Html.ValidationMessageFor(model => model.Titulo) %>
+            <%=Html.TextBoxFor(model => model.Titulo, new {style = "width:30%; height:30%;"})%>
+            <%=Html.ValidationMessageFor(model => model.Titulo)%>
         </div>
         <div class="editor-label">
-            <%= Html.LabelFor(model => model.Corpo) %>
+            <%=Html.LabelFor(model => model.Corpo)%>
         </div>
         <div class="editor-field" style="width: 100%; height: 100%;">
-            <%= Html.TextAreaFor(model => model.Corpo, 12, 100, new { style = "width:100%; height:100%;" })%>
-            <%= Html.ValidationMessageFor(model => model.Corpo) %>
+            <%=Html.TextAreaFor(model => model.Corpo, 12, 100, new {style = "width:100%; height:100%;"})%>
+            <%=Html.ValidationMessageFor(model => model.Corpo)%>
         </div>
         <div class="editor-label">
-            <%= Html.LabelFor(model => model.Tags) %>
+            <%=Html.LabelFor(model => model.Tags)%>
         </div>
         <div class="editor-field">
-            <%= Html.TextBoxFor(model => model.Tags, new { style = "width:30%; height:30%;" })%>
-            <%= Html.ValidationMessageFor(model => model.Tags) %>
+            <%=Html.TextBoxFor(model => model.Tags, new {style = "width:30%; height:30%;"})%>
+            <%=Html.ValidationMessageFor(model => model.Tags)%>
         </div>
 
 
         <div id="imagens">
             <%
-                var listaImagens = Model.Imagems;
-                var num = listaImagens.Count;
-           
-            %>
-            <input id="numImagens" type="text" value="<%=num%>" />
+              var listaImagens = Model.Imagems;
+              var num = listaImagens.Count;
+
+%>
+            <input id="numImagens" type="text" value="<%=num%>" style="display:none"/>
             <%
-           
-           if (num > 0)
-             Response.Write("<div>Imagens</div>");
-                int countImagens = 0;
-                foreach (Imagem imagem in listaImagens)
-                {
-                    string nome = imagem.Nome + "." + imagem.Tipo;
-                    string source = "/News/getImage/" + imagem.ImagemId;
-                    
-            %>
+
+              if (num > 0)
+                  Response.Write("<div>Imagens</div>");
+              int countImagens = 0;
+              foreach (Imagem imagem in listaImagens)
+              {
+                  string nome = imagem.Nome + "." + imagem.Tipo;
+                  string source = "/News/getImage/" + imagem.ImagemId;
+
+%>
             <div id="divImagem<%=countImagens%>">
-                <input id="guidImagem<%=countImagens%>" type="text" value="<%=imagem.ImagemId%>" />
+                <input id="guidImagem<%=countImagens%>" type="text" value="<%=imagem.ImagemId%>" style="display:none"/>
                 <input id="remImagem<%=countImagens%>" type="button" value="x" />
                 <a href="<%=source%>">
-                    <%=nome %></a>
+                    <%=nome%></a>
             </div>
             <%
-                countImagens++;
-                }
-            %>
+                  countImagens++;
+              }
+%>
         </div>
 
 
 
-        <input id="textBoxRemoveImagens" name = "textBoxRemoveImagens" type="text" value="" />
+        <input id="textBoxRemoveImagens" name = "textBoxRemoveImagens" type="text" value="" style="display:none"/>
         <script type="text/javascript">
 
             function initHandlerRemove(num) {
@@ -96,6 +97,12 @@
             $(document).ready(mainImagens);
 
         </script>
+
+        <div id="uploads">
+            <input type="file" name="file1" id="file1" style="width: 30%; height: 30%;" />
+        </div>
+
+
         <div>
             <label>
                 Links Videos</label>
@@ -105,30 +112,33 @@
         <input id="removeListaVideos" name="removeListaVideos" type="text" style="display: none" />
         <div id="linksVideos">
             <%
-            var listaVideos = Model.Videos;
-            if (listaVideos.Count == 0)
-            {
-                string caixaNumVideos = "<input id=\"link0\" name=\"link0\" type=\"text\" value=\"" + listaVideos.Count +
-                                        "\" style=\"display: none\"/>";
-                Response.Write(caixaNumVideos);
-            }
-            if (listaVideos.Count > 0)
-            {
+              var listaVideos = Model.Videos;
+              if (listaVideos.Count == 0)
+              {
+                  string caixaNumVideos = "<input id=\"link0\" name=\"link0\" type=\"text\" value=\"" +
+                                          listaVideos.Count +
+                                          "\" style=\"display: none\"/>";
+                  Response.Write(caixaNumVideos);
+              }
+              if (listaVideos.Count > 0)
+              {
 
-                string caixaNumVideos = "<input id=\"link0\" name=\"link0\" type=\"text\" value=\"" + listaVideos.Count +
-                                        "\" style=\"display: none\"/>";
-                Response.Write(caixaNumVideos);
-                int contador = 1;
-                foreach (var video in listaVideos)
-                {
-                    string id = "\"" + "link" + contador + "\"";
-                    string novoLink = "<input id=" + id + " name=" + id + " value=" + "\"" + video.Url + "\"" + " style=\"display: none\" />";
-                    Response.Write(novoLink);
-                    contador++;
-                }
-            }
-           
-            %>
+                  string caixaNumVideos = "<input id=\"link0\" name=\"link0\" type=\"text\" value=\"" +
+                                          listaVideos.Count +
+                                          "\" style=\"display: none\"/>";
+                  Response.Write(caixaNumVideos);
+                  int contador = 1;
+                  foreach (var video in listaVideos)
+                  {
+                      string id = "\"" + "link" + contador + "\"";
+                      string novoLink = "<input id=" + id + " name=" + id + " value=" + "\"" + video.Url + "\"" +
+                                        " style=\"display: none\" />";
+                      Response.Write(novoLink);
+                      contador++;
+                  }
+              }
+
+%>
         </div>
         <div id="videos">
         </div>
@@ -138,30 +148,30 @@
     
         </script>
         <%
-        var mapas = Model.Mapas;
-        int countMarcos = 0;
-        
-        %>
+              var mapas = Model.Mapas;
+              int countMarcos = 0;
+
+%>
         <input id="countMarcos" type="text" value="<%=mapas.Count%>" style="display: none" />
         <%
-        foreach (var mapa in mapas)
-        {
-            string latitude = mapa.Latitude.ToString (); 
-            string longitude = mapa.Longitude.ToString ();
-            latitude = latitude.Replace(',', '.');
-            longitude = longitude.Replace (',','.');
-            string[] arrayMarcos = mapa.Morada.Split('§');
-            string titulo = arrayMarcos[0];
-            string corpo = arrayMarcos[1];%>
-        <input id="latitude<%=countMarcos %>" type="text" value="<%=latitude%>" style="display: none" />
-        <input id="longitude<%=countMarcos %>" type="text" value="<%=longitude %>" style="display: none" />
-        <input id="titulo<%=countMarcos %>" type="text" value="<%=titulo %>" style="display: none" />
-        <input id="corpo<%=countMarcos %>" type="text" value="<%=corpo %>" style="display: none" />
+              foreach (var mapa in mapas)
+              {
+                  string latitude = mapa.Latitude.ToString();
+                  string longitude = mapa.Longitude.ToString();
+                  latitude = latitude.Replace(',', '.');
+                  longitude = longitude.Replace(',', '.');
+                  string[] arrayMarcos = mapa.Morada.Split('§');
+                  string titulo = arrayMarcos[0];
+                  string corpo = arrayMarcos[1];%>
+        <input id="latitude<%=countMarcos%>" type="text" value="<%=latitude%>" style="display: none" />
+        <input id="longitude<%=countMarcos%>" type="text" value="<%=longitude%>" style="display: none" />
+        <input id="titulo<%=countMarcos%>" type="text" value="<%=titulo%>" style="display: none" />
+        <input id="corpo<%=countMarcos%>" type="text" value="<%=corpo%>" style="display: none" />
         <%
-            countMarcos++;
-        }
-              
-        %>
+                  countMarcos++;
+              }
+
+%>
         <br />
         <div id="mapaGoogle">
         </div>
@@ -195,7 +205,8 @@
         <input id="botaoAdicionaStringComMarcos" type="submit" value="Save" />
     </fieldset>
     <%
-        }%>
+          }%>
+
     <div>
         <%=Html.ActionLink("Back to List", "Index") %>
     </div>

@@ -109,7 +109,7 @@
             <%} %>
         </fieldset>
         <%}%>
-        <% if (Model.Videos.Count != 0)
+        <% if (Model.Mapas.Count != 0)
            {%>
         <script type="text/javascript">
             $(document).ready(mainShow);
@@ -165,6 +165,7 @@
     <script src="../../Scripts/googleMapsV2.js" type="text/javascript">
     </script>
     <% }%>
+    <script src="../../Scripts/upload.js" type="text/javascript"></script>
     <%if (Model.Imagems.Count != 0)
       {%>
     <script type="text/javascript"><%= ViewData["PicIds"] %></script>

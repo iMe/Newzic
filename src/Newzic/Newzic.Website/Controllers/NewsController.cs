@@ -414,7 +414,8 @@ namespace Newzic.Website.Controllers
 
         private bool linkVideoValido(string url)
         {
-            if (url.Equals(""))
+            
+            if (String.IsNullOrEmpty(url))
                 return false;
             else
             {
@@ -705,15 +706,44 @@ namespace Newzic.Website.Controllers
             var stringRemImagens = Request.Form["textBoxRemoveImagens"];
 
             removeImagensBD(stringRemImagens);
+
+            IDataCRUD<Imagem> imagemAdd = new DataCRUD<Imagem>();
+
+            foreach (string file in Request.Files)
+            {
+
+                HttpPostedFileBase hpf = Request.Files[file] as HttpPostedFileBase;
+                var fileSize = hpf.ContentLength;
+                if (fileSize == 0)
+                    continue;
+
+                Imagem novaImagem = new Imagem();
+                if (Path.GetExtension(hpf.FileName).Length == 0)
+                {
+                    throw new Exception(string.Format("File '{0}' has no extension (e.g. .jpeg .png)", hpf.FileName));
+                }
+                byte[] buffer = new byte[fileSize];
+                hpf.InputStream.Read(buffer, 0, fileSize);
+                //novaImagem.Tipo = Path.GetExtension(hpf.FileName);
+                novaImagem.ImageFile = buffer;
+                novaImagem.NoticiaId = id;
+                //novaImagem.Nome = hpf.FileName;
+                var aux = hpf.FileName.Split('.');
+                novaImagem.Nome = aux[0];
+                novaImagem.Tipo = aux[1];
+
+                Guid idImagem = imagemAdd.create(novaImagem);
+                imagemAdd.Save();
+            }
             
             try
             {
                 string dataEditado = ("\r\nEditado (" + DateTime.Now.ToString() + ")");
-                //noticia.Corpo = noticia.Corpo + dataEditado;
+                noticia.Corpo = noticia.Corpo + dataEditado;
                 bla.setObjecto(noticia);
                 editaNew.update(bla);
                 editaNew.Save();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
             catch
             {

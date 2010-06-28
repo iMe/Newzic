@@ -15,6 +15,11 @@ function handler_insereVideo() {
 }
 
 function adicionaVideo(linkHTML) {
+    var failLink = 'http://www.youtube.com/v/3HrSN7176XI&hl=en_US&fs=1&'
+    var re = /http:\/\/www\.youtube\.com\/watch\?v=([^&]+).*/
+    var replaceString = 'http://www.youtube.com/v/\1&hl=en_US&fs=1&'
+    linkHTML = linkHTML.match(re) ? 'http://www.youtube.com/v/' + linkHTML.match(re)[1] + '&hl=en_US&fs=1&' : failLink
+
     //por alguma razao o numId soma como string... fica 1+1 fika 11 em vez de 2
     var numId = 0;
     numId = contador + 1;
