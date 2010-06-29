@@ -630,6 +630,24 @@ namespace Newzic.Website.Controllers
             }
         }
 
+        public void removeImagensBD (string textBoxImagens)
+        {
+            IDataCRUD<Imagem> remImagens = new DataCRUD<Imagem>();
+            IQueryable<Imagem> imagems = remImagens.fetchAll();
+
+            string[] arrayImagens = textBoxImagens.Split(';');
+            foreach (var idImagem in arrayImagens)
+            {
+                
+                foreach (var imagem in imagems)
+                {
+                    if (imagem.ImagemId.ToString().Equals(idImagem))
+                        remImagens.remove(imagem);
+                }
+                remImagens.Save();
+            }
+        }
+
         [HttpPost]
         public ActionResult Edit(Guid id, Noticia noticia)
         {
@@ -670,6 +688,10 @@ namespace Newzic.Website.Controllers
             adicionaMarcos(stringMarcos, id);
 
 
+            var stringRemImagens = Request.Form["textBoxRemoveImagens"];
+
+            removeImagensBD(stringRemImagens);
+            
             try
             {
                 string dataEditado = ("\r\nEditado (" + DateTime.Now.ToString() + ")");
