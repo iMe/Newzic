@@ -258,20 +258,34 @@ namespace Newzic.Website.Controllers
 
             noticia.Data = DateTime.Now;
             noticia.JornalistaId = jorn.JornalistaId;
+            noticia.Jornalista = jorn;
 
-            var stringVideos = Request.Form["stringListaVideos"];
-            string[] arrayVideos = stringVideos.Split(';');
-
-            for (int i = 0; i < arrayVideos.Length; i++)
+            int contadorVideos = int.Parse(Request.Form["link0"]);
+            for (int i = 1; i <= contadorVideos + 1; i++)
             {
-                var novoVideo = new Video();
-                string url = arrayVideos[i];
+                string name = "link" + i;
+                string url = Request.Form[name];
                 if (linkVideoValido(url) == true)
                 {
+                    var novoVideo = new Video();
                     novoVideo.Url = url;
                     noticia.Videos.Add(novoVideo);
                 }
             }
+
+            //var stringVideos = Request.Form["stringListaVideos"];
+            //string[] arrayVideos = stringVideos.Split(';');
+
+            //for (int i = 0; i < arrayVideos.Length; i++)
+            //{
+            //    var novoVideo = new Video();
+            //    string url = arrayVideos[i];
+            //    if (linkVideoValido(url) == true)
+            //    {
+            //        novoVideo.Url = url;
+            //        noticia.Videos.Add(novoVideo);
+            //    }
+            //}
 
             var stringMarcos = Request.Form["stringComMarcos"];
             string[] arrayMarcos = stringMarcos.Split('§');
@@ -281,8 +295,8 @@ namespace Newzic.Website.Controllers
                 // Falta resolver o problema do parse, ele nao ta a parsar bem o decimal!
                 //arrayMarcos[i] = arrayMarcos[i].Replace('.', ',');
                 //arrayMarcos[i + 1] = arrayMarcos[i + 1].Replace('.', ',');
-                double latitude = double.Parse(arrayMarcos[i], NumberStyles.Any);
-                double longitude = double.Parse(arrayMarcos[i + 1], NumberStyles.Any);
+                double latitude = double.Parse(arrayMarcos[i], CultureInfo.InvariantCulture);
+                double longitude = double.Parse(arrayMarcos[i + 1], CultureInfo.InvariantCulture);
                 string titulo = arrayMarcos[i + 2];
                 string corpo = arrayMarcos[i + 3];
                 Mapa novoMapa = new Mapa();

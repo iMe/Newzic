@@ -112,10 +112,11 @@
         <script type="text/javascript">
             function handler_preview() {
                 //var antigo = document.getElementById("formulario").action;
-                document.getElementById("formulario").action = "Preview";
+                document.getElementById("formulario").action = "/News/Preview";
                 //var novo = document.getElementById("formulario").action;
                 //alert(antigo);
                 //alert(novo);
+                $('#botaoPreview').click(preencheInputComAString);
             }
             function fazPreview() {
                 $('#botaoPreview').click(handler_preview);
