@@ -5,21 +5,7 @@
     Newzic -
     <%=Html.Encode(Model.noticia.Titulo) %>
 </asp:Content>
-<%--<asp:Content ID="Content4" ContentPlaceHolderID="scripts" runat="server">
-    
-    <%if (Model.hasMap)
-          {%>
-    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAPDUET0Qt7p2VcSk6JNU1sBSM5jMcmVqUpI7aqV44cW1cEECiThQYkcZUPRJn9vy_TWxWvuLoOfSFBw"
-        type="text/javascript"></script>
-    <script type="text/javascript"><%= ViewData["MapPoints"] %></script>
-    <script src="../../Scripts/viewmap.js" type="text/javascript"></script>
-    <% }%>
 
-    <%if (Model.noticia.Imagems.Count!=0) {%>
-    <script type="text/javascript"><%= ViewData["PicIds"] %></script>
-    <script type="text/javascript" src="../../Scripts/pics.js"></script>
-    <% }%>
-</asp:Content>--%>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <h2>
         <%=Html.Encode(Model.noticia.Titulo) %></h2>
@@ -163,12 +149,50 @@
             <%} %>
         </fieldset>
         <%}%>
+
+        <% if (Model.hasMap)
+           {%>
+         <script type="text/javascript">
+             $(document).ready(mainShow);
+        </script>
+        <%
+           }%>
+        <%
+            
+        var mapas = Model.noticia.Mapas;
+        int countMarcos = 0;
+        
+        %>
+        <input id="countMarcos" type="text" value="<%=mapas.Count%>" style="display:none" />
+        <%
+        foreach (var mapa in mapas)
+        {
+            string latitude = mapa.Latitude.ToString (); 
+            string longitude = mapa.Longitude.ToString ();
+            latitude = latitude.Replace(',', '.');
+            longitude = longitude.Replace (',','.');
+            string[] arrayMarcos = mapa.Morada.Split('§');
+            string titulo = arrayMarcos[0];
+            string corpo = arrayMarcos[1];%>
+            <input id="latitude<%=countMarcos %>" type="text" value="<%=latitude%>"  style="display: none"/>
+            <input id="longitude<%=countMarcos %>" type="text" value="<%=longitude %>" style="display: none"/>
+            <input id="titulo<%=countMarcos %>" type="text" value="<%=titulo %>" style="display: none"/>
+            <input id="corpo<%=countMarcos %>" type="text" value="<%=corpo %>" style="display: none"/>
+    <%
+            countMarcos++;
+        }
+              
+    %>
+
+   
+
         <%if (Model.hasMap)
           {%>
         <fieldset>
             <legend>Mapa</legend>
             <center>
-                <div id="map">
+                <div id="mapaGoogle">
+                
                 </div>
             </center>
         </fieldset>
@@ -246,8 +270,8 @@
       {%>
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAPDUET0Qt7p2VcSk6JNU1sBSM5jMcmVqUpI7aqV44cW1cEECiThQYkcZUPRJn9vy_TWxWvuLoOfSFBw"
         type="text/javascript"></script>
-    <script type="text/javascript"><%= ViewData["MapPoints"] %></script>
-    <script src="../../Scripts/viewmap.js" type="text/javascript"></script>
+    <script src="../../Scripts/googleMapsV2.js" type="text/javascript">
+    </script>
     <% }%>
     <%if (Model.noticia.Imagems.Count != 0)
       {%>

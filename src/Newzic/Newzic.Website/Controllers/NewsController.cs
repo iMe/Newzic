@@ -45,35 +45,35 @@ namespace Newzic.Website.Controllers
 
             var gid = new Guid(id);
             var noticia = repNoticias.fetchAll().Single(n => n.NoticiaId == gid);
-            
-            if(AdminController.getRole(user).Equals("Administrador"))
+
+            if (AdminController.getRole(user).Equals("Administrador"))
             {
                 podeApagar(noticia);
                 return View("SuccessView");
             }
-            
-            if(AdminController.getRole(user).Equals("Moderador"))
+
+            if (AdminController.getRole(user).Equals("Moderador"))
             {
-                if (!AdminController.getRole(noticia.Jornalista.Email).Equals("Moderador"))
+                if (!AdminController.getRole(noticia.Jornalista.Email).Equals("Moderador") || user.Equals(noticia.Jornalista.Email))
                 {
                     podeApagar(noticia);
                     return View("SuccessView");
                 }
                 return View("Error");
             }
-                
-            if(noticia.Jornalista.Email.Equals(user))
+
+            if (noticia.Jornalista.Email.Equals(user))
             {
                 podeApagar(noticia);
                 return View("SuccessView");
             }
             return View("Error");
-                
+
         }
 
         private void podeApagar(Noticia noticia)
         {
-            
+
             //noticia.NoticiaFlaggeds.Clear();
             repNoticias.remove(noticia);
             repNoticias.Save();
@@ -85,7 +85,7 @@ namespace Newzic.Website.Controllers
         public ActionResult Details(string id)
         {
             NewsDetailsModel model = buildModel(id);
-            
+
             //var array = model.noticia.Imagems.Select(i => "\"" + i.ImagemId.ToString() + "\"").ToArray();
             //ViewData["PicIds"] = "window.picIds = [" + string.Join(",", array) + "];";
 
@@ -94,7 +94,7 @@ namespace Newzic.Website.Controllers
             //ViewData["MapPoints"] = "window.MapPoints = [" + string.Join(",", arrayPontos) + "];";
 
 
-            return View("Show",model);
+            return View("Show", model);
         }
 
         public ActionResult Comentario(NewsDetailsModel model)
@@ -103,7 +103,7 @@ namespace Newzic.Website.Controllers
 
             if (!Request.IsAuthenticated) return View("AcessoNegado");
             string email = User.Identity.Name;
-            
+
             IDataCRUD<Jornalista> dbj = new DataCRUD<Jornalista>();
             IDataCRUD<Comentario> dbc = new DataCRUD<Comentario>();
 
@@ -145,7 +145,7 @@ namespace Newzic.Website.Controllers
             Jornalista jorn = (from Jornalista j in dbj.fetchAll() where j.Email.Equals(User.Identity.Name) select j).Single();
             var votos = noticia.VotoNoticias;
             Boolean b = votos.Any(vn => vn.JornalistaId == jorn.JornalistaId);//(from VotoNoticia vn in votos where vn.JornalistaId==jorn.JornalistaId select vn).Any();
-            
+
 
             if (!b)
             {
@@ -160,7 +160,7 @@ namespace Newzic.Website.Controllers
             }
 
             NewsDetailsModel model = buildModel(id);
-            
+
             return View("Show", model);
         }
 
@@ -199,7 +199,7 @@ namespace Newzic.Website.Controllers
             IDataCRUD<Imagem> dbi = new DataCRUD<Imagem>();
             String tipo = dbi.fetchAll().Single(ii => ii.ImagemId.ToString().Equals(id)).Tipo;
             byte[] res = dbi.fetchAll().Single(i => i.ImagemId.ToString().Equals(id)).ImageFile.ToArray();
-            return new FileContentResult(res, "image/"+tipo);
+            return new FileContentResult(res, "image/" + tipo);
         }
 
         public ActionResult getImagePreview(String id)
@@ -213,7 +213,7 @@ namespace Newzic.Website.Controllers
         {
             NewsDetailsModel model = new NewsDetailsModel();
             IDataCRUD<Noticia> db = new DataCRUD<Noticia>();
-            IDataCRUD<Comentario> dbc =new DataCRUD<Comentario>();
+            IDataCRUD<Comentario> dbc = new DataCRUD<Comentario>();
 
             model.comments = (from Comentario c in dbc.fetchAll() where c.NoticiaId.ToString().Equals(id) orderby c.Data select c).ToList();
             //model.comments=model.comments.OrderBy(c => c.Data);
@@ -221,12 +221,25 @@ namespace Newzic.Website.Controllers
             model.comentario = null;
             model.guid = model.noticia.NoticiaId.ToString();
 
+            IDataCRUD<Mapa> bdMapas = new DataCRUD<Mapa>();
+            EntitySet<Mapa> mapas = new EntitySet<Mapa>();
+            var todosMarcos = bdMapas.fetchAll();
+            foreach (Mapa marco in todosMarcos)
+            {
+                if (marco.NoticiaId == model.noticia.NoticiaId)
+                    mapas.Add(marco);
+            }
+
+            model.noticia.Mapas = mapas;
+
+
             var array = model.noticia.Imagems.Select(i => "\"" + i.ImagemId.ToString() + "\"").ToArray();
             ViewData["PicIds"] = "window.picIds = [" + string.Join(",", array) + "];";
 
             var arrayPontos = model.noticia.Mapas.Select(m => "{ point: new GLatLng(" + m.Latitude + "," + m.Longitude + "), text: '" + buildMapMarkText(m.Morada) + "' }").ToArray();
             if (arrayPontos.Length == 0) model.hasMap = false;
-            else{
+            else
+            {
                 ViewData["MapPoints"] = "window.MapPoints = [" + string.Join(",", arrayPontos) + "];";
                 model.hasMap = true;
             }
@@ -241,35 +254,49 @@ namespace Newzic.Website.Controllers
             if (noticia == null) return View("AcessoNegado");
 
             IDataCRUD<Jornalista> jornalistas = new DataCRUD<Jornalista>();
-            Jornalista jorn =(from Jornalista j in jornalistas.fetchAll() where j.Email.Equals(User.Identity.Name) select j).Single();
+            Jornalista jorn = (from Jornalista j in jornalistas.fetchAll() where j.Email.Equals(User.Identity.Name) select j).Single();
 
             noticia.Data = DateTime.Now;
             noticia.JornalistaId = jorn.JornalistaId;
+            noticia.Jornalista = jorn;
 
-            var stringVideos = Request.Form["stringListaVideos"];
-            string[] arrayVideos = stringVideos.Split(';');
-
-            for (int i = 0; i < arrayVideos.Length; i++)
+            int contadorVideos = int.Parse(Request.Form["link0"]);
+            for (int i = 1; i <= contadorVideos + 1; i++)
             {
-                var novoVideo = new Video();
-                string url = arrayVideos[i];
+                string name = "link" + i;
+                string url = Request.Form[name];
                 if (linkVideoValido(url) == true)
                 {
+                    var novoVideo = new Video();
                     novoVideo.Url = url;
                     noticia.Videos.Add(novoVideo);
                 }
             }
 
+            //var stringVideos = Request.Form["stringListaVideos"];
+            //string[] arrayVideos = stringVideos.Split(';');
+
+            //for (int i = 0; i < arrayVideos.Length; i++)
+            //{
+            //    var novoVideo = new Video();
+            //    string url = arrayVideos[i];
+            //    if (linkVideoValido(url) == true)
+            //    {
+            //        novoVideo.Url = url;
+            //        noticia.Videos.Add(novoVideo);
+            //    }
+            //}
+
             var stringMarcos = Request.Form["stringComMarcos"];
             string[] arrayMarcos = stringMarcos.Split('§');
-            
+
             for (int i = 0; (i + 4) < arrayMarcos.Length; i += 4)
             {
                 // Falta resolver o problema do parse, ele nao ta a parsar bem o decimal!
                 //arrayMarcos[i] = arrayMarcos[i].Replace('.', ',');
                 //arrayMarcos[i + 1] = arrayMarcos[i + 1].Replace('.', ',');
-                double latitude = double.Parse(arrayMarcos[i], NumberStyles.Any);
-                double longitude = double.Parse(arrayMarcos[i + 1], NumberStyles.Any);
+                double latitude = double.Parse(arrayMarcos[i], CultureInfo.InvariantCulture);
+                double longitude = double.Parse(arrayMarcos[i + 1], CultureInfo.InvariantCulture);
                 string titulo = arrayMarcos[i + 2];
                 string corpo = arrayMarcos[i + 3];
                 Mapa novoMapa = new Mapa();
@@ -319,11 +346,11 @@ namespace Newzic.Website.Controllers
                 var arrayPontos = noticia.Mapas.Select(m => "{ point: new GLatLng(" + m.Latitude + "," + m.Longitude + "), text: '" + buildMapMarkText(m.Morada) + "' }").ToArray();
                 ViewData["MapPoints"] = "window.MapPoints = [" + string.Join(",", arrayPontos) + "];";
             }
-            
+
             //noticia = n;
 
             //if (noticia == null) { return RedirectToAction("Index", "Home"); }
-            
+
             //foreach (Imagem imagem in noticia.Imagems)
             //{
             //    TypeConverter tc = TypeDescriptor.GetConverter(typeof(Bitmap));
@@ -364,21 +391,7 @@ namespace Newzic.Website.Controllers
             return View();
         }
 
-        public ActionResult AddVideo ()
-        {
-            var nameValueCollection = Request.Form;
-            return View();
-        }
-
-        public void addMapaPoint (float longitude, float latitude, string localidade)
-        {
-            
-
-
-
-        }
-
-        public bool camposNoticiaInvalidos (Noticia noticia)
+        public bool camposNoticiaInvalidos(Noticia noticia)
         {
             bool erroPrenchimento = false;
             if (string.IsNullOrWhiteSpace(noticia.Titulo))
@@ -408,7 +421,31 @@ namespace Newzic.Website.Controllers
                 return true;
             }
         }
-        
+
+        public void adicionaMarcos(string stringMarcos, Guid idNoticia)
+        {
+            string[] arrayMarcos = stringMarcos.Split('§');
+            IDataCRUD<Mapa> mapaAdd = new DataCRUD<Mapa>();
+            for (int i = 0; (i + 4) < arrayMarcos.Length; i += 4)
+            {
+                // Falta resolver o problema do parse, ele nao ta a parsar bem o decimal!
+                //arrayMarcos[i] = arrayMarcos[i].Replace('.', ',');
+                //arrayMarcos[i + 1] = arrayMarcos[i + 1].Replace('.', ',');
+                double latitude = double.Parse(arrayMarcos[i], CultureInfo.InvariantCulture);
+                double longitude = double.Parse(arrayMarcos[i + 1], CultureInfo.InvariantCulture);
+                string titulo = arrayMarcos[i + 2];
+                string corpo = arrayMarcos[i + 3];
+                Mapa novoMapa = new Mapa();
+                novoMapa.Latitude = (float)latitude;
+                novoMapa.Longitude = (float)longitude;
+                novoMapa.Morada = titulo + "§" + corpo;
+                novoMapa.NoticiaId = idNoticia;
+                mapaAdd.create(novoMapa);
+                mapaAdd.Save();
+            }
+
+        }
+
         //
         // POST: /Noticia/Create
 
@@ -440,45 +477,28 @@ namespace Newzic.Website.Controllers
                         IDataCRUD<Noticia> noticiaAdd = new DataCRUD<Noticia>();
                         Guid idNoticia = noticiaAdd.create(noticia);
                         noticiaAdd.Save();
-                        IDataCRUD<Video> videoAdd = new DataCRUD<Video>();
-
-                        var stringVideos = Request.Form["stringListaVideos"];
-                        string[] arrayVideos = stringVideos.Split(';');
 
 
-                        for (int i = 0; i < arrayVideos.Length; i++)
+
+                        int contadorVideos = int.Parse(Request.Form["link0"]);
+
+                        string linhaRemove = Request.Form["removeListaVideos"];
+                        string[] arrayRemoveVideos = linhaRemove.Split(';');
+
+                        for (int i = 1; i <= contadorVideos + 1; i++)
                         {
-                            var novoVideo = new Video();
-                            string url = arrayVideos[i];
-                            if (linkVideoValido(url) == true)
-                            {
-                                novoVideo.Url = url;
-                                novoVideo.NoticiaId = idNoticia;
-                                Guid idVideo = videoAdd.create(novoVideo);
-                                videoAdd.Save();
-                            }
+                            string name = "link" + i;
+                            string url = Request.Form[name];
+                            adicionaVideo(url, noticia.NoticiaId);
+                        }
+
+                        foreach (string url in arrayRemoveVideos)
+                        {
+                            removeVideos(url, noticia.NoticiaId);
                         }
 
                         var stringMarcos = Request.Form["stringComMarcos"];
-                        string[] arrayMarcos = stringMarcos.Split('§');
-                        IDataCRUD<Mapa> mapaAdd = new DataCRUD<Mapa>();
-                        for (int i = 0; (i + 4) < arrayMarcos.Length; i += 4)
-                        {
-                            // Falta resolver o problema do parse, ele nao ta a parsar bem o decimal!
-                            //arrayMarcos[i] = arrayMarcos[i].Replace('.', ',');
-                            //arrayMarcos[i + 1] = arrayMarcos[i + 1].Replace('.', ',');
-                            double latitude = double.Parse(arrayMarcos[i], NumberStyles.Any);
-                            double longitude = double.Parse(arrayMarcos[i + 1], NumberStyles.Any);
-                            string titulo = arrayMarcos[i + 2];
-                            string corpo = arrayMarcos[i + 3];
-                            Mapa novoMapa = new Mapa();
-                            novoMapa.Latitude = (float)latitude;
-                            novoMapa.Longitude = (float)longitude;
-                            novoMapa.Morada = titulo + "§" + corpo;
-                            novoMapa.NoticiaId = idNoticia;
-                            mapaAdd.create(novoMapa);
-                            mapaAdd.Save();
-                        }
+                        adicionaMarcos(stringMarcos, idNoticia);
 
                         IDataCRUD<Imagem> imagemAdd = new DataCRUD<Imagem>();
 
@@ -513,8 +533,8 @@ namespace Newzic.Website.Controllers
                         }
 
 
-
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index","Home");
+                        //return RedirectToAction("Index");
                     }
                     catch
                     {
@@ -528,9 +548,10 @@ namespace Newzic.Website.Controllers
             }
             else
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
         }
+
 
         //
         // GET: /Noticia/Edit/5
@@ -541,25 +562,154 @@ namespace Newzic.Website.Controllers
             IDataCRUD<Noticia> editaNew = new DataCRUD<Noticia>();
             var dados = editaNew.fetchAll();
             Noticia bla = (dados.SingleOrDefault(n => n.NoticiaId.Equals(id)));
-            
+            var array = bla.Imagems.Select(i => "\"" + i.ImagemId.ToString() + "\"").ToArray();
+            ViewData["PicIds"] = "window.picIds = [" + string.Join(",", array) + "];";
+            IDataCRUD<Video> bdVideos = new DataCRUD<Video>();
+            var fetchAll = bdVideos.fetchAll();
+            EntitySet<Video> videos = new EntitySet<Video>();
+            foreach (var video in fetchAll)
+            {
+                if (video.NoticiaId == id)
+                    videos.Add(video);
+            }
+            EntitySet<Imagem> imagens = new EntitySet<Imagem>();
+            IDataCRUD<Imagem> bdImagens = new DataCRUD<Imagem>();
+            var todasImagens = bdImagens.fetchAll();
+            foreach (Imagem imagem in todasImagens)
+            {
+                if (imagem.NoticiaId == id)
+                    imagens.Add(imagem);
+            }
+
+            IDataCRUD<Mapa> bdMapas = new DataCRUD<Mapa>();
+            EntitySet<Mapa> mapas = new EntitySet<Mapa>();
+            var todosMarcos = bdMapas.fetchAll();
+            foreach (Mapa marco in todosMarcos)
+            {
+                if (marco.NoticiaId == id)
+                    mapas.Add(marco);
+            }
+
+            bla.Videos = videos;
+            bla.Imagems = imagens;
+            bla.Mapas = mapas;
             return View(bla);
         }
 
         //
         // POST: /Noticia/Edit/5
 
+        public void adicionaVideo(string url, Guid idNoticia)
+        {
+            DataCRUD<Video> addVideo = new DataCRUD<Video>();
+            IQueryable<Video> fetchAll = addVideo.fetchAll();
+            int flagAdiciona = 1;
+
+            if (String.IsNullOrEmpty(url))
+                flagAdiciona = 0;
+
+            foreach (Video video1 in fetchAll)
+            {
+                if (video1.Url == url && video1.NoticiaId == idNoticia)
+                    flagAdiciona = 0;
+            }
+
+            if (flagAdiciona == 1)
+            {
+
+                Video video = new Video();
+                video.Url = url;
+                video.NoticiaId = idNoticia;
+                addVideo.create(video);
+                addVideo.Save();
+            }
+        }
+
+        public void removeVideos(string url, Guid idNoticia)
+        {
+
+            if (String.IsNullOrEmpty(url))
+                return;
+
+            DataCRUD<Video> remVideo = new DataCRUD<Video>();
+            IQueryable<Video> videos = remVideo.fetchAll();
+            foreach (Video video in videos)
+            {
+                if (video.NoticiaId == idNoticia && video.Url == url)
+                {
+                    remVideo.remove(video);
+                    remVideo.Save();
+                    break;
+                }
+            }
+        }
+
+        public void removeImagensBD (string textBoxImagens)
+        {
+            IDataCRUD<Imagem> remImagens = new DataCRUD<Imagem>();
+            IQueryable<Imagem> imagems = remImagens.fetchAll();
+
+            string[] arrayImagens = textBoxImagens.Split(';');
+            foreach (var idImagem in arrayImagens)
+            {
+                
+                foreach (var imagem in imagems)
+                {
+                    if (imagem.ImagemId.ToString().Equals(idImagem))
+                        remImagens.remove(imagem);
+                }
+                remImagens.Save();
+            }
+        }
+
         [HttpPost]
         public ActionResult Edit(Guid id, Noticia noticia)
         {
             IDataCRUD<Noticia> editaNew = new DataCRUD<Noticia>();
+
             var dados = editaNew.fetchAll();
             Noticia bla = (dados.SingleOrDefault(n => n.NoticiaId.Equals(id)));
             if (camposNoticiaInvalidos(noticia) == true)
-                return View (noticia);
+                return View(noticia);
+
+            int contadorVideos = int.Parse(Request.Form["link0"]);
+
+            string linhaRemove = Request.Form["removeListaVideos"];
+            string[] arrayRemoveVideos = linhaRemove.Split(';');
+
+            for (int i = 1; i <= contadorVideos; i++)
+            {
+                string name = "link" + i;
+                string url = Request.Form[name];
+                adicionaVideo(url, id);
+            }
+
+            foreach (string url in arrayRemoveVideos)
+            {
+                removeVideos(url, id);
+            }
+
+            IDataCRUD<Mapa> mapasRem = new DataCRUD<Mapa>();
+            var mapas = mapasRem.fetchAll();
+            foreach (Mapa mapa in mapas)
+            {
+                if (mapa.NoticiaId == id)
+                    mapasRem.remove(mapa);
+            }
+            mapasRem.Save();
+
+            var stringMarcos = Request.Form["stringComMarcos"];
+            adicionaMarcos(stringMarcos, id);
+
+
+            var stringRemImagens = Request.Form["textBoxRemoveImagens"];
+
+            removeImagensBD(stringRemImagens);
+            
             try
             {
                 string dataEditado = ("\r\nEditado (" + DateTime.Now.ToString() + ")");
-                noticia.Corpo = noticia.Corpo + dataEditado;
+                //noticia.Corpo = noticia.Corpo + dataEditado;
                 bla.setObjecto(noticia);
                 editaNew.update(bla);
                 editaNew.Save();
@@ -582,7 +732,7 @@ namespace Newzic.Website.Controllers
             repNoticias.Save();
             var model = buildModel(id);
             return View("Show", model);
-            
+
         }
     }
 }
